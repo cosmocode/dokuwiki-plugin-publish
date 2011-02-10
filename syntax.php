@@ -63,7 +63,7 @@ class syntax_plugin_publish extends DokuWiki_Syntax_Plugin {
                     $renderer->doc .= '</a></td></tr>';
                     $working_ns = $this_ns;
                 }
-                $updated = '<a href="' . wl($page[0]) . '">' . date('d/m/Y H:i', $page[2]) . '</a>';
+                $updated = '<a href="' . wl($page[0]) . '">' . dformat($page[2]) . '</a>';
                 if($page[1] == null || count($page[1]) == 0) {
                     // Has never been approved
                     $approved = '';
@@ -74,7 +74,7 @@ class syntax_plugin_publish extends DokuWiki_Syntax_Plugin {
                     $approved .= sprintf($this->getLang('apr_p_approved'),
                             $page[1][$last][1],
                             wl($page[0], 'rev=' . $last),
-                            date('d/m/Y H:i', $last));
+                            dformat($last));
                     if($last == $page[2]) { $updated = 'Unchanged'; } //shouldn't be possible:
                     //the search_helper should have
                     //excluded this

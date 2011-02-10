@@ -105,11 +105,10 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
         $latest_rev = $meta['last_change']['date'];
         #$strings[] = '<!-- ' . print_r($meta, true) . '-->';
 
-        $longdate = date('d/m/y H:i', $rev);
+        $longdate = dformat($rev);
 
         # Is this document approved?
         $approver = null;
-        $date = null;
         if($meta['approval'][$rev]) {
             # Approved
             if(is_array($meta['approval'][$rev])) {
@@ -125,8 +124,6 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
             }else{
               $approver = $meta['approval'][$rev];
             }
-
-            $date = date('d/m/Y', $rev);
         }
 
         # What is the most recent approved version?
@@ -192,7 +189,7 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
             $strings[] = '<span class="approval_previous">';
             $strings[] = sprintf($this->getLang('apr_previous'),
                             wl($ID, 'rev=' . $previous_approved),
-                            date('d/m/y H:i', $previous_approved));
+                            dformat($previous_approved));
             $strings[] = $this->difflink($ID, $previous_approved, $REV) . '</span>';
         }
 
