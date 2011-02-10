@@ -1,4 +1,11 @@
 <?php
+/**
+ * DokuWiki Plugin publish (Action Component)
+ *
+ * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
+ * @author  Jarrod Lowe <dokuwiki@rrod.net>
+ * @author  Andreas Gohr <gohr@cosmocode.de>
+ */
 
 // TODO:
 // Old Revisions Display   X
@@ -16,15 +23,12 @@
 // must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();
 
-if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
-require_once(DOKU_PLUGIN.'action.php');
-require_once(DOKU_PLUGIN.'publish/shared.php');
-
-
-
 class action_plugin_publish extends DokuWiki_Action_Plugin {
+    private $hlp;
 
-    function getInfo() { return publish_getInfo(); }
+    function action_plugin_publish(){
+        $this->hlp = plugin_load('helper','publish'); // load helper plugin
+    }
 
     function register(&$controller) {
         $controller->register_hook('HTML_EDITFORM_OUTPUT', 'BEFORE', $this, handle_html_editform_output, array());
@@ -38,12 +42,17 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
 
     function handle_html_editform_output(&$event, $param) {
         global $ID;
-        if(!in_namespace($this->getConf('apr_namespaces'), $ID)) { return; }
         global $INFO;
-        if($INFO['perm'] < AUTH_DELETE) { return; }
-        #$html = '<input type=checkbox name=approve> Approve</input>';
+
+        if(!$this->hlp->in_namespace($this->getConf('apr_namespaces'), $ID)) {
+             return;
+        }
+        if($INFO['perm'] < AUTH_DELETE) {
+            return;
+        }
+
         $html = '<label class="nowrap" for="approved"><input type="checkbox" id="approved" name="approved" value="1" tabindex=3 onclick="{ return approval_checkbox(\'' . $this->getConf('apr_approved_text') . '\'); }"/> <span>' . $this->getLang('apr_do_approve') . '</span></label>';
-        $event->data->insertElement(12,$html);
+        $event->data->insertElement(12,$html); //FIXME hardcoded element position
     }
 
     function debug(&$event, $param) {
@@ -63,7 +72,7 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
         global $ACT;
         global $USERINFO;
         global $INFO;
-        if(!in_namespace($this->getConf('apr_namespaces'), $ID)) { return; }
+        if(!$this->hlp->in_namespace($this->getConf('apr_namespaces'), $ID)) { return; }
         if($INFO['perm'] < AUTH_DELETE) { return true; }
         if($ACT != 'save') { return true; }
         if(!$event->data[3]) { return true; } # don't approve the doc being moved to archive
@@ -78,11 +87,13 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
     }
 
     function handle_display_banner(&$event, $param) {
-        $strings = array();
         global $ID;
-        if(!in_namespace($this->getConf('apr_namespaces'), $ID)) { return; }
         global $REV;
+
+        if(!$this->hlp->in_namespace($this->getConf('apr_namespaces'), $ID)) { return; }
         if($event->data != 'show') { return true; }
+
+        $strings = array();
         $meta = p_get_metadata($ID);
         $rev = $REV;
         if(!$rev) { $rev = $meta['last_change']['date']; }
@@ -94,7 +105,6 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
 
         $longdate = date('d/m/y H:i', $rev);
 
-
         # Is this document approved?
         $approver = null;
         $date = null;
@@ -104,7 +114,8 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
               $approver = $meta['approval'][$rev][1];
               if(!$approver) { $approver = $meta['approval'][$rev][2]; }
               if(!$approver) { $approver = $meta['approval'][$rev][0]; }
-              $approver = '<a href="mailto:' . 
+              //FIXME use correct user function here
+              $approver = '<a href="mailto:' .
                   $meta['approval'][$rev][2] .
                   '">' .
                   $approver .
@@ -124,7 +135,7 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
                 $most_recent_approved = $allapproved[$id];
             }
         }
-        
+
         # Latest, if draft
         $most_recent_draft = null;
         #$strings[] = '<!-- lr='.$latest_rev.', r='.$rev.', mra='.$most_recently_approved.', d='.($latest_rev != $rev).','.($latest_rev != $most_recently_approved).' -->';
@@ -161,7 +172,7 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
         if(!$approver) {
             # Draft
             $strings[] = '<span class="approval_draft">';
-            $strings[] = sprintf($this->getLang('apr_draft'), 
+            $strings[] = sprintf($this->getLang('apr_draft'),
                             '<span class="approval_date">' . $longdate . '</span>');
             $strings[] = '</span>';
         }
@@ -191,8 +202,8 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
 
     function handle_revisions(&$event, $param) {
         global $ID;
-        if(!in_namespace($this->getConf('apr_namespaces'), $ID)) { return; }
         global $REV;
+        if(!$this->hlp->in_namespace($this->getConf('apr_namespaces'), $ID)) { return; }
         $meta = p_get_metadata($ID);
         $latest_rev = $meta['last_change']['date'];
 
