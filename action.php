@@ -89,9 +89,11 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
     function handle_display_banner(&$event, $param) {
         global $ID;
         global $REV;
+        global $INFO;
 
-        if(!$this->hlp->in_namespace($this->getConf('apr_namespaces'), $ID)) { return; }
-        if($event->data != 'show') { return true; }
+        if(!$this->hlp->in_namespace($this->getConf('apr_namespaces'), $ID)) return;
+        if($event->data != 'show') return true;
+        if(!$INFO['exists']) return true;
 
         $strings = array();
         $meta = p_get_metadata($ID);
