@@ -17,4 +17,3 @@ $lang['apr_p_approved'] = 'Von %s am <a href="%s">%s</a>';
 // Submit (Next to the tick-box to approve a page)
 $lang['apr_do_approve'] = 'Bestätigen';
 
-?>
