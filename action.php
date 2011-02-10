@@ -115,12 +115,6 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
               $approver = $meta['approval'][$rev][1];
               if(!$approver) { $approver = $meta['approval'][$rev][2]; }
               if(!$approver) { $approver = $meta['approval'][$rev][0]; }
-              //FIXME use correct user function here
-              $approver = '<a href="mailto:' .
-                  $meta['approval'][$rev][2] .
-                  '">' .
-                  $approver .
-                  '</a>';
             }else{
               $approver = $meta['approval'][$rev];
             }
@@ -181,7 +175,7 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
             $strings[] = '<span class="approval_approved">';
             $strings[] = sprintf($this->getLang('apr_approved'),
                             '<span class="approval_date">' . $longdate . '</span>',
-                            $approver);
+                            editorinfo($approver));
             $strings[] = '</span>';
         }
 
