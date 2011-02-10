@@ -80,7 +80,7 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
             $data = pageinfo();
             #$newdata = p_get_metadata($ID, 'approval');
             $newdata = $data['meta']['approval'];
-            $newdata[$data['lastmod']] = array($data['client'], $USERINFO['name'], $USERINFO['mail']);
+            $newdata[$data['lastmod']] = array($data['client'], $_SERVER['REMOTE_USER'], $USERINFO['mail']);
             p_set_metadata($ID, array('approval' => $newdata), true, true);
         }
         return true;
