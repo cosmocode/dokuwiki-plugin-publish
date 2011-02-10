@@ -1,0 +1,75 @@
+div.approval {
+  margin: 2em;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70% !important;
+  min-height: 40px;
+  clear: both;
+  text-align: justify;
+  vertical-align: middle;
+  border-collapse: collapse;
+  padding: 15px 20px 15px 20px;
+  -moz-border-radius: 10px;
+  -khtml-border-radius: 10px;
+  border-radius: 10px;
+  border: solid black 2px;
+}
+
+div.approved_yes {
+  background-color: #dfd;
+  background-image: url(images/yes.gif);
+}
+
+div.approved_no {
+  background-color: #fdd;
+  background-image: url(images/no.gif);
+}
+
+div.approval em {
+  font-weight: bold;
+}
+
+div.approval span {
+  display: block;
+}
+
+div.approved_revision {
+  background-color: #dfd;
+}
+
+div.unapproved_revision {
+  background-color: #fdd;
+}
+
+p.apr_none { }
+
+/* table.apr_table tr.apr_head th.(apr_page,apr_prev,apr_upd)
+ * table.apr_table tr.apr_ns td a
+ * table.apr_table tr.apr_entry [apr_never] td.(apr_page,apr_prev,apr_upd) a
+ */
+table.apr_table {
+  width: 100%;
+}
+
+table.apr_table tr.apr_head {
+  border-bottom: solid black 2px;
+}
+
+table.apr_table tr.apr_ns {
+  border-bottom: solid black 1px;
+}
+
+
+table.apr_table tr.apr_ns td {
+  text-align: center;
+  font-weight: bold;
+}
+
+a.approved_diff_link {
+  visibility: hidden;
+}
+
+div.approval span span.approval_date {
+  display: inline;
+  font-size: 80%;
+}
