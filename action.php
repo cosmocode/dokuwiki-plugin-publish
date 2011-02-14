@@ -289,7 +289,7 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
 
         # Only apply to appropriate namespaces
         global $ID;
-        if(!in_namespace($this->getConf('apr_namespaces'), $ID)) { return; }
+        if(!$this->hlp->in_namespace($this->getConf('apr_namespaces'), $ID)) { return; }
 
         # Find latest rev
         $meta = p_get_metadata($ID);
