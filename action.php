@@ -266,7 +266,7 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
         if($rev1 == $rev2) { return ''; }
         return '<a href="' . wl($id, 'rev2[]=' . $rev1 . '&rev2[]=' . $rev2 . '&do[diff]=1') .
           '" class="approved_diff_link">' .
-          '<img src="/lib/images/diff.png" class="approved_diff_link" alt="Diff" />' .
+          '<img src="'.DOKU_BASE.'lib/images/diff.png" class="approved_diff_link" alt="Diff" />' .
           '</a>';
     }
 
