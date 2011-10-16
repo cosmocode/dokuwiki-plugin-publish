@@ -246,7 +246,7 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
                     }
                 }
                 if($usename) {
-                  if(in_namespace($this->getConf('apr_namespaces'), $usename)) {
+                  if($this->hlp->in_namespace($this->getConf('apr_namespaces'), $usename)) {
                       $meta = p_get_metadata($usename);
 
                       if($meta['approval'][$meta['last_change']['date']]) {
