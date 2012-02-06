@@ -17,4 +17,12 @@ $lang['apr_p_approved'] = 'By %s on <a href="%s">%s</a>';
 // Submit (Next to the tick-box to approve a page)
 $lang['apr_do_approve'] = 'Approve';
 
-?>
+
+$lang['wrong permissions to approve'] = 'You have not the right permissions to approve this page.';
+$lang['cannot approve a non-existing revision'] = 'You cannot approve a non-existing revision.';
+$lang['version approved'] = 'You have approved the document.';
+$lang['cannot approve error'] = 'Cannot approve due some technical errors (permissions?)';
+
+$lang['approvals'] = 'Approvals: %s/%s';
+$lang['approved by'] = 'Approved by: %s';
+$lang['approve action'] = 'Approve document';
