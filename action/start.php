@@ -20,31 +20,32 @@ class action_plugin_publish_start extends DokuWiki_Action_Plugin {
         global $INFO;
         global $ID;
 
-        if($ACT != 'show') { return; }
+        if ($ACT !== 'show') {
+            return;
+        }
 
-        if($REV != '') { return; }
+        if ($REV != '') {
+            return;
+        }
 
-        # apply to readers only
-        if($INFO['perm'] != AUTH_READ) { return; }
+        if ($INFO['perm'] != AUTH_READ) {
+            return;
+        }
 
-        # Check for override token
         global $_GET;
-        if($_GET['force_rev']) { return; }
+        if($_GET['force_rev']) {
+            return;
+        }
 
-        # Only apply to appropriate namespaces
-        if(!$this->hlp->in_namespace($this->getConf('apr_namespaces'), $ID)) { return; }
+        if (!$this->hlp->in_namespace($this->getConf('apr_namespaces'), $ID)) {
+            return;
+        }
 
-        # Find latest rev
-        $meta = p_get_metadata($ID);
-        if($meta['approval'][$meta['last_change']['date']]) { return; } //REV=0 *is* approved
-
-        if(!$meta['approval']) { return; } //no approvals
-
-        # Get list of approvals
-        $all = array_keys($meta['approval']);
-        if(count($all) == 0) { return; } //no approvals
-
-        $REV = $all[count($all)-1];
+        $latestApproved = $this->hlp->getLatestApprovedRevision();
+        if ($latestApproved) {
+            $REV = $latestApproved;
+            $INFO['rev'] = $latestApproved;
+        }
     }
 
 }
