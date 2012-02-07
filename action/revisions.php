@@ -16,6 +16,7 @@ class action_plugin_publish_revisions extends DokuWiki_Action_Plugin {
 
     function handle_revisions(&$event, $param) {
         global $ID;
+        global $INFO;
 
         if (!$this->hlp->in_namespace($this->getConf('apr_namespaces'), $ID)) {
             return;
@@ -32,8 +33,12 @@ class action_plugin_publish_revisions extends DokuWiki_Action_Plugin {
 
             if ($member && $ref['_elem'] == 'tag' &&
                 $ref['_tag'] == 'input' && $ref['name'] == 'rev2[]'){
-                if ($meta['approval'][$ref['value']] ||
-                    ($ref['value'] == 'current' && $meta['approval'][$latest_rev])) {
+
+                $revision = $ref['value'];
+                if ($revision == 'current') {
+                    $revision = $INFO['meta']['date']['modified'];
+                }
+                if ($this->hlp->isRevisionApproved($revision)) {
                     $event->data->_content[$member]['class'] = 'li approved_revision';
                 } else {
                     $event->data->_content[$member]['class'] = 'li unapproved_revision';
