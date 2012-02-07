@@ -96,13 +96,23 @@ class helper_plugin_publish extends DokuWiki_Plugin {
         return $INFO['rev'];
     }
 
-    function getApprovals() {
-        global $INFO;
-        if (!isset($INFO['meta']['approval'])) {
+    function getApprovals($id = null) {
+        $meta = $this->getMeta($id);
+        if (!isset($meta['meta']['approval'])) {
             return array();
         }
-        $approvals = $INFO['meta']['approval'];
+        $approvals = $meta['meta']['approval'];
         return $approvals;
+    }
+
+    function getMeta($id = null) {
+        global $ID;
+        if ($id === null || $ID === $id) {
+            global $INFO;
+            return $INFO;
+        } else {
+            return p_get_metadata($id);
+        }
     }
 
     function getApprovalsOnRevision($revision) {
@@ -123,8 +133,8 @@ class helper_plugin_publish extends DokuWiki_Plugin {
         return $this->sortedApprovedRevisions;
     }
 
-    function isRevisionApproved($revision) {
-        $approvals = $this->getApprovals();
+    function isRevisionApproved($revision, $id = null) {
+        $approvals = $this->getApprovals($id);
         if (!isset($approvals[$revision])) {
             return false;
         }

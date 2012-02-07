@@ -19,11 +19,26 @@ class syntax_plugin_publish extends DokuWiki_Syntax_Plugin {
         $this->hlp = plugin_load('helper','publish');
     }
 
-    function pattern() { return '\[APPROVALS.*?\]'; }
-    function getType() { return 'substition'; }
-    function getSort() { return 20; }
-    function PType() { return 'block'; }
-    function connectTo($mode) { $this->Lexer->addSpecialPattern($this->pattern(),$mode,'plugin_publish'); }
+    function pattern() {
+        return '\[APPROVALS.*?\]';
+    }
+
+    function getType() {
+        return 'substition';
+    }
+
+    function getSort() {
+        return 20;
+    }
+
+    function PType() {
+        return 'block';
+    }
+
+    function connectTo($mode) {
+        $this->Lexer->addSpecialPattern($this->pattern(),$mode,'plugin_publish');
+    }
+
     function handle($match, $state, $pos, &$handler){
         $namespace = substr($match, 11, -1);
         return array($match, $state, $pos, $namespace);
@@ -32,72 +47,88 @@ class syntax_plugin_publish extends DokuWiki_Syntax_Plugin {
     function render($mode, &$renderer, $data) {
         global $conf;
 
-        if($mode == 'xhtml'){
-            $ns = cleanID(getNS($data[3] . ":*"));
-            $dir = $conf['datadir'] . '/' . str_replace(':', '/', $ns);
-            $pages = array();
-            search($pages, $dir, array($this,'_search_helper'), array($ns, $this->getConf('apr_namespaces')));
-            if(count($pages) == 0) {
-                $renderer->doc .= '<p class="apr_none">' . $this->getLang('apr_p_none') . '</p>';
-                return true;
-            }
-            usort($pages, array($this,'_pagesorter'));
+        if($mode != 'xhtml') {
+            return false;
+        }
 
-            // Output Table
-            $renderer->doc .= '<table class="apr_table"><tr class="apr_head">';
-            $renderer->doc .= '<th class="apr_page">' . $this->getLang('apr_p_hdr_page') . '</th>';
-            $renderer->doc .= '<th class="apr_prev">' . $this->getLang('apr_p_hdr_previous') . '</th>';
-            $renderer->doc .= '<th class="apr_upd">' . $this->getLang('apr_p_hdr_updated') . '</th>';
-            $renderer->doc .= '</tr>';
-            $working_ns = null;
-            foreach($pages as $page) {
-                // $page: 0 -> pagename, 1 -> approval metadata, 2 -> last changed date
-                $this_ns = getNS($page[0]);
-                if($this_ns != $working_ns) {
-                    $name_ns = $this_ns;
-                    if($this_ns == '') { $name_ns = 'root'; }
-                    $renderer->doc .= '<tr class="apr_ns"><td colspan="3"><a href="';
-                    $renderer->doc .= wl($this_ns . ':' . $this->getConf('start'));
-                    $renderer->doc .= '">';
-                    $renderer->doc .= $name_ns;
-                    $renderer->doc .= '</a></td></tr>';
-                    $working_ns = $this_ns;
-                }
-                $updated = '<a href="' . wl($page[0]) . '">' . dformat($page[2]) . '</a>';
-                if($page[1] == null || count($page[1]) == 0) {
-                    // Has never been approved
-                    $approved = '';
-                }else{
-                    $keys = array_keys($page[1]);
-                    sort($keys);
-                    $last = $keys[count($keys)-1];
-                    $approved .= sprintf($this->getLang('apr_p_approved'),
-                            $page[1][$last][1],
-                            wl($page[0], 'rev=' . $last),
-                            dformat($last));
-                    if($last == $page[2]) { $updated = 'Unchanged'; } //shouldn't be possible:
-                    //the search_helper should have
-                    //excluded this
-                }
+        list($match, $state, $pos, $namespace) = $data;
 
-                $renderer->doc .= '<tr class="apr_table';
-                if($approved == '') { $renderer->doc .= ' apr_never'; }
-                $renderer->doc .= '"><td class="apr_page"><a href="';
-                $renderer->doc .= wl($page[0]);
-                $renderer->doc .= '">';
-                $renderer->doc .= $page[0];
-                $renderer->doc .= '</a></td><td class="apr_prev">';
-                $renderer->doc .= $approved;
-                $renderer->doc .= '</td><td class="apr_upd">';
-                $renderer->doc .= $updated;
-                $renderer->doc .= '</td></tr>';
+        $namespace = cleanID(getNS($namespace . ":*"));
 
-                //$renderer->doc .= '<tr><td colspan="3">' . print_r($page, true) . '</td></tr>';
-            }
-            $renderer->doc .= '</table>';
+        $pages = $this->getPagesFromNamespace($namespace);
+
+        if(count($pages) == 0) {
+            $renderer->doc .= '<p class="apr_none">' . $this->getLang('apr_p_none') . '</p>';
             return true;
         }
-        return false;
+
+        usort($pages, array($this,'_pagesorter'));
+
+        // Output Table
+        $renderer->doc .= '<table class="apr_table"><tr class="apr_head">';
+        $renderer->doc .= '<th class="apr_page">' . $this->getLang('apr_p_hdr_page') . '</th>';
+        $renderer->doc .= '<th class="apr_prev">' . $this->getLang('apr_p_hdr_previous') . '</th>';
+        $renderer->doc .= '<th class="apr_upd">' . $this->getLang('apr_p_hdr_updated') . '</th>';
+        $renderer->doc .= '</tr>';
+
+
+        $working_ns = null;
+        foreach($pages as $page) {
+            // $page: 0 -> pagename, 1 -> approval metadata, 2 -> last changed date
+            $this_ns = getNS($page[0]);
+
+            if($this_ns != $working_ns) {
+                $name_ns = $this_ns;
+                if($this_ns == '') { $name_ns = 'root'; }
+                $renderer->doc .= '<tr class="apr_ns"><td colspan="3"><a href="';
+                $renderer->doc .= wl($this_ns . ':' . $this->getConf('start'));
+                $renderer->doc .= '">';
+                $renderer->doc .= $name_ns;
+                $renderer->doc .= '</a></td></tr>';
+                $working_ns = $this_ns;
+            }
+
+            $updated = '<a href="' . wl($page[0]) . '">' . dformat($page[2]) . '</a>';
+            if($page[1] == null || count($page[1]) == 0) {
+                // Has never been approved
+                $approved = '';
+            }else{
+                $keys = array_keys($page[1]);
+                sort($keys);
+                $last = $keys[count($keys)-1];
+                $approved = sprintf($this->getLang('apr_p_approved'),
+                    $page[1][$last][1],
+                    wl($page[0], 'rev=' . $last),
+                    dformat($last));
+                if($last == $page[2]) { $updated = 'Unchanged'; } //shouldn't be possible:
+                //the search_helper should have
+                //excluded this
+            }
+
+            $renderer->doc .= '<tr class="apr_table';
+            if($approved == '') { $renderer->doc .= ' apr_never'; }
+            $renderer->doc .= '"><td class="apr_page"><a href="';
+            $renderer->doc .= wl($page[0]);
+            $renderer->doc .= '">';
+            $renderer->doc .= $page[0];
+            $renderer->doc .= '</a></td><td class="apr_prev">';
+            $renderer->doc .= $approved;
+            $renderer->doc .= '</td><td class="apr_upd">';
+            $renderer->doc .= $updated;
+            $renderer->doc .= '</td></tr>';
+
+            //$renderer->doc .= '<tr><td colspan="3">' . print_r($page, true) . '</td></tr>';
+        }
+        $renderer->doc .= '</table>';
+        return true;
+    }
+
+    function getPagesFromNamespace($namespace) {
+        global $conf;
+        $dir = $conf['datadir'] . '/' . str_replace(':', '/', $namespace);
+        $pages = array();
+        search($pages, $dir, array($this,'_search_helper'), array($namespace, $this->getConf('apr_namespaces')));
+        return $pages;
     }
 
     /**
@@ -109,16 +140,31 @@ class syntax_plugin_publish extends DokuWiki_Syntax_Plugin {
     function _search_helper(&$data, $base, $file, $type, $lvl, $opts) {
         $ns = $opts[0];
         $valid_ns = $opts[1];
-        if($type == 'd') { return $this->hlp->in_sub_namespace($valid_ns, $ns . ':' . str_replace('/', ':', $file)); }
-        if(!preg_match('#\.txt$#', $file)) { return false; }
+
+        if ($type == 'd') {
+            return $this->hlp->in_sub_namespace($valid_ns, $ns . ':' . str_replace('/', ':', $file));
+        }
+
+        if (!preg_match('#\.txt$#', $file)) {
+            return false;
+        }
+
         $id = pathID($ns . $file);
-        if(!$this->hlp->in_namespace($valid_ns, $id)) { return false; }
-        if(auth_quickaclcheck($id) < AUTH_DELETE) { return false; } //insufficent permissions
-        $meta = p_get_metadata($id);
-        if($meta['approval'][$meta['last_change']['date']]) {
+        if (!$this->hlp->in_namespace($valid_ns, $id)) {
+            return false;
+        }
+
+        if (auth_quickaclcheck($id) < AUTH_DELETE) {
+            return false;
+        }
+
+        $meta = $this->hlp->getMeta($id);
+        if ($this->hlp->isRevisionApproved($meta['meta']['last_change']['date'], $id)) {
+
             // Already approved
             return false;
         }
+
         $data[] = array($id, $meta['approval'], $meta['last_change']['date']);
         return false;
     }
@@ -149,7 +195,6 @@ class syntax_plugin_publish extends DokuWiki_Syntax_Plugin {
             $n += 1;
         }
     }
-
 
 }
 
