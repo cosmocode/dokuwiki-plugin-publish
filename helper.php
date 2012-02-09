@@ -88,20 +88,24 @@ class helper_plugin_publish extends DokuWiki_Plugin {
         return ($INFO['perm'] >= AUTH_DELETE);
     }
 
-    function getRevision() {
-        global $INFO;
-        if (!$INFO['rev']) {
-            return $INFO['lastmod'];
+    function getRevision($id = null) {
+        global $REV;
+        if (isset($REV) && !empty($REV)) {
+            return $REV;
         }
-        return $INFO['rev'];
+        $meta = $this->getMeta($id);
+        if (isset($meta['last_change']['date'])) {
+            return $meta['last_change']['date'];
+        }
+        return $meta['date']['modified'];
     }
 
     function getApprovals($id = null) {
         $meta = $this->getMeta($id);
-        if (!isset($meta['meta']['approval'])) {
+        if (!isset($meta['approval'])) {
             return array();
         }
-        $approvals = $meta['meta']['approval'];
+        $approvals = $meta['approval'];
         return $approvals;
     }
 
@@ -109,7 +113,7 @@ class helper_plugin_publish extends DokuWiki_Plugin {
         global $ID;
         if ($id === null || $ID === $id) {
             global $INFO;
-            return $INFO;
+            return $INFO['meta'];
         } else {
             return p_get_metadata($id);
         }
@@ -141,8 +145,8 @@ class helper_plugin_publish extends DokuWiki_Plugin {
         return (count($approvals[$revision]) >= $this->getConf('number_of_approved'));
     }
 
-    function isCurrentRevisionApproved() {
-        return $this->isRevisionApproved($this->getRevision());
+    function isCurrentRevisionApproved($id = null) {
+        return $this->isRevisionApproved($this->getRevision($id), $id);
     }
 
     function getLatestApprovedRevision() {
