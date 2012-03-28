@@ -41,6 +41,7 @@ class action_plugin_publish_approve extends DokuWiki_Action_Plugin {
         global $USERINFO;
         global $ID;
         global $INFO;
+        global $REV;
 
         if (!$INFO['exists']) {
             msg($this->getLang('cannot approve a non-existing revision'), -1);
@@ -68,7 +69,7 @@ class action_plugin_publish_approve extends DokuWiki_Action_Plugin {
             msg($this->getLang('cannot approve error'), -1);
         }
 
-        send_redirect(wl($ID), array('rev' => $this->helper->getRevision()));
+        send_redirect(wl($ID, array('rev' => $this->helper->getRevision()), true, '&'));
     }
 
 }
