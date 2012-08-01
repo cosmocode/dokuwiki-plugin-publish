@@ -13,6 +13,10 @@ if(!defined('DOKU_INC')) die();
 
 
 class syntax_plugin_publish extends DokuWiki_Syntax_Plugin {
+
+    /**
+     * @var helper_plugin_publish
+     */
     private $hlp;
 
     function syntax_plugin_publish(){
@@ -159,7 +163,7 @@ class syntax_plugin_publish extends DokuWiki_Syntax_Plugin {
         }
 
         $meta = $this->hlp->getMeta($id);
-        if ($this->hlp->isRevisionApproved($meta['meta']['last_change']['date'], $id)) {
+        if ($this->hlp->isCurrentRevisionApproved($id)) {
 
             // Already approved
             return false;

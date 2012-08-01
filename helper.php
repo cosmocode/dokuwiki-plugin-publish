@@ -113,10 +113,49 @@ class helper_plugin_publish extends DokuWiki_Plugin {
         global $ID;
         if ($id === null || $ID === $id) {
             global $INFO;
-            return $INFO['meta'];
+            $meta = $INFO['meta'];
+            $id = $ID;
         } else {
-            return p_get_metadata($id);
+            $meta = p_get_metadata($id);
         }
+
+        $this->checkApprovalFormat($meta, $id);
+
+        return $meta;
+    }
+
+    function checkApprovalFormat($meta, $id) {
+        if (isset($meta['approval_version']) && $meta['approval_version'] >= 2) {
+            return;
+        }
+
+        if (!$this->hasApprovals($meta)) {
+            return;
+        }
+
+        $approvals = $meta['approval'];
+        foreach (array_keys($approvals) as $approvedId) {
+            $keys = array_keys($approvals[$approvedId]);
+
+            if (is_array($approvals[$approvedId][$keys[0]])) {
+                continue; // current format
+            }
+
+            $newEntry = $approvals[$approvedId];
+            if (count($newEntry) !== 3) {
+                //continue; // some messed up format...
+            }
+            $newEntry[] = intval($approvedId); // revision is the time of page edit
+
+            $approvals[$approvedId] = array();
+            $approvals[$approvedId][$newEntry[0]] = $newEntry;
+        }
+        p_set_metadata($id, array('approval' => $approvals), true, true);
+        p_set_metadata($id, array('approval_version' => 2), true, true);
+    }
+
+    function hasApprovals($meta) {
+        return isset($meta['approval']) && !empty($meta['approval']);
     }
 
     function getApprovalsOnRevision($revision) {
@@ -185,6 +224,10 @@ class helper_plugin_publish extends DokuWiki_Plugin {
 
     function getApprovers() {
         $approvers = $this->getApprovalsOnRevision($this->getRevision());
+        if (count($approvers) === 0) {
+            return;
+        }
+
         $result = array();
         foreach ($approvers as $approver) {
             $result[] = editorinfo($this->getApproverName($approver));
