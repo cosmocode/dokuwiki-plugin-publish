@@ -4,6 +4,9 @@ if(!defined('DOKU_INC')) die();
 
 class action_plugin_publish_approve extends DokuWiki_Action_Plugin {
 
+    /**
+     * @var helper_plugin_publish
+     */
     private $helper;
 
     function __construct() {
