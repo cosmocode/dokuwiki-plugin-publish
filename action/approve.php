@@ -44,7 +44,6 @@ class action_plugin_publish_approve extends DokuWiki_Action_Plugin {
         global $USERINFO;
         global $ID;
         global $INFO;
-        global $REV;
 
         if (!$INFO['exists']) {
             msg($this->getLang('cannot approve a non-existing revision'), -1);
@@ -68,6 +67,13 @@ class action_plugin_publish_approve extends DokuWiki_Action_Plugin {
         $success = p_set_metadata($ID, array('approval' => $approvals), true, true);
         if ($success) {
             msg($this->getLang('version approved'), 1);
+
+            $data = array();
+            $data['rev'] = $approvalRevision;
+            $data['id'] = $ID;
+            $data['approver'] = $_SERVER['REMOTE_USER'];
+            $data['approver_info'] = $USERINFO;
+            trigger_event('PLUGIN_PUBLISH_APPROVE', $data);
         } else {
             msg($this->getLang('cannot approve error'), -1);
         }
