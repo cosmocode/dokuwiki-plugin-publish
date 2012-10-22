@@ -58,7 +58,9 @@ class action_plugin_publish_banner extends DokuWiki_Action_Plugin {
             $class = 'approved_yes';
         } else {
             if ($this->getConf('hide drafts')) {
-                return;
+                if (auth_quickaclcheck($ID) < AUTH_EDIT) {
+                    return;
+                }
             }
             $class = 'approved_no';
         }
