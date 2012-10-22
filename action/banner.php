@@ -57,6 +57,9 @@ class action_plugin_publish_banner extends DokuWiki_Action_Plugin {
         if ($this->hlp->isCurrentRevisionApproved()) {
             $class = 'approved_yes';
         } else {
+            if ($this->getConf('hide drafts')) {
+                return;
+            }
             $class = 'approved_no';
         }
 
