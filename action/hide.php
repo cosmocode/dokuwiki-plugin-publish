@@ -13,10 +13,8 @@ class action_plugin_publish_hide extends DokuWiki_Action_Plugin {
         $this->hlp = plugin_load('helper','publish');
     }
 
-    function register(&$controller) {
-        if ($this->getConf('hide drafts')) {
-            $controller->register_hook('TPL_ACT_RENDER', 'BEFORE', $this, 'hide', array());
-        }
+    function register(Doku_Event_Handler &$controller) {
+        $controller->register_hook('TPL_ACT_RENDER', 'BEFORE', $this, 'hide', array());
     }
 
     /**
@@ -24,27 +22,8 @@ class action_plugin_publish_hide extends DokuWiki_Action_Plugin {
      * @param array $param
      */
     function hide(&$event, $param) {
-        global $ID;
-        global $REV;
-        if ($this->hlp->isRevisionApproved($REV, $ID)) {
+        if (!$this->hlp->isHidden()) {
             return;
-        }
-
-        $allowedGroups = array_filter(explode(' ', trim($this->getConf('author groups'))));
-        if (empty($allowedGroups)) {
-            if (auth_quickaclcheck($ID) >= AUTH_EDIT) {
-                return;
-            }
-        } else {
-            if ($_SERVER['REMOTE_USER']) {
-                global $USERINFO;
-                foreach ($allowedGroups as $allowedGroup) {
-                    $allowedGroup = trim($allowedGroup);
-                    if (in_array($allowedGroup, $USERINFO['grps'])) {
-                        return;
-                    }
-                }
-            }
         }
 
         global $ACT;

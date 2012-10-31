@@ -259,4 +259,33 @@ class helper_plugin_publish extends DokuWiki_Plugin {
         return 0;
     }
 
+    function isHidden() {
+        global $ID;
+
+        if (!$this->getConf('hide drafts')) {
+            return false;
+        }
+
+        if ($this->getLatestApprovedRevision()) {
+            return false;
+        }
+
+        $allowedGroups = array_filter(explode(' ', trim($this->getConf('author groups'))));
+        if (empty($allowedGroups)) {
+            return auth_quickaclcheck($ID) < AUTH_EDIT;
+        }
+
+        if (!$_SERVER['REMOTE_USER']) {
+            return true;
+        }
+
+        global $USERINFO;
+        foreach ($allowedGroups as $allowedGroup) {
+            $allowedGroup = trim($allowedGroup);
+            if (in_array($allowedGroup, $USERINFO['grps'])) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

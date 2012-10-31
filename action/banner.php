@@ -13,13 +13,12 @@ class action_plugin_publish_banner extends DokuWiki_Action_Plugin {
         $this->hlp = plugin_load('helper','publish');
     }
 
-    function register(&$controller) {
+    function register(Doku_Event_Handler &$controller) {
         $controller->register_hook('TPL_ACT_RENDER', 'BEFORE', $this, 'handle_display_banner', array());
     }
 
     function handle_display_banner(&$event, $param) {
         global $ID;
-        global $REV;
         global $INFO;
 
         if (!$this->hlp->in_namespace($this->getConf('apr_namespaces'), $ID)) {
@@ -57,10 +56,8 @@ class action_plugin_publish_banner extends DokuWiki_Action_Plugin {
         if ($this->hlp->isCurrentRevisionApproved()) {
             $class = 'approved_yes';
         } else {
-            if ($this->getConf('hide drafts')) {
-                if (auth_quickaclcheck($ID) < AUTH_EDIT) {
-                    return;
-                }
+            if ($this->hlp->isHidden()) {
+                return;
             }
             $class = 'approved_no';
         }
