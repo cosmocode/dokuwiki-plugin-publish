@@ -5,3 +5,4 @@ $lang['number_of_approved'] = 'Anzahl der Benutzer die das Dokument prüfen müs
 $lang['hide drafts'] = 'Verstecke unbestätigte Versionen vor Benutzern die nur das Leserecht haben.';
 $lang['author groups'] = 'Gruppen die drafts sehen können (mehrere mit Leerzeichen trennen)';
 $lang['internal note'] = 'Notiz auf nicht veröffentlichen Seiten';
+$conf['delete attic on first approve'] = 'Alter Versionen bei erster Bestätigung löschen';

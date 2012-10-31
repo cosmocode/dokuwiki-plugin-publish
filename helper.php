@@ -106,6 +106,9 @@ class helper_plugin_publish extends DokuWiki_Plugin {
             return array();
         }
         $approvals = $meta['approval'];
+        if (!is_array($approvals)) {
+            return array();
+        }
         return $approvals;
     }
 
