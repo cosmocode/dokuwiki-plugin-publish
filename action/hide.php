@@ -30,8 +30,19 @@ class action_plugin_publish_hide extends DokuWiki_Action_Plugin {
             return;
         }
 
-        if (auth_quickaclcheck($ID) >= AUTH_EDIT) {
-            return;
+        $allowedGroups = array_filter(explode(' ', trim($this->getConf('author groups'))));
+        if (empty($allowedGroups)) {
+            if (auth_quickaclcheck($ID) >= AUTH_EDIT) {
+                return;
+            }
+        } else {
+            global $USERINFO;
+            foreach ($allowedGroups as $allowedGroup) {
+                $allowedGroup = trim($allowedGroup);
+                if (in_array($allowedGroup, $USERINFO['grps'])) {
+                    return;
+                }
+            }
         }
 
         global $ACT;
