@@ -36,11 +36,13 @@ class action_plugin_publish_hide extends DokuWiki_Action_Plugin {
                 return;
             }
         } else {
-            global $USERINFO;
-            foreach ($allowedGroups as $allowedGroup) {
-                $allowedGroup = trim($allowedGroup);
-                if (in_array($allowedGroup, $USERINFO['grps'])) {
-                    return;
+            if ($_SERVER['REMOTE_USER']) {
+                global $USERINFO;
+                foreach ($allowedGroups as $allowedGroup) {
+                    $allowedGroup = trim($allowedGroup);
+                    if (in_array($allowedGroup, $USERINFO['grps'])) {
+                        return;
+                    }
                 }
             }
         }
