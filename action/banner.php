@@ -56,7 +56,7 @@ class action_plugin_publish_banner extends DokuWiki_Action_Plugin {
         if ($this->hlp->isCurrentRevisionApproved()) {
             $class = 'approved_yes';
         } else {
-            if ($this->hlp->isHidden()) {
+            if ($this->hlp->isHiddenForUser()) {
                 return;
             }
             $class = 'approved_no';
@@ -70,8 +70,21 @@ class action_plugin_publish_banner extends DokuWiki_Action_Plugin {
         $this->showPreviousApproved();
 
         $this->showApproveAction();
+        $this->showInternalNote();
 
         echo '</div>';
+    }
+
+    function showInternalNote() {
+        $note = trim($this->getConf('internal note'));
+        if ($note === '') {
+            return;
+        }
+        if (!$this->hlp->isHidden()) {
+            return;
+        }
+
+        printf('<span>%s</span>', hsc($note));
     }
 
     function showLatestDraftIfNewer() {

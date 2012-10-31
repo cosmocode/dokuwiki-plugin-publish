@@ -269,7 +269,15 @@ class helper_plugin_publish extends DokuWiki_Plugin {
         if ($this->getLatestApprovedRevision()) {
             return false;
         }
+        return true;
+    }
 
+    function isHiddenForUser() {
+        if (!$this->isHidden()) {
+            return false;
+        }
+
+        global $ID;
         $allowedGroups = array_filter(explode(' ', trim($this->getConf('author groups'))));
         if (empty($allowedGroups)) {
             return auth_quickaclcheck($ID) < AUTH_EDIT;

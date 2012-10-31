@@ -22,7 +22,7 @@ class action_plugin_publish_hide extends DokuWiki_Action_Plugin {
      * @param array $param
      */
     function hide(&$event, $param) {
-        if (!$this->hlp->isHidden()) {
+        if (!$this->hlp->isHiddenForUser()) {
             return;
         }
 
