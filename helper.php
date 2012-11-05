@@ -170,13 +170,20 @@ class helper_plugin_publish extends DokuWiki_Plugin {
         return array();
     }
 
-    function getSortedApprovedRevisions() {
-        if ($this->sortedApprovedRevisions === null) {
-            $approvals = $this->getApprovals();
-            krsort($approvals);
-            $this->sortedApprovedRevisions = $approvals;
+    function getSortedApprovedRevisions($id = null) {
+        if ($id === null) {
+            global $ID;
+            $id = $ID;
         }
-        return $this->sortedApprovedRevisions;
+
+        static $sortedApprovedRevisions = array();
+        if (!isset($sortedApprovedRevisions[$id])) {
+            $approvals = $this->getApprovals($id);
+            krsort($approvals);
+            $sortedApprovedRevisions[$id] = $approvals;
+        }
+
+        return $sortedApprovedRevisions[$id];
     }
 
     function isRevisionApproved($revision, $id = null) {
@@ -191,10 +198,10 @@ class helper_plugin_publish extends DokuWiki_Plugin {
         return $this->isRevisionApproved($this->getRevision($id), $id);
     }
 
-    function getLatestApprovedRevision() {
-        $approvals = $this->getSortedApprovedRevisions();
+    function getLatestApprovedRevision($id = null) {
+        $approvals = $this->getSortedApprovedRevisions($id);
         foreach ($approvals as $revision => $ignored) {
-            if ($this->isRevisionApproved($revision)) {
+            if ($this->isRevisionApproved($revision, $id)) {
                 return $revision;
             }
         }
@@ -262,28 +269,29 @@ class helper_plugin_publish extends DokuWiki_Plugin {
         return 0;
     }
 
-    function isHidden() {
-        global $ID;
-
+    function isHidden($id = null) {
         if (!$this->getConf('hide drafts')) {
             return false;
         }
-
-        if ($this->getLatestApprovedRevision()) {
+        if ($this->getLatestApprovedRevision($id)) {
             return false;
         }
         return true;
     }
 
-    function isHiddenForUser() {
-        if (!$this->isHidden()) {
+    function isHiddenForUser($id = null) {
+        if (!$this->isHidden($id)) {
             return false;
         }
 
-        global $ID;
+        if ($id == null) {
+            global $ID;
+            $id = $ID;
+        }
+
         $allowedGroups = array_filter(explode(' ', trim($this->getConf('author groups'))));
         if (empty($allowedGroups)) {
-            return auth_quickaclcheck($ID) < AUTH_EDIT;
+            return auth_quickaclcheck($id) < AUTH_EDIT;
         }
 
         if (!$_SERVER['REMOTE_USER']) {

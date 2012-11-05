@@ -15,13 +15,14 @@ class action_plugin_publish_hide extends DokuWiki_Action_Plugin {
 
     function register(Doku_Event_Handler &$controller) {
         $controller->register_hook('TPL_ACT_RENDER', 'BEFORE', $this, 'hide', array());
+        $controller->register_hook('PAGEUTILS_ID_HIDEPAGE', 'BEFORE', $this, 'hidePage', array());
     }
 
     /**
      * @param Doku_Event $event
      * @param array $param
      */
-    function hide(&$event, $param) {
+    function hide(Doku_Event &$event, $param) {
         if (!$this->hlp->isHiddenForUser()) {
             return;
         }
@@ -37,7 +38,14 @@ class action_plugin_publish_hide extends DokuWiki_Action_Plugin {
         $event->stopPropagation();
 
         print p_locale_xhtml('denied');
+    }
 
+    function hidePage(Doku_Event &$event, $params) {
+        if (!$this->hlp->isHiddenForUser($event->data['id'])) {
+            return;
+        }
+
+        $event->data['hidden'] = true;
     }
 
 }
