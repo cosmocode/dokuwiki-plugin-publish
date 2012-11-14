@@ -44,10 +44,12 @@ class action_plugin_publish_start extends DokuWiki_Action_Plugin {
             return;
         }
 
-        $latestApproved = $this->hlp->getLatestApprovedRevision();
-        if ($latestApproved) {
-            $REV = $latestApproved;
-            $INFO['rev'] = $latestApproved;
+        if (!$this->hlp->isCurrentRevisionApproved()) {
+            $latestApproved = $this->hlp->getLatestApprovedRevision();
+            if ($latestApproved) {
+                $REV = $latestApproved;
+                $INFO['rev'] = $latestApproved;
+            }
         }
     }
 
