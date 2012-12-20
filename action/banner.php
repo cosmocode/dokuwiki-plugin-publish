@@ -39,6 +39,9 @@ class action_plugin_publish_banner extends DokuWiki_Action_Plugin {
             $meta['approval'] = array();
         }
 
+        if($INFO['perm'] <= AUTH_READ && $this->getConf('hidereaderbanner')){
+            return;
+        }
 
         $this->showBanner();
         return;
