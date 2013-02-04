@@ -23,6 +23,16 @@ class action_plugin_publish_hide extends DokuWiki_Action_Plugin {
      * @param array $param
      */
     function hide(Doku_Event &$event, $param) {
+
+        // if the actual namespace is aet in the no_apr_namespace
+        global $ID;
+        $no_apr_namespaces = $this->getConf('no_apr_namespaces');
+        if (!empty($no_apr_namespaces)) {
+            if ($this->hlp->in_namespace($no_apr_namespaces, $ID)) {
+                return false;
+            }
+        }
+
         if (!$this->hlp->isHiddenForUser()) {
             return;
         }
