@@ -273,6 +273,26 @@ class helper_plugin_publish extends DokuWiki_Plugin {
         if (!$this->getConf('hide drafts')) {
             return false;
         }
+
+        // needs to check if the actual namespace belongs to the apr_namespaces
+        global $INFO;
+        if (isset($INFO['namespace'])) {
+            $apr_namespaces = $this->getConf('apr_namespaces');
+            if (!empty($apr_namespaces)) {
+                $apr_namespaces = explode(" ", $apr_namespaces);
+                $match_namespace = false;
+                foreach ($apr_namespaces as $key) {
+                    if ($INFO['namespace'] === $key) {
+                        $match_namespace = true;
+                        break;
+                    }
+                }
+                if (!$match_namespace) {
+                    return false;
+                }
+            }
+        }
+
         if ($this->getLatestApprovedRevision($id)) {
             return false;
         }
