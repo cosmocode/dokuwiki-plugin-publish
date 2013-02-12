@@ -45,15 +45,15 @@ class action_plugin_publish_recent extends DokuWiki_Action_Plugin {
     }
 
     function isParentTag($tag) {
-        if ($tag['_elem'] !== 'opentag') {
+        if (isset($tag['_elem']) && $tag['_elem'] !== 'opentag') {
             return false;
         }
 
-        if ($tag['_tag'] !== 'div') {
+        if (isset($tag['_tag']) && $tag['_tag'] !== 'div') {
             return false;
         }
 
-        return ($tag['class'] === 'li');
+        return (isset($tag['class']) && $tag['class'] === 'li');
     }
 
     function getPageId($tag) {
