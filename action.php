@@ -25,6 +25,7 @@ if(!defined('DOKU_INC')) die();
 
 class action_plugin_publish extends DokuWiki_Action_Plugin {
     private $hlp;
+    private $written = false;     // set to true after handling IO_WIKIPAGE_WRITE
 
     function action_plugin_publish(){
         $this->hlp = plugin_load('helper','publish'); // load helper plugin
@@ -34,6 +35,7 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
         $controller->register_hook('HTML_EDITFORM_OUTPUT', 'BEFORE', $this, handle_html_editform_output, array());
         #$controller->register_hook('TPL_ACT_RENDER', 'AFTER', $this, debug, array());
         $controller->register_hook('TPL_ACT_RENDER', 'BEFORE', $this, handle_display_banner, array());
+        $controller->register_hook('IO_WIKIPAGE_READ', 'AFTER', $this, handle_io_read, array());
         $controller->register_hook('IO_WIKIPAGE_WRITE', 'BEFORE', $this, handle_io_write, array());
         $controller->register_hook('HTML_REVISIONSFORM_OUTPUT', 'BEFORE', $this, handle_revisions, array());
         $controller->register_hook('HTML_RECENTFORM_OUTPUT', 'BEFORE', $this, handle_recent, array());
@@ -63,11 +65,28 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
         ptln('</pre>');
     }
 
+    /**
+     * hack to force the wiki page to be different and ensure IO_WIKIPAGE_WRITE is fired
+     */
+    function handle_io_read(&$event, $param) {
+        global $ID, $ACT, $INPUT;
+
+        $id = ($event->data[1] ? $event->data[1].':' : '').$event->data[2];
+        $rev = $event->data[3];
+
+        if ($ACT == 'save' && $ID == $id && !$rev && !$this->written) {
+            $currentApproval = p_get_metadata($ID,'approval',METADATA_DONT_RENDER);
+            if ($INPUT->bool('approved') != $currentApproval) {
+                $event->result .= "%%\n%%";
+            }
+        }
+    }
+
     function handle_io_write(&$event, $param) {
         # This is the only hook I could find which runs on save,
         # but late enough to have lastmod set (ACTION_ACT_PREPROCESS
         # is too early)
-        global $_POST;
+        global $INPUT;
         global $ID;
         global $ACT;
         global $USERINFO;
@@ -76,13 +95,14 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
         if($INFO['perm'] < AUTH_DELETE) { return true; }
         if($ACT != 'save') { return true; }
         if(!$event->data[3]) { return true; } # don't approve the doc being moved to archive
-        if($_POST['approved']) {
+        if($INPUT->bool('approved')) {
             $data = pageinfo();
             #$newdata = p_get_metadata($ID, 'approval');
             $newdata = $data['meta']['approval'];
             $newdata[$data['lastmod']] = array($data['client'], $_SERVER['REMOTE_USER'], $USERINFO['mail']);
             p_set_metadata($ID, array('approval' => $newdata), true, true);
         }
+        $this->written = true;
         return true;
     }
 
