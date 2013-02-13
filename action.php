@@ -69,14 +69,14 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
      * hack to force the wiki page to be different and ensure IO_WIKIPAGE_WRITE is fired
      */
     function handle_io_read(&$event, $param) {
-        global $ID, $ACT;
+        global $ID, $ACT, $INPUT;
 
         $id = ($event->data[1] ? $event->data[1].':' : '').$event->data[2];
         $rev = $event->data[3];
 
         if ($ACT == 'save' && $ID == $id && !$rev && !$this->written) {
             $currentApproval = p_get_metadata($ID,'approval',METADATA_DONT_RENDER);
-            if ($_POST['approved'] != $currentApproval) {
+            if ($INPUT->bool('approved') != $currentApproval) {
                 $event->result .= "%%\n%%";
             }
         }
@@ -86,7 +86,7 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
         # This is the only hook I could find which runs on save,
         # but late enough to have lastmod set (ACTION_ACT_PREPROCESS
         # is too early)
-        global $_POST;
+        global $INPUT;
         global $ID;
         global $ACT;
         global $USERINFO;
@@ -95,7 +95,7 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
         if($INFO['perm'] < AUTH_DELETE) { return true; }
         if($ACT != 'save') { return true; }
         if(!$event->data[3]) { return true; } # don't approve the doc being moved to archive
-        if($_POST['approved']) {
+        if($INPUT->bool('approved')) {
             $data = pageinfo();
             #$newdata = p_get_metadata($ID, 'approval');
             $newdata = $data['meta']['approval'];
