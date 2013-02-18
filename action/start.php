@@ -40,7 +40,7 @@ class action_plugin_publish_start extends DokuWiki_Action_Plugin {
             return;
         }
 
-        if (!$this->hlp->in_namespace($this->getConf('apr_namespaces'), $ID)) {
+        if (!$this->hlp->isActive()) {
             return;
         }
 

@@ -18,10 +18,9 @@ class action_plugin_publish_banner extends DokuWiki_Action_Plugin {
     }
 
     function handle_display_banner(&$event, $param) {
-        global $ID;
         global $INFO;
 
-        if (!$this->hlp->in_namespace($this->getConf('apr_namespaces'), $ID)) {
+        if (!$this->hlp->isActive()) {
             return;
         }
 

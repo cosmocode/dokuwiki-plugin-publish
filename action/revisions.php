@@ -4,21 +4,24 @@ if(!defined('DOKU_INC')) die();
 
 class action_plugin_publish_revisions extends DokuWiki_Action_Plugin {
 
+    /**
+     * @var helper_plugin_publish
+     */
     private $hlp;
 
     function __construct() {
         $this->hlp = plugin_load('helper','publish');
     }
 
-    function register(&$controller) {
+    function register(Doku_Event_Handler &$controller) {
         $controller->register_hook('HTML_REVISIONSFORM_OUTPUT', 'BEFORE', $this, 'handle_revisions', array());
     }
 
-    function handle_revisions(&$event, $param) {
+    function handle_revisions(Doku_Event &$event, $param) {
         global $ID;
         global $INFO;
 
-        if (!$this->hlp->in_namespace($this->getConf('apr_namespaces'), $ID)) {
+        if (!$this->hlp->isActive()) {
             return;
         }
 

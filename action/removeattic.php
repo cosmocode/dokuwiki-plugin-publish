@@ -22,6 +22,10 @@ class action_plugin_publish_removeattic extends DokuWiki_Action_Plugin {
      * @param array $param
      */
     function remove(&$event, $param) {
+        if (!$this->hlp->isActive()) {
+            return;
+        }
+
         if (!$this->getConf('delete attic on first approve')) {
             return;
         }

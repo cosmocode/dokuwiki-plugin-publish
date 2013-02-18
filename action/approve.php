@@ -13,11 +13,11 @@ class action_plugin_publish_approve extends DokuWiki_Action_Plugin {
         $this->helper = plugin_load('helper', 'publish');
     }
 
-    function register(&$controller) {
+    function register(Doku_Event_Handler &$controller) {
         $controller->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE', $this, 'handle_io_write', array());
     }
 
-    function handle_io_write(&$event, $param) {
+    function handle_io_write(Doku_Event &$event, $param) {
         # This is the only hook I could find which runs on save,
         # but late enough to have lastmod set (ACTION_ACT_PREPROCESS
         # is too early)
