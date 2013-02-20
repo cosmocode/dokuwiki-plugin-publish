@@ -28,7 +28,7 @@ class action_plugin_publish_approve extends DokuWiki_Action_Plugin {
             return;
         }
 
-        if ($INPUT->has('publish_approve')) {
+        if (!$INPUT->has('publish_approve')) {
             return;
         }
 
