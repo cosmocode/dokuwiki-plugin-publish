@@ -22,12 +22,13 @@ class action_plugin_publish_approve extends DokuWiki_Action_Plugin {
         # but late enough to have lastmod set (ACTION_ACT_PREPROCESS
         # is too early)
         global $ACT;
+        global $INPUT;
 
         if ($ACT != 'show') {
             return;
         }
 
-        if (!isset($_REQUEST['publish_approve'])) {
+        if ($INPUT->has('publish_approve')) {
             return;
         }
 
