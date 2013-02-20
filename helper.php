@@ -275,8 +275,11 @@ class helper_plugin_publish extends DokuWiki_Plugin {
         }
 
         // needs to check if the actual namespace belongs to the apr_namespaces
-        global $ID;
-        if (!$this->in_namespace($this->getConf('apr_namespaces'), $ID)) {
+        if ($id == null) {
+            global $ID;
+            $id = $ID;
+        }
+        if (!$this->isActive($id)) {
             return false;
         }
 
@@ -315,15 +318,18 @@ class helper_plugin_publish extends DokuWiki_Plugin {
         return true;
     }
 
-    function isActive() {
-        global $ID;
-        if (!$this->in_namespace($this->getConf('apr_namespaces'), $ID)) {
+    function isActive($id = null) {
+        if ($id == null) {
+            global $ID;
+            $id = $ID;
+        }
+        if (!$this->in_namespace($this->getConf('apr_namespaces'), $id)) {
             return false;
         }
 
         $no_apr_namespaces = $this->getConf('no_apr_namespaces');
         if (!empty($no_apr_namespaces)) {
-            if ($this->in_namespace($no_apr_namespaces, $ID)) {
+            if ($this->in_namespace($no_apr_namespaces, $id)) {
                 return false;
             }
         }
