@@ -74,7 +74,7 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
         global $INFO;
         if(!$this->hlp->in_namespace($this->getConf('apr_namespaces'), $ID)) { return; }
         if($INFO['perm'] < AUTH_DELETE) { return true; }
-        if($ACT != 'save') { return true; }
+        if(($ACT != 'save') && (!array_key_exists ( 'save' , $ACT))) { return true; }
         if(!$event->data[3]) { return true; } # don't approve the doc being moved to archive
         if($_POST['approved']) {
             $data = pageinfo();
