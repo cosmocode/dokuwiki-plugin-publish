@@ -114,10 +114,12 @@ class helper_plugin_publish extends DokuWiki_Plugin {
 
     function getMeta($id = null) {
         global $ID;
-        if ($id === null || $ID === $id) {
-            global $INFO;
+        global $INFO;
+
+        if ($id === null) $id = $ID;
+
+        if($ID === $id && $INFO['meta']) {
             $meta = $INFO['meta'];
-            $id = $ID;
         } else {
             $meta = p_get_metadata($id);
         }
