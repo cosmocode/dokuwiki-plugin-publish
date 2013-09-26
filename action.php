@@ -143,7 +143,13 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
             $previous_approved = $arev;
         }
 
-        $strings[] = '<div class="approval approved_';
+		$suffix = '';
+		$strings[] = '<div class="';
+		if($this->getConf('apr_compact') == 1) {
+			$suffix = '_compact';
+			$strings[] = ' compact';
+		}
+	    $strings[] = ' approval approved_';
         if($approver && !$most_recent_approved) { $strings[] = 'yes'; } else { $strings[] = 'no'; }
         $strings[] = '">';
 
@@ -151,7 +157,7 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
 
         if($most_recent_draft) {
             $strings[] = '<span class="approval_latest_draft">';
-            $strings[] = sprintf($this->getLang('apr_recent_draft'), wl($ID, 'force_rev=1'));
+            $strings[] = sprintf($this->getLang('apr_recent_draft'.$suffix), wl($ID, 'force_rev=1'));
             $difflink = $this->difflink($ID, null, $REV) . '</span>';
         }
 
@@ -160,14 +166,14 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
             $userrev = $most_recent_approved;
             if($userrev == $latest_rev) { $userrev = ''; }
             $strings[] = '<span class="approval_outdated">';
-            $strings[] = sprintf($this->getLang('apr_outdated'), wl($ID, 'rev=' . $userrev));
+            $strings[] = sprintf($this->getLang('apr_outdated'.$suffix), wl($ID, 'rev=' . $userrev));
             $difflink = $this->difflink($ID, $userrev, $REV) . '</span>';
         }
 
         if(!$approver) {
             # Draft
             $strings[] = '<span class="approval_draft">';
-            $strings[] = sprintf($this->getLang('apr_draft'),
+            $strings[] = sprintf($this->getLang('apr_draft'.$suffix),
                             '<span class="approval_date">' . $longdate . '</span>');
             $strings[] = '</span>';
         }
@@ -175,7 +181,7 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
         if($approver) {
             # Approved
             $strings[] = '<span class="approval_approved">';
-            $strings[] = sprintf($this->getLang('apr_approved'),
+            $strings[] = sprintf($this->getLang('apr_approved'.$suffix),
                             '<span class="approval_date">' . $longdate . '</span>',
                             editorinfo($approver));
             $strings[] = '</span>';
@@ -183,7 +189,7 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
 
         if($previous_approved) {
             $strings[] = '<span class="approval_previous">';
-            $strings[] = sprintf($this->getLang('apr_previous'),
+            $strings[] = sprintf($this->getLang('apr_previous'.$suffix),
                             wl($ID, 'rev=' . $previous_approved),
                             dformat($previous_approved));
             $difflink = $this->difflink($ID, $previous_approved, $REV) . '</span>';
