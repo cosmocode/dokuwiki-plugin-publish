@@ -8,10 +8,10 @@ $lang['apr_approved'] = 'This version (%s) was <em>Approved</em> by %s.';
 $lang['apr_previous'] = 'The <a href="%s">Previously Approved Version</a> (%s) is available.';
 
 // compact banner
-$lang['apr_recent_draft_compact'] = '<a href="%s">Most Recent</a> - draft';
-$lang['apr_outdated_compact'] = ' | <em>Outdated</em> by a <a href="%s">Newer Approved</a>';
+$lang['apr_recent_draft_compact'] = '<a href="%s">Most Recent</a> - draft | ';
+$lang['apr_outdated_compact'] = '<em>Outdated</em> by a <a href="%s">Newer Approved</a> | ';
 $lang['apr_draft_compact'] = '%s - <em>Draft</em>';
-$lang['apr_approved_compact'] = ' | <em>Approved</em> (%s) by %s';
+$lang['apr_approved_compact'] = '<em>Approved</em> (%s) by %s';
 $lang['apr_previous_compact'] = ' | <a href="%s">Previously Approved</a> (%s)';
 
 // Pending Approvals List
