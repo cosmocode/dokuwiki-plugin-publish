@@ -1,6 +1,6 @@
 <?php
 
-$lang['apr_namespaces'] = 'Namespaces this plugin applies to';
-$lang['apr_approved_text'] = 'Automatic Approval Comment';
+$lang['apr_namespaces'] = 'Preztrzenie nazw (ang. namespaces), które wtyczka ma obejmować (puste pole oznacza całe wiki)';
+$lang['apr_approved_text'] = 'Komentarz do operacji zatwierdzenia strony';
 
 ?>
