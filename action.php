@@ -147,10 +147,12 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
         if($approver && !$most_recent_approved) { $strings[] = 'yes'; } else { $strings[] = 'no'; }
         $strings[] = '">';
 
+		$difflink = '';
+
         if($most_recent_draft) {
             $strings[] = '<span class="approval_latest_draft">';
             $strings[] = sprintf($this->getLang('apr_recent_draft'), wl($ID, 'force_rev=1'));
-            $strings[] = $this->difflink($ID, null, $REV) . '</span>';
+            $difflink = $this->difflink($ID, null, $REV) . '</span>';
         }
 
         if($most_recent_approved) {
@@ -159,7 +161,7 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
             if($userrev == $latest_rev) { $userrev = ''; }
             $strings[] = '<span class="approval_outdated">';
             $strings[] = sprintf($this->getLang('apr_outdated'), wl($ID, 'rev=' . $userrev));
-            $strings[] = $this->difflink($ID, $userrev, $REV) . '</span>';
+            $difflink = $this->difflink($ID, $userrev, $REV) . '</span>';
         }
 
         if(!$approver) {
@@ -184,9 +186,10 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
             $strings[] = sprintf($this->getLang('apr_previous'),
                             wl($ID, 'rev=' . $previous_approved),
                             dformat($previous_approved));
-            $strings[] = $this->difflink($ID, $previous_approved, $REV) . '</span>';
+            $difflink = $this->difflink($ID, $previous_approved, $REV) . '</span>';
         }
 
+        $strings[] = $difflink;
         $strings[] = '</div>';
 
         ptln(implode($strings));
