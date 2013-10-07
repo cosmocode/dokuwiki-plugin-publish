@@ -14,5 +14,5 @@ $lang['apr_p_none']            = '승인 없이 보류 중인 문서 없음';
 $lang['apr_p_hdr_page']        = '문서';
 $lang['apr_p_hdr_previous']    = '승인 없이 보류 중';
 $lang['apr_p_hdr_updated']     = '업데이트됨';
-$lang['apr_p_approved']        = '승인자 %s 장소 <a href="%s">%s</a>';
+$lang['apr_p_approved']        = '승인자 %s 위치 <a href="%s">%s</a>';
 $lang['apr_do_approve']        = '승인';
