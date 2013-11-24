@@ -52,11 +52,11 @@ class action_plugin_publish_recent extends DokuWiki_Action_Plugin {
     }
 
     function isParentTag($tag) {
-        if (isset($tag['_elem']) && $tag['_elem'] !== 'opentag') {
+        if (!isset($tag['_elem']) || $tag['_elem'] !== 'opentag') {
             return false;
         }
 
-        if (isset($tag['_tag']) && $tag['_tag'] !== 'div') {
+        if (!isset($tag['_tag']) || $tag['_tag'] !== 'div') {
             return false;
         }
 
