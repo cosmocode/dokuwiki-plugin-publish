@@ -30,7 +30,7 @@ class action_plugin_publish_revisions extends DokuWiki_Action_Plugin {
 
         $member = null;
         foreach ($event->data->_content as $key => $ref) {
-            if($ref['_elem'] == 'opentag' && $ref['_tag'] == 'div' && $ref['class'] == 'li') {
+            if(isset($ref['_elem']) && $ref['_elem'] == 'opentag' && $ref['_tag'] == 'div' && $ref['class'] == 'li') {
                 $member = $key;
             }
 
