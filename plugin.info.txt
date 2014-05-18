@@ -1,7 +1,7 @@
 base    publish
 author  Jarrod Lowe
 email   dokuwiki@rrod.net
-date    2011-10-02
+date    2013-09-26
 name    Publishing Plugin
 desc    Integrate a publishing process into DokuWiki
 url     http://www.dokuwiki.org/plugin:publish
