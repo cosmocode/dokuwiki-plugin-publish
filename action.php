@@ -202,6 +202,7 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
 
         $member = null;
         foreach($event->data->_content as $key => $ref) {
+            if ( !isset ( $ref ['_elem'] ) ) { break ; }
             if($ref['_elem'] == 'opentag' && $ref['_tag'] == 'div' && $ref['class'] == 'li') {
                 $member = $key;
             }
