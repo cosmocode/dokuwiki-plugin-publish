@@ -252,10 +252,12 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
                       if($this->hlp->in_namespace($this->getConf('apr_namespaces'), $usename)) {
                           $meta = p_get_metadata($usename);
     
-                          if($meta['approval'][$meta['last_change']['date']]) {
-                            $event->data->_content[$member]['class'] = 'li approved_revision';
-                          }else{
-                            $event->data->_content[$member]['class'] = 'li unapproved_revision';
+                          if ( isset ( $meta['last_change']['date'] ) ) {
+                              if($meta['approval'][$meta['last_change']['date']]) {
+                                $event->data->_content[$member]['class'] = 'li approved_revision';
+                              }else{
+                                $event->data->_content[$member]['class'] = 'li unapproved_revision';
+                              }
                           }
                       }
                     }
