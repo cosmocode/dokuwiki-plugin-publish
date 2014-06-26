@@ -223,7 +223,7 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
 			} else {
 				$content .= "\n";
 			}
-			saveWikiText($ID, $content, $this->getLang('apr_do_approve'));
+			saveWikiText($ID, $content, 'Approved');
 			
             $data = pageinfo();
             #$newdata = p_get_metadata($ID, 'approval');
