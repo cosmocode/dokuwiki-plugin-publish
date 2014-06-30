@@ -33,7 +33,6 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
 
     function register(&$controller) {
         $controller->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE', $this, handle_approve, array());
-		$controller->register_hook('TPL_ACT_UNKNOWN', 'BEFORE', $this, handle_tpl_approve, array());
 
         $controller->register_hook('HTML_EDITFORM_OUTPUT', 'BEFORE', $this, handle_html_editform_output, array());
         #$controller->register_hook('TPL_ACT_RENDER', 'AFTER', $this, debug, array());
