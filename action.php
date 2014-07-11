@@ -96,6 +96,7 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
         if(!$INFO['exists']) return true;
 
         $strings = array();
+        $strings_flag = false;
         $meta = p_get_metadata($ID);
         $rev = $REV;
         if(!$rev) { $rev = $meta['last_change']['date']; }
@@ -147,13 +148,15 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
         if($approver && !$most_recent_approved) { $strings[] = 'yes'; } else { $strings[] = 'no'; }
         $strings[] = '">';
 
-        if($most_recent_draft) {
+        if($most_recent_draft && $this->getConf('apr_recent_draft')) {
+            $strings_flag = true;
             $strings[] = '<span class="approval_latest_draft">';
             $strings[] = sprintf($this->getLang('apr_recent_draft'), wl($ID, 'force_rev=1'));
             $strings[] = $this->difflink($ID, null, $REV) . '</span>';
         }
 
-        if($most_recent_approved) {
+        if($most_recent_approved && $this->getConf('apr_outdated')) {
+            $strings_flag = true;
             # Approved, but there is a more recent version
             $userrev = $most_recent_approved;
             if($userrev == $latest_rev) { $userrev = ''; }
@@ -162,7 +165,8 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
             $strings[] = $this->difflink($ID, $userrev, $REV) . '</span>';
         }
 
-        if(!$approver) {
+        if(!$approver && $this->getConf('apr_draft')) {
+            $strings_flag = true;
             # Draft
             $strings[] = '<span class="approval_draft">';
             $strings[] = sprintf($this->getLang('apr_draft'),
@@ -170,7 +174,8 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
             $strings[] = '</span>';
         }
 
-        if($approver) {
+        if($approver && $this->getConf('apr_approved')) {
+            $strings_flag = true;
             # Approved
             $strings[] = '<span class="approval_approved">';
             $strings[] = sprintf($this->getLang('apr_approved'),
@@ -179,7 +184,8 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
             $strings[] = '</span>';
         }
 
-        if($previous_approved) {
+        if($previous_approved && $this->getConf('apr_previous')) {
+            $strings_flag = true;
             $strings[] = '<span class="approval_previous">';
             $strings[] = sprintf($this->getLang('apr_previous'),
                             wl($ID, 'rev=' . $previous_approved),
@@ -189,7 +195,9 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
 
         $strings[] = '</div>';
 
-        ptln(implode($strings));
+        # Don't print the banner if no visible banner is to be displayed
+        if($strings_flag)
+            ptln(implode($strings));
         return true;
     }
 
