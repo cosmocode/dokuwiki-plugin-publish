@@ -66,3 +66,21 @@ table.apr_table tr.apr_ns td {
 div.approval span span.approval_date {
   display: inline;
 }
+
+#dokuwiki__pagetools ul li a.approve_act {
+    background-position: right 0;
+}
+#dokuwiki__pagetools ul li a.approve_act:before {
+    content: url(images/template_approve_key.png);
+    margin-top: 0;
+}
+#dokuwiki__pagetools:hover ul li a.approve_act,
+#dokuwiki__pagetools ul li a.approve_act:focus,
+#dokuwiki__pagetools ul li a.approve_act:active {
+    background-image: url(images/template_approve_key.png);
+}
+#dokuwiki__pagetools ul li a.approve_act:hover,
+#dokuwiki__pagetools ul li a.approve_act:active,
+#dokuwiki__pagetools ul li a.approve_act:focus {
+    background-position: right -45px;
+}
