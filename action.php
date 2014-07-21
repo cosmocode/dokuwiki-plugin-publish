@@ -38,6 +38,10 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
         $controller->register_hook('HTML_REVISIONSFORM_OUTPUT', 'BEFORE', $this, handle_revisions, array());
         $controller->register_hook('HTML_RECENTFORM_OUTPUT', 'BEFORE', $this, handle_recent, array());
         $controller->register_hook('DOKUWIKI_STARTED', 'BEFORE', $this, handle_start, array());
+        #template addbutton
+        $controller->register_hook('TEMPLATE_PAGETOOLS_DISPLAY', 'BEFORE', $this, addbutton, array());
+        #action registration
+        $controller->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE', $this, approve_act, array());
     }
 
     function handle_html_editform_output(&$event, $param) {
@@ -303,7 +307,59 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
 
         $REV = $all[count($all)-1];
     }
+
+    # addbutton - originaly code comes from dw2pdf plugin
+    # add approve button to dokuwiki template 
+    public function addbutton(&$event, $param) {
+        global $ID, $REV, $conf;
+        global $INFO;
+    
+        if(!$this->hlp->in_namespace($this->getConf('apr_namespaces'), $ID)) { return true; }
+        if($INFO['perm'] < AUTH_DELETE) { return true; }
+        if (!$REV) { $rev = $INFO['lastmod']; } else { $rev = $REV; }
+        # if page not exist
+        if (!$rev) { return true; }
+        # allready approved ?
+        if($INFO['meta']['approval'][$rev]) { return true; }
+    
+        if($event->data['view'] == 'main') {
+            $params = array('do' => 'approve_act');
+            if($REV) $params['rev'] = $REV;
+    
+            switch($conf['template']) {
+                case 'dokuwiki':
+                case 'arago':
+                    $event->data['items']['approve_act'] =
+                        '<li>'
+                        .'<a href='.wl($ID, $params).'  class="action approve_act" rel="nofollow" title="'.$this->getLang('apr_do_approve').'">'
+                        .'<span>'.$this->getLang('apr_do_approve').'</span>'
+                        .'</a>'
+                        .'</li>';
+                    break;
+            }
+        }
+    }
+
+    # approve_act
+    # check if action is approve if yes add nececery data to metadata to mark item as approved
+    function approve_act(&$event, $param) {
+        global $ID;
+        global $ACT;
+        global $USERINFO;
+        global $INFO;
+        global $REV;
+    
+        // our event?
+        if (( $ACT != 'approve_act' )) return false;
+    
+        if(!$this->hlp->in_namespace($this->getConf('apr_namespaces'), $ID)) { return true; }
+        if($INFO['perm'] < AUTH_DELETE) { return true; }
+        $newdata = $INFO['meta']['approval'];
+        if (!$REV) { $rev = $INFO['lastmod']; } else { $rev = $REV; }
+        $newdata[$rev] = array($INFO['client'], $_SERVER['REMOTE_USER'], $USERINFO['mail']);
+        p_set_metadata($ID, array('approval' => $newdata), true, true);
+        $ACT = 'show';
+        return true;
+    }
 }
-
-
 
