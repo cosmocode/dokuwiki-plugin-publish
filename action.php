@@ -187,7 +187,7 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
             $strings[] = '<span class="approval_approved">';
             $strings[] = sprintf($this->getLang('apr_approved'.$suffix),
                             '<span class="approval_date">' . $longdate . '</span>',
-                            editorinfo($approver));
+                            '<span id="publish_author">'.editorinfo($approver).'</span>');
             $strings[] = '</span>';
         }
 
