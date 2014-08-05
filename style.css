@@ -16,6 +16,21 @@ div.approval {
   border-radius: 10px;
 }
 
+div.approval.compact {
+  margin: 0;
+  width: auto !important;
+  min-height: 20px;
+  padding: 2px 10px;
+
+  -moz-border-radius: 0;
+  -khtml-border-radius: 0;
+  border-radius: 0;
+
+  position: absolute;
+  right:0;
+  top:0;
+}
+
 div.approved_yes {
   background-color: #dfd;
   background-image: url(images/yes.gif);
@@ -26,12 +41,24 @@ div.approved_no {
   background-image: url(images/no.gif);
 }
 
+div.approved_yes.compact {
+  background-image: none;
+}
+
+div.approved_no.compact {
+  background-image: none;
+}
+
 div.approval em {
   font-weight: bold;
 }
 
 div.approval span {
   display: block;
+}
+
+div.approval.compact span {
+  display: inline;
 }
 
 div.approved_revision {

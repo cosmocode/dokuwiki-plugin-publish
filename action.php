@@ -5,6 +5,7 @@
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Jarrod Lowe <dokuwiki@rrod.net>
  * @author  Andreas Gohr <gohr@cosmocode.de>
+ * @author  Szymon Olewniczak <dokuwiki@imz.re>
  */
 
 // TODO:
@@ -31,9 +32,12 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
     }
 
     function register(&$controller) {
+        $controller->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE', $this, handle_approve, array());
+
         $controller->register_hook('HTML_EDITFORM_OUTPUT', 'BEFORE', $this, handle_html_editform_output, array());
         #$controller->register_hook('TPL_ACT_RENDER', 'AFTER', $this, debug, array());
         $controller->register_hook('TPL_ACT_RENDER', 'BEFORE', $this, handle_display_banner, array());
+        $controller->register_hook('TPL_ACT_RENDER', 'AFTER', $this, handle_diff_accept, array());
         $controller->register_hook('IO_WIKIPAGE_WRITE', 'BEFORE', $this, handle_io_write, array());
         $controller->register_hook('HTML_REVISIONSFORM_OUTPUT', 'BEFORE', $this, handle_revisions, array());
         $controller->register_hook('HTML_RECENTFORM_OUTPUT', 'BEFORE', $this, handle_recent, array());
@@ -143,14 +147,22 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
             $previous_approved = $arev;
         }
 
-        $strings[] = '<div class="approval approved_';
+		$suffix = '';
+		$strings[] = '<div class="';
+		if($this->getConf('apr_compact') == 1) {
+			$suffix = '_compact';
+			$strings[] = ' compact';
+		}
+	    $strings[] = ' approval approved_';
         if($approver && !$most_recent_approved) { $strings[] = 'yes'; } else { $strings[] = 'no'; }
         $strings[] = '">';
 
+		$difflink = '';
+
         if($most_recent_draft) {
             $strings[] = '<span class="approval_latest_draft">';
-            $strings[] = sprintf($this->getLang('apr_recent_draft'), wl($ID, 'force_rev=1'));
-            $strings[] = $this->difflink($ID, null, $REV) . '</span>';
+            $strings[] = sprintf($this->getLang('apr_recent_draft'.$suffix), wl($ID, 'force_rev=1'));
+            $difflink = $this->difflink($ID, null, $REV) . '</span>';
         }
 
         if($most_recent_approved) {
@@ -158,14 +170,14 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
             $userrev = $most_recent_approved;
             if($userrev == $latest_rev) { $userrev = ''; }
             $strings[] = '<span class="approval_outdated">';
-            $strings[] = sprintf($this->getLang('apr_outdated'), wl($ID, 'rev=' . $userrev));
-            $strings[] = $this->difflink($ID, $userrev, $REV) . '</span>';
+            $strings[] = sprintf($this->getLang('apr_outdated'.$suffix), wl($ID, 'rev=' . $userrev));
+            $difflink = $this->difflink($ID, $userrev, $REV) . '</span>';
         }
 
         if(!$approver) {
             # Draft
             $strings[] = '<span class="approval_draft">';
-            $strings[] = sprintf($this->getLang('apr_draft'),
+            $strings[] = sprintf($this->getLang('apr_draft'.$suffix),
                             '<span class="approval_date">' . $longdate . '</span>');
             $strings[] = '</span>';
         }
@@ -173,25 +185,54 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
         if($approver) {
             # Approved
             $strings[] = '<span class="approval_approved">';
-            $strings[] = sprintf($this->getLang('apr_approved'),
+            $strings[] = sprintf($this->getLang('apr_approved'.$suffix),
                             '<span class="approval_date">' . $longdate . '</span>',
-                            editorinfo($approver));
+                            '<span id="publish_author">'.editorinfo($approver).'</span>');
             $strings[] = '</span>';
         }
 
         if($previous_approved) {
             $strings[] = '<span class="approval_previous">';
-            $strings[] = sprintf($this->getLang('apr_previous'),
+            $strings[] = sprintf($this->getLang('apr_previous'.$suffix),
                             wl($ID, 'rev=' . $previous_approved),
                             dformat($previous_approved));
-            $strings[] = $this->difflink($ID, $previous_approved, $REV) . '</span>';
+            $difflink = $this->difflink($ID, $previous_approved, $REV, ($approver && !$most_recent_approved) || $most_recent_approved ? false : true) . '</span>';
         }
 
+        $strings[] = $difflink;
         $strings[] = '</div>';
 
         ptln(implode($strings));
         return true;
     }
+
+	function handle_diff_accept(&$event, $param) {
+		if ($event->data == 'diff' && isset($_GET['approve'])) {
+			ptln('<a href="'.DOKU_URL.'doku.php?id='.$_GET['id'].'&approve=approve">'.$this->getLang('apr_do_approve').'</a>');
+		}
+	}
+
+	function handle_approve(&$event, $param) {
+		global $ID;
+		if ($event->data == 'show' && isset($_GET['approve'])) {
+			//Add or remove the new line from the end of the page. Silly but needed.
+			$content = rawWiki($ID, '');
+			if (substr($content, -1) == "\n") {
+				substr($content, 0, -1);
+			} else {
+				$content .= "\n";
+			}
+			saveWikiText($ID, $content, 'Approved');
+			
+            $data = pageinfo();
+            #$newdata = p_get_metadata($ID, 'approval');
+            $newdata = $data['meta']['approval'];
+            $newdata[$data['lastmod']] = array($data['client'], $_SERVER['REMOTE_USER'], $USERINFO['mail']);
+            p_set_metadata($ID, array('approval' => $newdata), true, true);
+
+			return true;
+		}
+	}
 
     function handle_revisions(&$event, $param) {
         global $ID;
@@ -262,12 +303,17 @@ class action_plugin_publish extends DokuWiki_Action_Plugin {
         return true;
     }
 
-    function difflink($id, $rev1, $rev2) {
+    function difflink($id, $rev1, $rev2, $revandapp=false) {
         if($rev1 == $rev2) { return ''; }
-        return '<a href="' . wl($id, 'rev2[]=' . $rev1 . '&rev2[]=' . $rev2 . '&do[diff]=1') .
-          '" class="approved_diff_link">' .
-          '<img src="'.DOKU_BASE.'lib/images/diff.png" class="approved_diff_link" alt="Diff" />' .
-          '</a>';
+          $output = '<a href="' . wl($id, 'rev2[]=' . $rev1 . '&rev2[]=' . $rev2 . '&do[diff]=1') . ($revandapp ? '&approve=approve' : '') .
+          '" class="approved_diff_link">';
+		  if ($revandapp) {
+			  $output .= $this->getLang('apr_diff_approve');
+		  } else {
+			 $output .= '<img src="'.DOKU_BASE.'lib/images/diff.png" class="approved_diff_link" alt="Diff" />';
+		  }
+          $output .= '</a>';
+		  return $output;
     }
 
     function handle_start(&$event, $param) {
