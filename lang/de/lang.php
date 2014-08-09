@@ -16,4 +16,12 @@ $lang['apr_p_approved'] = 'Von %s am <a href="%s">%s</a>';
 
 // Submit (Next to the tick-box to approve a page)
 $lang['apr_do_approve'] = 'Bestätigen';
+$lang['wrong permissions to approve'] = 'Sie haben nicht die nötige Berechtigung um diese Seite zu bestätigen.';
+$lang['cannot approve a non-existing revision'] = 'Sie können keine Revision bestätigen die nicht existiert.';
+$lang['version approved'] = 'Sie haben das Dokument überprüft.';
+$lang['cannot approve error'] = 'Überprüfung konnte aus technischen Gründen nicht gesetzt werden. (Berechtigungsfehler?)';
 
+$lang['approvals'] = 'Überprüfungen: %s/%s';
+$lang['approved by'] = 'Überprüft durch: %s';
+
+$lang['approve action'] = 'Dokument bestätigen';

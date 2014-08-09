@@ -12,6 +12,8 @@ if (!defined('DOKU_INC')) die();
 
 class helper_plugin_publish extends DokuWiki_Plugin {
 
+    private $sortedApprovedRevisions = null;
+
     // FIXME find out what this is supposed to do and how it can be done better
     function in_namespace($valid, $check) {
         // PHP apparantly does not have closures -
@@ -75,4 +77,264 @@ class helper_plugin_publish extends DokuWiki_Plugin {
         return false;
     }
 
+    function canApprove() {
+        global $INFO;
+        global $ID;
+
+        if (!$this->in_namespace($this->getConf('apr_namespaces'), $ID)) {
+            return false;
+        }
+
+        return ($INFO['perm'] >= AUTH_DELETE);
+    }
+
+    function getRevision($id = null) {
+        global $REV;
+        if (isset($REV) && !empty($REV)) {
+            return $REV;
+        }
+        $meta = $this->getMeta($id);
+        if (isset($meta['last_change']['date'])) {
+            return $meta['last_change']['date'];
+        }
+        return $meta['date']['modified'];
+    }
+
+    function getApprovals($id = null) {
+        $meta = $this->getMeta($id);
+        if (!isset($meta['approval'])) {
+            return array();
+        }
+        $approvals = $meta['approval'];
+        if (!is_array($approvals)) {
+            return array();
+        }
+        return $approvals;
+    }
+
+    function getMeta($id = null) {
+        global $ID;
+        global $INFO;
+
+        if ($id === null) $id = $ID;
+
+        if($ID === $id && $INFO['meta']) {
+            $meta = $INFO['meta'];
+        } else {
+            $meta = p_get_metadata($id);
+        }
+
+        $this->checkApprovalFormat($meta, $id);
+
+        return $meta;
+    }
+
+    function checkApprovalFormat($meta, $id) {
+        if (isset($meta['approval_version']) && $meta['approval_version'] >= 2) {
+            return;
+        }
+
+        if (!$this->hasApprovals($meta)) {
+            return;
+        }
+
+        $approvals = $meta['approval'];
+        foreach (array_keys($approvals) as $approvedId) {
+            $keys = array_keys($approvals[$approvedId]);
+
+            if (is_array($approvals[$approvedId][$keys[0]])) {
+                continue; // current format
+            }
+
+            $newEntry = $approvals[$approvedId];
+            if (count($newEntry) !== 3) {
+                //continue; // some messed up format...
+            }
+            $newEntry[] = intval($approvedId); // revision is the time of page edit
+
+            $approvals[$approvedId] = array();
+            $approvals[$approvedId][$newEntry[0]] = $newEntry;
+        }
+        p_set_metadata($id, array('approval' => $approvals), true, true);
+        p_set_metadata($id, array('approval_version' => 2), true, true);
+    }
+
+    function hasApprovals($meta) {
+        return isset($meta['approval']) && !empty($meta['approval']);
+    }
+
+    function getApprovalsOnRevision($revision) {
+        $approvals = $this->getApprovals();
+
+        if (isset($approvals[$revision])) {
+            return $approvals[$revision];
+        }
+        return array();
+    }
+
+    function getSortedApprovedRevisions($id = null) {
+        if ($id === null) {
+            global $ID;
+            $id = $ID;
+        }
+
+        static $sortedApprovedRevisions = array();
+        if (!isset($sortedApprovedRevisions[$id])) {
+            $approvals = $this->getApprovals($id);
+            krsort($approvals);
+            $sortedApprovedRevisions[$id] = $approvals;
+        }
+
+        return $sortedApprovedRevisions[$id];
+    }
+
+    function isRevisionApproved($revision, $id = null) {
+        $approvals = $this->getApprovals($id);
+        if (!isset($approvals[$revision])) {
+            return false;
+        }
+        return (count($approvals[$revision]) >= $this->getConf('number_of_approved'));
+    }
+
+    function isCurrentRevisionApproved($id = null) {
+        return $this->isRevisionApproved($this->getRevision($id), $id);
+    }
+
+    function getLatestApprovedRevision($id = null) {
+        $approvals = $this->getSortedApprovedRevisions($id);
+        foreach ($approvals as $revision => $ignored) {
+            if ($this->isRevisionApproved($revision, $id)) {
+                return $revision;
+            }
+        }
+        return 0;
+    }
+
+    function getLastestRevision() {
+        global $INFO;
+        return $INFO['meta']['date']['modified'];
+    }
+
+    function getApprovalDate() {
+        if (!$this->isCurrentRevisionApproved()) {
+            return -1;
+        }
+
+        $approvals = $this->getApprovalsOnRevision($this->getRevision());
+        uasort($approvals, array(&$this, 'cmpApprovals'));
+        $keys = array_keys($approvals);
+        return $approvals[$keys[$this->getConf('number_of_approved') -1]][3];
+
+    }
+
+    function cmpApprovals($left, $right) {
+        if ($left[3] == $right[3]) {
+            return 0;
+        }
+        return ($left[3] < $right[3]) ? -1 : 1;
+    }
+
+    function getApprovers() {
+        $approvers = $this->getApprovalsOnRevision($this->getRevision());
+        if (count($approvers) === 0) {
+            return;
+        }
+
+        $result = array();
+        foreach ($approvers as $approver) {
+            $result[] = editorinfo($this->getApproverName($approver));
+        }
+        return $result;
+    }
+
+    function getApproverName($approver) {
+        if ($approver[1]) {
+            return $approver[1];
+        }
+        if ($approver[2]) {
+            return $approver[2];
+        }
+        return $approver[0];
+    }
+
+    function getPreviousApprovedRevision() {
+        $currentRevision = $this->getRevision();
+        $approvals = $this->getSortedApprovedRevisions();
+        foreach ($approvals as $revision => $ignored) {
+            if ($revision >= $currentRevision) {
+                continue;
+            }
+            if ($this->isRevisionApproved($revision)) {
+                return $revision;
+            }
+        }
+        return 0;
+    }
+
+    function isHidden($id = null) {
+        if (!$this->getConf('hide drafts')) {
+            return false;
+        }
+
+        // needs to check if the actual namespace belongs to the apr_namespaces
+        if ($id == null) {
+            global $ID;
+            $id = $ID;
+        }
+        if (!$this->isActive($id)) {
+            return false;
+        }
+
+        if ($this->getLatestApprovedRevision($id)) {
+            return false;
+        }
+        return true;
+    }
+
+    function isHiddenForUser($id = null) {
+        if (!$this->isHidden($id)) {
+            return false;
+        }
+
+        if ($id == null) {
+            global $ID;
+            $id = $ID;
+        }
+
+        $allowedGroups = array_filter(explode(' ', trim($this->getConf('author groups'))));
+        if (empty($allowedGroups)) {
+            return auth_quickaclcheck($id) < AUTH_EDIT;
+        }
+
+        if (!$_SERVER['REMOTE_USER']) {
+            return true;
+        }
+
+        global $USERINFO;
+        foreach ($allowedGroups as $allowedGroup) {
+            $allowedGroup = trim($allowedGroup);
+            if (in_array($allowedGroup, $USERINFO['grps'])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function isActive($id = null) {
+        if ($id == null) {
+            global $ID;
+            $id = $ID;
+        }
+        if (!$this->in_namespace($this->getConf('apr_namespaces'), $id)) {
+            return false;
+        }
+
+        $no_apr_namespaces = $this->getConf('no_apr_namespaces');
+        if (!empty($no_apr_namespaces)) {
+            if ($this->in_namespace($no_apr_namespaces, $id)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
