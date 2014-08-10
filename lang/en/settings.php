@@ -7,4 +7,4 @@ $lang['hidereaderbanner'] = 'Hide banner to read only users';
 $lang['hide drafts'] = 'Hide drafts to read only users';
 $lang['author groups'] = 'Groups that can see drafts (separate by blank)';
 $lang['internal note'] = 'Note on unapproved pages';
-$conf['delete attic on first approve'] = 'Delete attic on first approve';
+$lang['delete attic on first approve'] = 'Delete attic on first approve';
