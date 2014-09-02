@@ -12,3 +12,4 @@ $lang['hidereaderbanner']      = 'Sakriti zaglavlje korisnicima s ovlastima samo
 $lang['hide drafts']           = 'Sakriti ne odobrene stranice korisnicima s ovlastima samo čitanja';
 $lang['author groups']         = 'Grupe koje mogu vidjeti ne odobrene stranice (odvojeno razmacima)';
 $lang['internal note']         = 'Napomena na ne odobrenim stranicama';
+$lang['delete attic on first approve'] = 'Obriši stare revizije kod prvog odobravanja';
