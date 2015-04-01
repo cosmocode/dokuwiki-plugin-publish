@@ -5,7 +5,10 @@ $conf['no_apr_namespaces'] = '';
 $conf['number_of_approved'] = 1;
 $conf['hidereaderbanner'] = 0;
 $conf['hide drafts'] = 0;
-$conf['hide approved banner'] = 0;
+$conf['hide_approved_banner'] = 0;
 $conf['author groups'] = '';
 $conf['internal note'] = '';
 $conf['delete attic on first approve'] = 0;
+
+$conf['apr_mail_receiver'] = 'jirasmtp@localhost';
+$conf['apr_approved_text'] = 'Approved';

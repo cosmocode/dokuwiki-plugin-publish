@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  */
 $lang['apr_recent_draft']      = 'Die <a href="%s">aktuellste Version</a> dieses Dokuments ist ein Entwurf.';
 $lang['apr_outdated']          = 'Diese Version wurde durch eine <a href="%s">neuere bestätigte Version</a> <em>ersetzt</em>.';
@@ -22,3 +22,42 @@ $lang['cannot approve error']  = 'Überprüfung konnte aus technischen Gründen 
 $lang['approvals']             = 'Überprüfungen: %s/%s';
 $lang['approved by']           = 'Überprüft durch: %s';
 $lang['approve action']        = 'Dokument bestätigen';
+
+
+$lang['apr_changemail_text'] = 'Hallo @FULLNAME@!
+
+ein neuer Vorschlag für @TITLE@ auf @DOKUWIKIURL@ ist erstellt worden.
+
+Änderungen: @CHANGES@
+
+Bestätigen/Ablehnen: @APPREJ@
+
+--
+Diese Mail kommt von DokuWiki auf
+@DOKUWIKIURL@';
+
+$lang['apr_approvemail_text'] = 'Hallo @FULLNAME@!
+
+ihr Vorschlag für @TITLE@ auf @DOKUWIKIURL@ ist bestätigt worden.
+
+URL: @URL@
+
+--
+Diese Mail kommt von DokuWiki auf
+@DOKUWIKIURL@';
+
+$lang['apr_rejectmail_text'] = 'Hallo @FULLNAME@!
+
+ihr Vorschlag für @TITLE@ auf @DOKUWIKIURL@ wurde abgelehnt.
+
+URL: @URL@
+
+--
+Diese Mail kommt von DokuWiki auf
+@DOKUWIKIURL@';
+
+$lang['apr_do_reject'] = 'Ablehnen';
+$lang['apr_do_approve'] = 'Bestätigen';
+$lang['apr_mail_subject'] = 'Neuer Vorschlag';
+$lang['apr_mail_app_subject'] = 'Vorschlag bestätigt';
+$lang['apr_mail_rej_subject'] = 'Vorschlag abgelehnt';
