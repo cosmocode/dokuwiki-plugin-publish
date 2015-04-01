@@ -13,7 +13,7 @@ class action_plugin_publish_approve extends DokuWiki_Action_Plugin {
         $this->helper = plugin_load('helper', 'publish');
     }
 
-    function register(Doku_Event_Handler &$controller) {
+    function register(Doku_Event_Handler $controller) {
         $controller->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE', $this, 'handle_io_write', array());
     }
 

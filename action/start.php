@@ -13,7 +13,7 @@ class action_plugin_publish_start extends DokuWiki_Action_Plugin {
         $this->hlp = plugin_load('helper','publish');
     }
 
-    function register(&$controller) {
+    function register(Doku_Event_Handler $controller) {
         $controller->register_hook('DOKUWIKI_STARTED', 'BEFORE', $this, 'handle_start', array());
     }
 

@@ -13,7 +13,7 @@ class action_plugin_publish_removeattic extends DokuWiki_Action_Plugin {
         $this->hlp = plugin_load('helper','publish');
     }
 
-    function register(Doku_Event_Handler &$controller) {
+    function register(Doku_Event_Handler $controller) {
         $controller->register_hook('PLUGIN_PUBLISH_APPROVE', 'AFTER', $this, 'remove', array());
     }
 
