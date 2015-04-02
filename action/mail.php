@@ -14,6 +14,15 @@ if (!defined('DOKU_INC')) die();
  */
 class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
 
+    /**
+     * @var helper_plugin_publish
+     */
+    private $hlp;
+
+    function __construct() {
+        $this->hlp = plugin_load('helper','publish');
+    }
+
     public function register(Doku_Event_Handler $controller) {
 
         $controller->register_hook('IO_WIKIPAGE_WRITE', 'AFTER', $this, 'send_change_mail', array());
