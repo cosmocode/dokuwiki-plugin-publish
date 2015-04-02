@@ -77,16 +77,31 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         $body = str_replace('@FULLNAME@', $data['userinfo']['name'], $body);
         $body = str_replace('@TITLE@', $conf['title'], $body);
 
-//        dbglog(pageinfo());
-        $difflink = $this->difflink($ID, $this->getLastApproved(), $data['lastmod']);
-        $difflink = '"' . $difflink . '"';
-        $body = str_replace('@CHANGES@', $difflink, $body);
+        /** @var helper_plugin_publish $helper */
+        $helper = plugin_load('helper','publish');
+        $rev = $data['lastmod'];
+
+        /**
+         * todo it seems like the diff to the previous version is not that helpful after all. Check and remove.
+        $changelog = new PageChangelog($ID);
+        $difflinkPrev = $helper->getDifflink($ID, $changelog->getRelativeRevision($rev,-1), $rev);
+        $difflinkPrev = '"' . $difflinkPrev . '"';
+        $body = str_replace('@CHANGESPREV@', $difflinkPrev, $body);
+        */
+
+        $difflinkApr = $helper->getDifflink($ID, $helper->getLatestApprovedRevision($ID), $rev);
+        $difflinkApr = '"' . $difflinkApr . '"';
+        $body = str_replace('@CHANGES@', $difflinkApr, $body);
+
         $apprejlink = $this->apprejlink($ID, $data['lastmod']);
         $apprejlink = '"' . $apprejlink . '"';
         $body = str_replace('@APPREJ@', $apprejlink, $body);
 
-        dbglog('mail_send');
-        return mail_send($receiver, $subject, $body, $sender);
+        dbglog('mail_send?');
+        $returnStatus = mail_send($receiver, $subject, $body, $sender);
+        dbglog($returnStatus);
+        dbglog($body);
+        return $returnStatus;
     }
 
     function getLastApproved() {
