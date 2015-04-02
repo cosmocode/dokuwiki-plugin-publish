@@ -104,19 +104,41 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         return $returnStatus;
     }
 
-    function getLastApproved() {
+    // Funktion versendet eine approve-Mail
+    public function send_approve_mail() {
+        dbglog('send_approve_mail()');
+        global $ID;
+        global $ACT;
+        global $REV;
+        global $INFO;
+        global $conf;
         $data = pageinfo();
-        if (!$data['meta']['approval']) {
-            return '';
+
+        if ($ACT != 'save') {
+           // return true;
         }
-        $allapproved = array_keys($data['meta']['approval']);
-        dbglog('$allapproved: ' . $allapproved);
-        rsort($allapproved);
 
-        $latestapproved = $allapproved[0];
-        dbglog('$latest_rev: ' . $latestapproved);
+        // get mail receiver
+        $receiver = $data['meta']['suggestfrom'];
+        dbglog('$receiver: ' . $receiver);
+        // get mail sender
+        $sender = $data['userinfo']['mail'];
+        dbglog('$sender: ' . $sender);
+        // get mail subject
+        $subject = $this->getLang('apr_mail_app_subject');
+        dbglog('$subject: ' . $subject);
+        // get mail text
+        $body = $this->getLang('apr_approvemail_text');
+        $body = str_replace('@DOKUWIKIURL@', DOKU_URL, $body);
+        $body = str_replace('@FULLNAME@', $data['userinfo']['name'], $body);
+        $body = str_replace('@TITLE@', $conf['title'], $body);
 
-        return $latestapproved;
+        $url = wl($ID, array('rev'=>$this->hlp->getLatestApprovedRevision($ID)), true, '&');
+        $url = '"' . $url . '"';
+        $body = str_replace('@URL@', $url, $body);
+        dbglog('$body: ' . $body);
+
+        return mail_send($receiver, $subject, $body, $sender);
     }
 
     /**
