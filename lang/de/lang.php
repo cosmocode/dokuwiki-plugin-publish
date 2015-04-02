@@ -30,7 +30,7 @@ ein neuer Vorschlag für @TITLE@ auf @DOKUWIKIURL@ ist erstellt worden.
 
 Änderungen: @CHANGES@
 
-Bestätigen/Ablehnen: @APPREJ@
+Bestätigen: @APPREJ@
 
 --
 Diese Mail kommt von DokuWiki auf
