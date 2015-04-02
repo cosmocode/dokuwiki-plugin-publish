@@ -146,45 +146,16 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
      *
      * @param $id
      * @param $rev
-     * @return mixed|string
+     * @return string
      */
     function apprejlink($id, $rev) {
-        $data = pageinfo();
 
         $options = array(
              'rev'=> $rev,
-             'do'=>'edit',
-             'suggestfrom' => $data['userinfo']['mail'],
         );
-        $difflink = wl($id, $options, true, '&');
-//        $difflink = str_replace('//', '/', $difflink);
-//        $difflink = str_replace('http:/', 'http://', $difflink);
+        $apprejlink = wl($id, $options, true, '&');
 
-        return $difflink;
-    }
-
-    /**
-     * erzeugt den Diff-Link
-     */
-    function difflink($id, $rev1, $rev2) {
-        $data = pageinfo();
-
-        if ($rev1 == $rev2) {
-//            return '';
-        }
-        $options = array(
-            'do' => 'diff',
-            'rev2[0]' => 'lastappr',
-            'rev2[1]' => $rev2,
-            'suggestfrom' => $data['userinfo']['mail'],
-        );
-
-//        $difflink = DOKU_URL . wl($id, '&rev2[]=' . $rev1 . '&rev2[]=' . $rev2 . '&do[diff]=1&suggestfrom=' . $data['userinfo']['mail'], '', false, '&');
-        $difflink = wl($id, $options,true, '&');
-        //$difflink = str_replace('//', '/', $difflink);
-        //$difflink = str_replace('http:/', 'http://', $difflink);
-
-        return $difflink;
+        return $apprejlink;
     }
 
 }
