@@ -52,10 +52,10 @@ class publish_mail_test extends DokuWikiTest {
 
         saveWikiText('foo', 'bar new', 'foobar');
 
-        $mail = new action_plugin_publish_mail;
-        $actual_lastapproved = $mail->getLastApproved();
+        $helper = plugin_load('helper','publish');
+        $actual_lastapproved_helper = $helper->getLatestApprovedRevision($ID);
 
-        $this->assertSame($expected_revision, $actual_lastapproved);
+        $this->assertSame($expected_revision, $actual_lastapproved_helper);
     }
 
 

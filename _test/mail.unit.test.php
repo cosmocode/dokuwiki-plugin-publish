@@ -18,23 +18,23 @@ class publish_mail_unit_test extends DokuWikiTest {
     function test_difflink () {
         global $ID;
         $ID = 'wiki:syntax';
-        $mail = new action_plugin_publish_mail;
-        $actual_difflink = $mail->difflink('wiki:syntax','1','2');
-        print_r($actual_difflink);
+
+        /** @var helper_plugin_publish $helper*/
+        $helper = plugin_load('helper','publish');
+        $actual_difflink = $helper->getDifflink('wiki:syntax','1','2');
+
         $this->markTestIncomplete('Test must yet be implemented.');
     }
 
     /**
-     * @covers action_plugin_publish_mail::difflink
+     * @covers action_plugin_publish_mail::apprejlink
      */
     function test_apprejlink () {
         global $ID;
         $ID = 'wiki:syntax';
         $mail = new action_plugin_publish_mail;
         $actual_apprejlink = $mail->apprejlink('wiki:syntax','1');
-        print_r($actual_apprejlink);
-        $expected_apprejlink = 'http://wiki.example.com/doku.php?id=wiki:syntax&rev=1&do=edit&suggestfrom=';
-        $this->assertSame($expected_apprejlink,$actual_apprejlink);
-        $this->markTestIncomplete('Test must yet be implemented.');
+        $expected_apprejlink = 'http://wiki.example.com/./doku.php?id=wiki:syntax&rev=1'; //this stray dot comes from an unclean test-setup
+        $this->assertSame($expected_apprejlink, $actual_apprejlink);
     }
 }
