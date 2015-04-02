@@ -337,4 +337,22 @@ class helper_plugin_publish extends DokuWiki_Plugin {
         }
         return true;
     }
+
+    /**
+     * Create absolute diff-link between the two given revisions
+     *
+     * @param string $id
+     * @param int $rev1
+     * @param int $rev2
+     * @return string Diff-Link or empty string if $rev1 == $rev2
+     */
+    public function getDifflink($id, $rev1, $rev2) {
+        if($rev1 == $rev2) {
+            return '';
+        }
+        $params = 'do=diff,rev2[0]=' . $rev1 . ',rev2[1]=' . $rev2 . ',difftype=sidebyside';
+        $difflink = wl($id, $params,true,'&');
+        return $difflink;
+    }
+
 }
