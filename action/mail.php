@@ -79,8 +79,7 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         $subject = $this->getLang('apr_mail_subject') . ': ' . $ID . ' - ' . $datum . ' ' . $uhrzeit;
         dbglog($subject);
 
-        $body = $this->create_mail_body($ID, $data, 'change');
-
+        $body = $this->create_mail_body('change');
 
         dbglog('mail_send?');
         $returnStatus = mail_send($receiver, $subject, $body, $sender);
@@ -89,8 +88,17 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         return $returnStatus;
     }
 
-    public function create_mail_body($id, $pageinfo, $action) {
+    /**
+     * Create the body of mails to inform about a changed or an approved page
+     *
+     * @param string $action Must either be "change" or "approve"
+     * @return bool|string
+     * @internal param $pageinfo
+     */
+    public function create_mail_body($action) {
+        global $ID;
         global $conf;
+        $pageinfo = pageinfo();
 
         // get mail text
         $body = $this->getLang('mail_greeting') . "\n";
@@ -102,19 +110,19 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
             //If there is no approved revision show the diff to the revision before. Otherwise show the diff to the last approved revision.
             if($this->hlp->hasApprovals($pageinfo['meta'])) {
                 $body .= $this->getLang('mail_changes_to_approved_rev') . "\n\n";
-                $difflink = $this->hlp->getDifflink($id, $this->hlp->getLatestApprovedRevision($id), $rev);
+                $difflink = $this->hlp->getDifflink($ID, $this->hlp->getLatestApprovedRevision($ID), $rev);
             } else {
                 $body .= $this->getLang('mail_changes_to_previous_rev') . "\n\n";
-                $changelog = new PageChangelog($id);
+                $changelog = new PageChangelog($ID);
                 $prevrev = $changelog->getRelativeRevision($rev, -1);
-                $difflink = $this->hlp->getDifflink($id, $prevrev, $rev);
+                $difflink = $this->hlp->getDifflink($ID, $prevrev, $rev);
             }
             $body = str_replace('@CHANGES@', $difflink, $body);
-            $apprejlink = $this->apprejlink($id, $rev);
+            $apprejlink = $this->apprejlink($ID, $rev);
             $body = str_replace('@URL@', $apprejlink, $body);
         } elseif ($action === 'approve') {
             $body .= $this->getLang('mail_approved') . "\n\n";
-            $apprejlink = $this->apprejlink($id, $rev);
+            $apprejlink = $this->apprejlink($ID, $rev);
             $body = str_replace('@URL@', $apprejlink, $body);
         } else {
             return false;
@@ -164,7 +172,7 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         $subject = $this->getLang('apr_mail_app_subject');
 
         // get mail text
-        $body = $this->create_mail_body($ID,$data,'approve');
+        $body = $this->create_mail_body('approve');
 
         return mail_send($receiver, $subject, $body, $sender);
     }

@@ -70,7 +70,7 @@ http://wiki.example.com/./';
 
         $mail = new action_plugin_publish_mail;
         $data = pageinfo();
-        $actual_mail_body = $mail->create_mail_body('start',$data, 'change');
+        $actual_mail_body = $mail->create_mail_body('change');
 
         $this->assertSame($expected_mail_body, $actual_mail_body);
 
@@ -104,7 +104,7 @@ http://wiki.example.com/./';
 
         $mail = new action_plugin_publish_mail;
         $data = pageinfo();
-        $actual_mail_body = $mail->create_mail_body('start',$data, 'approve');
+        $actual_mail_body = $mail->create_mail_body('approve');
 
         $this->assertSame($expected_mail_body, $actual_mail_body);
 
