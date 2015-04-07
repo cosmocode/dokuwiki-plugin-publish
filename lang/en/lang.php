@@ -1,4 +1,8 @@
 <?php
+/**
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
+ */
 
 // banner
 $lang['apr_recent_draft'] = 'The <a href="%s">most recent version</a> of this page is a draft.';
