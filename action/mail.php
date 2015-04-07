@@ -79,7 +79,7 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         $subject = $this->getLang('apr_mail_subject') . ': ' . $ID . ' - ' . $datum . ' ' . $uhrzeit;
         dbglog($subject);
 
-        $body = $this->create_approve_mail_body($ID, $data);
+        $body = $this->create_mail_body($ID, $data, 'change');
 
 
         dbglog('mail_send?');
@@ -89,30 +89,38 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         return $returnStatus;
     }
 
-    public function create_change_mail_body($id, $pageinfo) {
+    public function create_mail_body($id, $pageinfo, $action) {
         global $conf;
+
         // get mail text
         $body = $this->getLang('mail_greeting') . "\n";
-        $body .= $this->getLang('mail_new_suggestiopns') . "\n\n";
-
         $rev = $pageinfo['lastmod'];
 
-        //If there is no approved revision show the diff to the revision before. Otherwise show the diff to the last approved revision.
-        if ($this->hlp->hasApprovals($pageinfo['meta'])) {
-            $body .= $this->getLang('mail_changes_to_approved_rev') . "\n\n";
-            $difflink = $this->hlp->getDifflink($id, $this->hlp->getLatestApprovedRevision($id), $rev);
+        if ($action === 'change') {
+            $body .= $this->getLang('mail_new_suggestiopns') . "\n\n";
+
+            //If there is no approved revision show the diff to the revision before. Otherwise show the diff to the last approved revision.
+            if($this->hlp->hasApprovals($pageinfo['meta'])) {
+                $body .= $this->getLang('mail_changes_to_approved_rev') . "\n\n";
+                $difflink = $this->hlp->getDifflink($id, $this->hlp->getLatestApprovedRevision($id), $rev);
+            } else {
+                $body .= $this->getLang('mail_changes_to_previous_rev') . "\n\n";
+                $changelog = new PageChangelog($id);
+                $prevrev = $changelog->getRelativeRevision($rev, -1);
+                $difflink = $this->hlp->getDifflink($id, $prevrev, $rev);
+            }
+            $body = str_replace('@CHANGES@', $difflink, $body);
+            $apprejlink = $this->apprejlink($id, $rev);
+            $body = str_replace('@URL@', $apprejlink, $body);
+        } elseif ($action === 'approve') {
+            $body .= $this->getLang('mail_approved') . "\n\n";
+            $apprejlink = $this->apprejlink($id, $rev);
+            $body = str_replace('@URL@', $apprejlink, $body);
         } else {
-            $body .= $this->getLang('mail_changes_to_previous_rev') . "\n\n";
-            $changelog = new PageChangelog($id);
-            $prevrev = $changelog->getRelativeRevision($rev,-1);
-            $difflink = $this->hlp->getDifflink($id, $prevrev, $rev);
+            return false;
         }
 
         $body .= $this->getLang('mail_dw_signature');
-
-        $body = str_replace('@CHANGES@', $difflink, $body);
-        $apprejlink = $this->apprejlink($id, $rev);
-        $body = str_replace('@APPREJ@', $apprejlink, $body);
 
         $body = str_replace('@DOKUWIKIURL@', DOKU_URL, $body);
         $body = str_replace('@FULLNAME@', $pageinfo['userinfo']['name'], $body);
@@ -148,23 +156,15 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         $revinfo = $changelog->getRevisionInfo($REV);
         $userinfo = $auth->getUserData($revinfo['user']);
         $receiver = $userinfo['mail'];
-        dbglog('$receiver: ' . $receiver);
+
         // get mail sender
         $sender = $data['userinfo']['mail'];
-        dbglog('$sender: ' . $sender);
+
         // get mail subject
         $subject = $this->getLang('apr_mail_app_subject');
-        dbglog('$subject: ' . $subject);
-        // get mail text
-        $body = $this->getLang('apr_approvemail_text');
-        $body = str_replace('@DOKUWIKIURL@', DOKU_URL, $body);
-        $body = str_replace('@FULLNAME@', $data['userinfo']['name'], $body);
-        $body = str_replace('@TITLE@', $conf['title'], $body);
 
-        $url = wl($ID, array('rev'=>$this->hlp->getLatestApprovedRevision($ID)), true, '&');
-        $url = '"' . $url . '"';
-        $body = str_replace('@URL@', $url, $body);
-        dbglog('$body: ' . $body);
+        // get mail text
+        $body = $this->create_mail_body($ID,$data,'approve');
 
         return mail_send($receiver, $subject, $body, $sender);
     }
