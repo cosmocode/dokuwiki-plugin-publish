@@ -28,13 +28,17 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         $controller->register_hook('IO_WIKIPAGE_WRITE', 'AFTER', $this, 'send_change_mail', array());
     }
 
-    // Funktion versendet eine Änderungsmail
+    /**
+     * send an email to inform about a changed page
+     *
+     * @param $event
+     * @param $param
+     * @return bool|mixed
+     */
     function send_change_mail(&$event, $param) {
         global $ID;
         global $ACT;
-        global $REV;
         global $INFO;
-        global $conf;
         $data = pageinfo();
 
         if ($ACT != 'save') {
@@ -74,8 +78,8 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
 
         // get mail subject
         $timestamp = $data['lastmod'];
-        $datum = date("d.m.Y",$timestamp);
-        $uhrzeit = date("H:i",$timestamp);
+        $datum = dformat("d.m.Y",$timestamp);
+        $uhrzeit = dformat("H:i",$timestamp);
         $subject = $this->getLang('apr_mail_subject') . ': ' . $ID . ' - ' . $datum . ' ' . $uhrzeit;
         dbglog($subject);
 
@@ -145,19 +149,12 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
      * @return mixed
      */
     public function send_approve_mail() {
-        dbglog('send_approve_mail()');
         global $ID;
-        global $ACT;
         global $REV;
 
         /** @var DokuWiki_Auth_Plugin $auth */
         global $auth;
-        global $conf;
         $data = pageinfo();
-
-        if ($ACT != 'save') {
-           // return true;
-        }
 
         // get mail receiver
         $changelog = new PageChangelog($ID);
