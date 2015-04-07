@@ -79,31 +79,8 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         $subject = $this->getLang('apr_mail_subject') . ': ' . $ID . ' - ' . $datum . ' ' . $uhrzeit;
         dbglog($subject);
 
-        // get mail text
-        $body = $this->getLang('apr_changemail_text');
-        $body = str_replace('@DOKUWIKIURL@', DOKU_URL, $body);
-        $body = str_replace('@FULLNAME@', $data['userinfo']['name'], $body);
-        $body = str_replace('@TITLE@', $conf['title'], $body);
+        $body = $this->create_approve_mail_body($ID, $data);
 
-        /** @var helper_plugin_publish $helper */
-        $helper = plugin_load('helper','publish');
-        $rev = $data['lastmod'];
-
-        /**
-         * todo it seems like the diff to the previous version is not that helpful after all. Check and remove.
-        $changelog = new PageChangelog($ID);
-        $difflinkPrev = $helper->getDifflink($ID, $changelog->getRelativeRevision($rev,-1), $rev);
-        $difflinkPrev = '"' . $difflinkPrev . '"';
-        $body = str_replace('@CHANGESPREV@', $difflinkPrev, $body);
-        */
-
-        $difflinkApr = $helper->getDifflink($ID, $helper->getLatestApprovedRevision($ID), $rev);
-        $difflinkApr = '"' . $difflinkApr . '"';
-        $body = str_replace('@CHANGES@', $difflinkApr, $body);
-
-        $apprejlink = $this->apprejlink($ID, $data['lastmod']);
-        $apprejlink = '"' . $apprejlink . '"';
-        $body = str_replace('@APPREJ@', $apprejlink, $body);
 
         dbglog('mail_send?');
         $returnStatus = mail_send($receiver, $subject, $body, $sender);
@@ -111,6 +88,39 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         dbglog($body);
         return $returnStatus;
     }
+
+    public function create_change_mail_body($id, $pageinfo) {
+        global $conf;
+        // get mail text
+        $body = $this->getLang('mail_greeting') . "\n";
+        $body .= $this->getLang('mail_new_suggestiopns') . "\n\n";
+
+        $rev = $pageinfo['lastmod'];
+
+        //If there is no approved revision show the diff to the revision before. Otherwise show the diff to the last approved revision.
+        if ($this->hlp->hasApprovals($pageinfo['meta'])) {
+            $body .= $this->getLang('mail_changes_to_approved_rev') . "\n\n";
+            $difflink = $this->hlp->getDifflink($id, $this->hlp->getLatestApprovedRevision($id), $rev);
+        } else {
+            $body .= $this->getLang('mail_changes_to_previous_rev') . "\n\n";
+            $changelog = new PageChangelog($id);
+            $prevrev = $changelog->getRelativeRevision($rev,-1);
+            $difflink = $this->hlp->getDifflink($id, $prevrev, $rev);
+        }
+
+        $body .= $this->getLang('mail_dw_signature');
+
+        $body = str_replace('@CHANGES@', $difflink, $body);
+        $apprejlink = $this->apprejlink($id, $rev);
+        $body = str_replace('@APPREJ@', $apprejlink, $body);
+
+        $body = str_replace('@DOKUWIKIURL@', DOKU_URL, $body);
+        $body = str_replace('@FULLNAME@', $pageinfo['userinfo']['name'], $body);
+        $body = str_replace('@TITLE@', $conf['title'], $body);
+
+        return $body;
+    }
+
 
 
     /**
