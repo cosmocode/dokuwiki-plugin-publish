@@ -10,5 +10,7 @@ $conf['author groups'] = '';
 $conf['internal note'] = '';
 $conf['delete attic on first approve'] = 0;
 
+$conf['send_mail_on_change'] = 0;
+$conf['send_mail_on_approve'] = 0;
 $conf['apr_mail_receiver'] = 'jirasmtp@localhost';
 $conf['apr_approved_text'] = 'Approved';
