@@ -40,7 +40,19 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         if ($ACT != 'save') {
             return true;
         }
+
+        // IO_WIKIPAGE_WRITE is always called twice when saving a page. This makes sure to only send the mail once.
         if (!$event->data[3]) {
+            return true;
+        }
+
+        // Does the publish plugin apply to this page?
+        if (!$this->hlp->isActive($ID)) {
+            return true;
+        }
+
+        //are we supposed to send change-mails at all?
+        if (!$this->getConf('send_mail_on_change')) {
             return true;
         }
 
