@@ -22,8 +22,8 @@ class publish_mail_unit_test extends DokuWikiTest {
         /** @var helper_plugin_publish $helper*/
         $helper = plugin_load('helper','publish');
         $actual_difflink = $helper->getDifflink('wiki:syntax','1','2');
-
-        $this->markTestIncomplete('Test must yet be implemented.');
+        $expected_difflink = 'http://wiki.example.com/./doku.php?id=wiki:syntax&do=diff&rev2[0]=1&rev2[1]=2&difftype=sidebyside';
+        $this->assertSame($expected_difflink,$actual_difflink);
     }
 
     /**
