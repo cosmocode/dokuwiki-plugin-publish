@@ -57,33 +57,29 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         }
 
         // get mail receiver
-        //$receiver = 'grosse@cosmocode.de';//
         $receiver = $this->getConf('apr_mail_receiver');
 
         // get mail sender
         $sender = $data['userinfo']['mail'];
 
         if ($sender == $receiver) {
-            dbglog('Mail not send. Sender and receiver are identical.');
-//            return true;
+            dbglog('[publish plugin]: Mail not send. Sender and receiver are identical.');
+            return true;
         }
 
         if ($INFO['isadmin'] == '1') {
-            dbglog('Mail not send. Sender is admin.');
-//            return true;
+            dbglog('[publish plugin]: Mail not send. Sender is admin.');
+            return true;
         }
 
         // get mail subject
-        //$timestamp = time(); //$data['meta']['date']['modified'];
         $timestamp = $data['lastmod'];
-//        date_default_timezone_set("Europe/Paris");
         $datum = date("d.m.Y",$timestamp);
         $uhrzeit = date("H:i",$timestamp);
         $subject = $this->getLang('apr_mail_subject') . ': ' . $ID . ' - ' . $datum . ' ' . $uhrzeit;
         dbglog($subject);
 
         // get mail text
-        //$body = 'apr_changemail_text';
         $body = $this->getLang('apr_changemail_text');
         $body = str_replace('@DOKUWIKIURL@', DOKU_URL, $body);
         $body = str_replace('@FULLNAME@', $data['userinfo']['name'], $body);
@@ -116,7 +112,12 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         return $returnStatus;
     }
 
-    // Funktion versendet eine approve-Mail
+
+    /**
+     * Send approve-mail to editor of the now approved revision
+     *
+     * @return mixed
+     */
     public function send_approve_mail() {
         dbglog('send_approve_mail()');
         global $ID;
