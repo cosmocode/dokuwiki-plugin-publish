@@ -110,7 +110,9 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         global $ID;
         global $ACT;
         global $REV;
-        global $INFO;
+
+        /** @var DokuWiki_Auth_Plugin $auth */
+        global $auth;
         global $conf;
         $data = pageinfo();
 
@@ -119,7 +121,10 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         }
 
         // get mail receiver
-        $receiver = $data['meta']['suggestfrom'];
+        $changelog = new PageChangelog($ID);
+        $revinfo = $changelog->getRevisionInfo($REV);
+        $userinfo = $auth->getUserData($revinfo['user']);
+        $receiver = $userinfo['mail'];
         dbglog('$receiver: ' . $receiver);
         // get mail sender
         $sender = $data['userinfo']['mail'];
