@@ -86,9 +86,12 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         $body = $this->create_mail_body('change');
 
         dbglog('mail_send?');
-        $returnStatus = mail_send($receiver, $subject, $body, $sender);
+
+        $replyto_header = mail_encode_address($sender, 'Reply-To');
+        $sender = 'DokuWiki <www-data@127.0.0.1>';
+
+        $returnStatus = mail_send($receiver, $subject, $body, $sender,"","",$replyto_header);
         dbglog($returnStatus);
-        dbglog($body);
         return $returnStatus;
     }
 
@@ -157,8 +160,13 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         $data = pageinfo();
 
         // get mail receiver
+        if (!$REV) {
+        $rev = $data['lastmod'];
+        } else {
+            $rev=$REV;
+        }
         $changelog = new PageChangelog($ID);
-        $revinfo = $changelog->getRevisionInfo($REV);
+        $revinfo = $changelog->getRevisionInfo($rev);
         $userinfo = $auth->getUserData($revinfo['user']);
         $receiver = $userinfo['mail'];
 
@@ -171,7 +179,10 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         // get mail text
         $body = $this->create_mail_body('approve');
 
-        return mail_send($receiver, $subject, $body, $sender);
+        $replyto_header = mail_encode_address($sender, 'Reply-To');
+        $sender = 'DokuWiki <www-data@127.0.0.1>';
+
+        return mail_send($receiver, $subject, $body, $sender,"","",$replyto_header);
     }
 
     /**
