@@ -33,7 +33,7 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
      *
      * @param $event
      * @param $param
-     * @return bool false if there was an error passing the mail to the MTA
+     * @return bool false if the receiver is invalid or there was an error passing the mail to the MTA
      */
     function send_change_mail(&$event, $param) {
         global $ID;
@@ -57,12 +57,18 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         }
 
         //are we supposed to send change-mails at all?
-        if (!$this->getConf('send_mail_on_change')) {
+        if ($this->getConf('apr_mail_receiver') === '') {
             return true;
         }
 
         // get mail receiver
         $receiver = $this->getConf('apr_mail_receiver');
+        $validator                      = new EmailAddressValidator();
+        $validator->allowLocalAddresses = true;
+        if(!$validator->check_email_address($receiver)) {
+            dbglog(sprintf($this->getLang('mail_invalid'),htmlspecialchars($receiver)));
+            return false;
+        }
 
         // get mail sender
         $ReplyTo = $data['userinfo']['mail'];

@@ -10,7 +10,6 @@ $meta['author groups'] = array('string');
 $meta['internal note'] = array('string');
 $meta['delete attic on first approve'] = array('onoff');
 
-$meta['send_mail_on_change'] = array('onoff');
 $meta['send_mail_on_approve'] = array('onoff');
 $meta['apr_mail_receiver'] = array('string');
 $meta['apr_approved_text'] = array('string');

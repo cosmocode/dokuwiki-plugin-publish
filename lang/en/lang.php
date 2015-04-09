@@ -31,6 +31,8 @@ $lang['approvals'] = 'Approvals: %s/%s';
 $lang['approved by'] = 'Approved by: %s';
 $lang['approve action'] = 'Approve document';
 
+$lang['mail_invalid'] = 'One of email adresses entered for change notifications from the publish plugin is invalid: %s';
+
 $lang['mail_greeting'] = 'Hi @FULLNAME@!';
 
 $lang['mail_new_suggestiopns'] = 'A new suggestion for @TITLE@ at @DOKUWIKIURL@

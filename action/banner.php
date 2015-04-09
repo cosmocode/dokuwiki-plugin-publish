@@ -84,6 +84,17 @@ class action_plugin_publish_banner extends DokuWiki_Action_Plugin {
         $this->showInternalNote();
 
         echo '</div>';
+
+        global $INFO;
+        if ($this->getConf('apr_mail_receiver') !== '' && $INFO['isadmin']) {
+            $validator                      = new EmailAddressValidator();
+            $validator->allowLocalAddresses = true;
+            $addr = $this->getConf('apr_mail_receiver');
+            if(!$validator->check_email_address($addr)) {
+                msg(sprintf($this->getLang('mail_invalid'),htmlspecialchars($addr)),-1);
+            }
+
+        }
     }
 
     function showInternalNote() {
