@@ -75,7 +75,8 @@ class action_plugin_publish_approve extends DokuWiki_Action_Plugin {
             $data['approver'] = $_SERVER['REMOTE_USER'];
             $data['approver_info'] = $USERINFO;
             if ($this->getConf('send_mail_on_approve') && $this->helper->isRevisionApproved($approvalRevision)) {
-                $mail =  new action_plugin_publish_mail();
+                /** @var action_plugin_publish_mail $mail */
+                $mail = plugin_load('action','publish_mail');
                 $mail->send_approve_mail();
             }
             trigger_event('PLUGIN_PUBLISH_APPROVE', $data);
