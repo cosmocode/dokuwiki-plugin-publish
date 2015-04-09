@@ -1,0 +1,19 @@
+Ein neuer Vorschlag in Ihrem Wiki wurde erstellt. Hier sind die Details:
+
+Datum          : @DATE@
+Browser        : @BROWSER@
+IP-Adresse     : @IPADDRESS@
+Hostname       : @HOSTNAME@
+Alte Version   : @OLDPAGE@
+Neue Version   : @NEWPAGE@
+Zusammenfassung: @SUMMARY@
+Benutzer       : @USER@
+
+@DIFF@
+
+
+Bitte überprüfen Sie die Änderungen und Bestätigen Sie den Vorschlag (@NEWPAGE@) oder teilen Sie @USER@ Ihre Verbesserungsvorschläge mit.
+
+-- 
+Diese Mail kommt vom DokuWiki auf
+@DOKUWIKIURL@

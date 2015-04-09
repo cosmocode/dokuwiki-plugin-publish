@@ -109,37 +109,45 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         $pageinfo = pageinfo();
 
         // get mail text
-        $body = $this->getLang('mail_greeting') . "\n";
         $rev = $pageinfo['lastmod'];
 
         if ($action === 'change') {
-            $body .= $this->getLang('mail_new_suggestiopns') . "\n\n";
+            $body = io_readFile($this->localFN('mailchangetext'));
 
             //If there is no approved revision show the diff to the revision before. Otherwise show the diff to the last approved revision.
             if($this->hlp->hasApprovals($pageinfo['meta'])) {
-                $body .= $this->getLang('mail_changes_to_approved_rev') . "\n\n";
-                $difflink = $this->hlp->getDifflink($ID, $this->hlp->getLatestApprovedRevision($ID), $rev);
+                $aprpre = 'Aproved';
+                $oldrev = $this->hlp->getLatestApprovedRevision($ID);
+                $difflink = $this->hlp->getDifflink($ID, $oldrev, $rev);
             } else {
-                $body .= $this->getLang('mail_changes_to_previous_rev') . "\n\n";
+                $aprpre = 'Previous';
                 $changelog = new PageChangelog($ID);
-                $prevrev = $changelog->getRelativeRevision($rev, -1);
-                $difflink = $this->hlp->getDifflink($ID, $prevrev, $rev);
+                $oldrev = $changelog->getRelativeRevision($rev, -1);
+                $difflink = $this->hlp->getDifflink($ID, $oldrev, $rev);
             }
-            $body = str_replace('@CHANGES@', $difflink, $body);
-            $apprejlink = $this->revlink($ID, $rev);
-            $body = str_replace('@URL@', $apprejlink, $body);
+
+            $body = str_replace('@DIFF@', $difflink, $body);
+            $body = str_replace('@APRPRE@', $aprpre, $body);
+            $summary = $pageinfo['meta']['last_change']['sum'];
+            $body = str_replace('@SUMMARY@', $summary, $body);
+            if ($oldrev === false ) {
+                $oldlink = '---';
+            } else {
+                $oldlink = $this->revlink($ID, $oldrev);
+            }
+            $body = str_replace('@OLDPAGE@', $oldlink, $body);
+            $newlink = $this->revlink($ID, $rev);
+            $body = str_replace('@NEWPAGE@', $newlink, $body);
         } elseif ($action === 'approve') {
-            $body .= $this->getLang('mail_approved') . "\n\n";
-            $apprejlink = $this->revlink($ID, $rev);
-            $body = str_replace('@URL@', $apprejlink, $body);
+            $body = io_readFile($this->localFN('mailapprovetext'));
+            $newlink = $this->revlink($ID, $rev);
+            $body = str_replace('@URL@', $newlink, $body);
+            $body = str_replace('@FULLNAME@', $pageinfo['userinfo']['name'], $body);
         } else {
             return false;
         }
 
-        $body .= $this->getLang('mail_dw_signature');
-
         $body = str_replace('@DOKUWIKIURL@', DOKU_URL, $body);
-        $body = str_replace('@FULLNAME@', $pageinfo['userinfo']['name'], $body);
         $body = str_replace('@TITLE@', $conf['title'], $body);
 
         return $body;

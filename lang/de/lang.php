@@ -31,26 +31,6 @@ $lang['approvals']             = 'Überprüfungen: %s/%s';
 $lang['approved by']           = 'Überprüft durch: %s';
 $lang['approve action']        = 'Dokument bestätigen';
 
-$lang['mail_greeting'] = 'Hallo @FULLNAME@!';
-
-$lang['mail_new_suggestiopns'] = 'Ein neuer Vorschlag für @TITLE@ auf @DOKUWIKIURL@ wurde erstellt.
-
-Ansehen and Bestätigen: @URL@';
-
-$lang['mail_changes_to_approved_rev'] = 'Änderungen zur letzten bestätigten Version: @CHANGES@';
-$lang['mail_changes_to_previous_rev'] = 'Änderungen zur vorherigen Version: @CHANGES@';
-
-$lang['mail_approved'] = 'Ihr Vorschlag für @TITLE@ auf @DOKUWIKIURL@ wurde bestätigt.
-
-URL: @URL@';
-
-
-
-$lang['mail_dw_signature'] =
-    '--
-Diese Mail kommt von DokuWiki auf
-@DOKUWIKIURL@';
-
 $lang['apr_do_approve'] = 'Bestätigen';
 $lang['apr_mail_subject'] = 'Neuer Vorschlag';
 $lang['apr_mail_app_subject'] = 'Vorschlag bestätigt';
