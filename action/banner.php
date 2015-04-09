@@ -42,7 +42,7 @@ class action_plugin_publish_banner extends DokuWiki_Action_Plugin {
             return;
         }
 
-        if ($this->hlp->isCurrentRevisionApproved() && $this->getConf('hide approved banner')) {
+        if ($this->hlp->isCurrentRevisionApproved() && $this->getConf('hide_approved_banner')) {
             return;
         }
 
