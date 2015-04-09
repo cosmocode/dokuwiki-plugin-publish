@@ -33,7 +33,7 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
      *
      * @param $event
      * @param $param
-     * @return bool|mixed
+     * @return bool false if there was an error passing the mail to the MTA
      */
     function send_change_mail(&$event, $param) {
         global $ID;
@@ -64,9 +64,9 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         $receiver = $this->getConf('apr_mail_receiver');
 
         // get mail sender
-        $sender = $data['userinfo']['mail'];
+        $ReplyTo = $data['userinfo']['mail'];
 
-        if ($sender == $receiver) {
+        if ($ReplyTo == $receiver) {
             dbglog('[publish plugin]: Mail not send. Sender and receiver are identical.');
             return true;
         }
@@ -85,13 +85,12 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
 
         $body = $this->create_mail_body('change');
 
-        dbglog('mail_send?');
-
-        $replyto_header = mail_encode_address($sender, 'Reply-To');
-        $sender = 'DokuWiki <www-data@127.0.0.1>';
-
-        $returnStatus = mail_send($receiver, $subject, $body, $sender,"","",$replyto_header);
-        dbglog($returnStatus);
+        $mail = new Mailer();
+        $mail->to($receiver);
+        $mail->subject($subject);
+        $mail->setBody($body);
+        $mail->setHeader("Reply-To", $ReplyTo);
+        $returnStatus = $mail->send();
         return $returnStatus;
     }
 
@@ -149,7 +148,7 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
     /**
      * Send approve-mail to editor of the now approved revision
      *
-     * @return mixed
+     * @return bool false if there was an error passing the mail to the MTA
      */
     public function send_approve_mail() {
         global $ID;
@@ -171,7 +170,11 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         $receiver = $userinfo['mail'];
 
         // get mail sender
-        $sender = $data['userinfo']['mail'];
+        $ReplyTo = $data['userinfo']['mail'];
+
+        if ($ReplyTo == $receiver) {
+            return true;
+        }
 
         // get mail subject
         $subject = $this->getLang('apr_mail_app_subject');
@@ -179,10 +182,14 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         // get mail text
         $body = $this->create_mail_body('approve');
 
-        $replyto_header = mail_encode_address($sender, 'Reply-To');
-        $sender = 'DokuWiki <www-data@127.0.0.1>';
+        $mail = new Mailer();
+        $mail->to($receiver);
+        $mail->subject($subject);
+        $mail->setBody($body);
+        $mail->setHeader("Reply-To", $ReplyTo);
+        $returnStatus = $mail->send();
 
-        return mail_send($receiver, $subject, $body, $sender,"","",$replyto_header);
+        return $returnStatus;
     }
 
     /**
