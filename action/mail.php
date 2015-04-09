@@ -68,19 +68,16 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         $ReplyTo = $data['userinfo']['mail'];
 
         if ($ReplyTo == $receiver) {
-            dbglog('[publish plugin]: Mail not send. Sender and receiver are identical.');
             return true;
         }
 
         if ($INFO['isadmin'] == '1') {
-            dbglog('[publish plugin]: Mail not send. Sender is admin.');
             return true;
         }
 
         // get mail subject
         $timestamp = dformat($data['lastmod'], $conf['dformat']);
         $subject = $this->getLang('apr_mail_subject') . ': ' . $ID . ' - ' . $timestamp;
-        dbglog($subject);
 
         $body = $this->create_mail_body('change');
 
@@ -159,7 +156,7 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
 
         // get mail receiver
         if (!$REV) {
-        $rev = $data['lastmod'];
+            $rev = $data['lastmod'];
         } else {
             $rev=$REV;
         }
