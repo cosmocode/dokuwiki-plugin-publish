@@ -39,6 +39,7 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         global $ID;
         global $ACT;
         global $INFO;
+        global $conf;
         $data = pageinfo();
 
         if ($ACT != 'save') {
@@ -77,10 +78,8 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         }
 
         // get mail subject
-        $timestamp = $data['lastmod'];
-        $datum = dformat("d.m.Y",$timestamp);
-        $uhrzeit = dformat("H:i",$timestamp);
-        $subject = $this->getLang('apr_mail_subject') . ': ' . $ID . ' - ' . $datum . ' ' . $uhrzeit;
+        $timestamp = dformat($data['lastmod'], $conf['dformat']);
+        $subject = $this->getLang('apr_mail_subject') . ': ' . $ID . ' - ' . $timestamp;
         dbglog($subject);
 
         $body = $this->create_mail_body('change');
