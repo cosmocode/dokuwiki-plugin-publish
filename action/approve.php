@@ -13,7 +13,7 @@ class action_plugin_publish_approve extends DokuWiki_Action_Plugin {
         $this->helper = plugin_load('helper', 'publish');
     }
 
-    function register(Doku_Event_Handler &$controller) {
+    function register(Doku_Event_Handler $controller) {
         $controller->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE', $this, 'handle_io_write', array());
     }
 
@@ -74,6 +74,11 @@ class action_plugin_publish_approve extends DokuWiki_Action_Plugin {
             $data['id'] = $ID;
             $data['approver'] = $_SERVER['REMOTE_USER'];
             $data['approver_info'] = $USERINFO;
+            if ($this->getConf('send_mail_on_approve') && $this->helper->isRevisionApproved($approvalRevision)) {
+                /** @var action_plugin_publish_mail $mail */
+                $mail = plugin_load('action','publish_mail');
+                $mail->send_approve_mail();
+            }
             trigger_event('PLUGIN_PUBLISH_APPROVE', $data);
         } else {
             msg($this->getLang('cannot approve error'), -1);

@@ -13,7 +13,7 @@ class action_plugin_publish_recent extends DokuWiki_Action_Plugin {
         $this->hlp = plugin_load('helper','publish');
     }
 
-    function register(Doku_Event_Handler &$controller) {
+    function register(Doku_Event_Handler $controller) {
         $controller->register_hook('HTML_RECENTFORM_OUTPUT', 'BEFORE', $this, 'handle_recent', array());
     }
 

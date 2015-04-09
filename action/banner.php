@@ -13,7 +13,7 @@ class action_plugin_publish_banner extends DokuWiki_Action_Plugin {
         $this->hlp = plugin_load('helper','publish');
     }
 
-    function register(Doku_Event_Handler &$controller) {
+    function register(Doku_Event_Handler $controller) {
         $controller->register_hook('TPL_ACT_RENDER', 'BEFORE', $this, 'handle_display_banner', array());
     }
 
@@ -51,8 +51,13 @@ class action_plugin_publish_banner extends DokuWiki_Action_Plugin {
     }
 
     function difflink($id, $rev1, $rev2) {
-        if($rev1 == $rev2) { return ''; }
-        return '<a href="' . wl($id, 'rev2[]=' . $rev1 . '&rev2[]=' . $rev2 . '&do[diff]=1') .
+        if($rev1 == $rev2) {
+            return '';
+        }
+
+        $difflink = $this->hlp->getDifflink($id,$rev1,$rev2);
+
+        return '<a href="' . $difflink .
             '" class="approved_diff_link">' .
             '<img src="'.DOKU_BASE.'lib/images/diff.png" class="approved_diff_link" alt="Diff" />' .
             '</a>';
@@ -79,6 +84,17 @@ class action_plugin_publish_banner extends DokuWiki_Action_Plugin {
         $this->showInternalNote();
 
         echo '</div>';
+
+        global $INFO;
+        if ($this->getConf('apr_mail_receiver') !== '' && $INFO['isadmin']) {
+            $validator                      = new EmailAddressValidator();
+            $validator->allowLocalAddresses = true;
+            $addr = $this->getConf('apr_mail_receiver');
+            if(!$validator->check_email_address($addr)) {
+                msg(sprintf($this->getLang('mail_invalid'),htmlspecialchars($addr)),-1);
+            }
+
+        }
     }
 
     function showInternalNote() {

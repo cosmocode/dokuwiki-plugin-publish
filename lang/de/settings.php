@@ -10,7 +10,9 @@ $lang['no_apr_namespaces']     = 'Namensräume, auf die dieses Plugin <strong>ni
 $lang['number_of_approved']    = 'Anzahl der Benutzer die das Dokument prüfen müssen, damit es als bestätigt gilt.';
 $lang['hidereaderbanner']      = 'Verstecke Banner für Benutzern die nur das Leserecht haben';
 $lang['hide drafts']           = 'Verstecke unbestätigte Versionen vor Benutzern die nur das Leserecht haben.';
-$lang['hide approved banner']  = 'Verstecke Banner auf bestätigten Seiten.';
+$lang['hide_approved_banner']  = 'Verstecke Banner auf bestätigten Seiten.';
 $lang['author groups']         = 'Gruppen die drafts sehen können (mehrere mit Leerzeichen trennen)';
 $lang['internal note']         = 'Notiz auf nicht veröffentlichen Seiten';
 $lang['delete attic on first approve'] = 'Alter Versionen bei erster Bestätigung löschen';
+
+

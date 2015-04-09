@@ -43,12 +43,12 @@ class syntax_plugin_publish extends DokuWiki_Syntax_Plugin {
         $this->Lexer->addSpecialPattern($this->pattern(),$mode,'plugin_publish');
     }
 
-    function handle($match, $state, $pos, &$handler){
+    function handle($match, $state, $pos, Doku_Handler $handler){
         $namespace = substr($match, 11, -1);
         return array($match, $state, $pos, $namespace);
     }
 
-    function render($mode, &$renderer, $data) {
+    function render($mode, Doku_Renderer $renderer, $data) {
         global $conf;
 
         if($mode != 'xhtml') {

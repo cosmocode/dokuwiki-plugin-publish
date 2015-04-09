@@ -13,7 +13,7 @@ class action_plugin_publish_hide extends DokuWiki_Action_Plugin {
         $this->hlp = plugin_load('helper','publish');
     }
 
-    function register(Doku_Event_Handler &$controller) {
+    function register(Doku_Event_Handler $controller) {
         $controller->register_hook('TPL_ACT_RENDER', 'BEFORE', $this, 'hide', array());
         $controller->register_hook('PAGEUTILS_ID_HIDEPAGE', 'BEFORE', $this, 'hidePage', array());
     }

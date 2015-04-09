@@ -1,4 +1,8 @@
 <?php
+/**
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
+ */
 
 // banner
 $lang['apr_recent_draft'] = 'The <a href="%s">most recent version</a> of this page is a draft.';
@@ -26,3 +30,9 @@ $lang['cannot approve error'] = 'Cannot approve due some technical errors (permi
 $lang['approvals'] = 'Approvals: %s/%s';
 $lang['approved by'] = 'Approved by: %s';
 $lang['approve action'] = 'Approve document';
+
+$lang['mail_invalid'] = 'One of email adresses entered for change notifications from the publish plugin is invalid: %s';
+
+$lang['apr_do_approve'] = 'Approve';
+$lang['apr_mail_subject'] = 'new suggestion';
+$lang['apr_mail_app_subject'] = 'suggestion approved';
