@@ -125,11 +125,11 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
                 $difflink = $this->hlp->getDifflink($ID, $prevrev, $rev);
             }
             $body = str_replace('@CHANGES@', $difflink, $body);
-            $apprejlink = $this->apprejlink($ID, $rev);
+            $apprejlink = $this->revlink($ID, $rev);
             $body = str_replace('@URL@', $apprejlink, $body);
         } elseif ($action === 'approve') {
             $body .= $this->getLang('mail_approved') . "\n\n";
-            $apprejlink = $this->apprejlink($ID, $rev);
+            $apprejlink = $this->revlink($ID, $rev);
             $body = str_replace('@URL@', $apprejlink, $body);
         } else {
             return false;
@@ -186,20 +186,20 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
     }
 
     /**
-     * erzeugt den Link auf die edit-Seite
+     * create link to the specified revision
      *
-     * @param $id
-     * @param $rev
+     * @param string $id
+     * @param string $rev The timestamp of the revision
      * @return string
      */
-    function apprejlink($id, $rev) {
+    function revlink($id, $rev) {
 
         $options = array(
              'rev'=> $rev,
         );
-        $apprejlink = wl($id, $options, true, '&');
+        $revlink = wl($id, $options, true, '&');
 
-        return $apprejlink;
+        return $revlink;
     }
 
 }

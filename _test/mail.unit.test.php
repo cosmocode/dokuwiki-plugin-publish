@@ -27,13 +27,13 @@ class publish_mail_unit_test extends DokuWikiTest {
     }
 
     /**
-     * @covers action_plugin_publish_mail::apprejlink
+     * @covers action_plugin_publish_mail::revlink
      */
     function test_apprejlink () {
         global $ID;
         $ID = 'wiki:syntax';
         $mail = new action_plugin_publish_mail;
-        $actual_apprejlink = $mail->apprejlink('wiki:syntax','1');
+        $actual_apprejlink = $mail->revlink('wiki:syntax','1');
         $expected_apprejlink = 'http://wiki.example.com/./doku.php?id=wiki:syntax&rev=1'; //this stray dot comes from an unclean test-setup
         $this->assertSame($expected_apprejlink, $actual_apprejlink);
     }
