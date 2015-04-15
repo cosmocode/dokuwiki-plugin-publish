@@ -101,7 +101,7 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
      *
      * @param string $action Must either be "change" or "approve"
      * @return bool|string
-     * @internal param $pageinfo
+     *
      */
     public function create_mail_body($action) {
         global $ID;
@@ -142,7 +142,13 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
             $body = io_readFile($this->localFN('mailapprovetext'));
             $newlink = $this->revlink($ID, $rev);
             $body = str_replace('@URL@', $newlink, $body);
-            $body = str_replace('@FULLNAME@', $pageinfo['userinfo']['name'], $body);
+
+            $changelog = new PageChangelog($ID);
+            $revinfo = $changelog->getRevisionInfo($rev);
+            /** @var DokuWiki_Auth_Plugin $auth */
+            global $auth;
+            $userinfo = $auth->getUserData($revinfo['user']);
+            $body = str_replace('@FULLNAME@', $userinfo['name'], $body);
         } else {
             return false;
         }
