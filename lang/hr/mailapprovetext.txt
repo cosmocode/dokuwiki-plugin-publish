@@ -1,0 +1,10 @@
+Pozdrav @FULLNAME@!
+Vaš prijedlog za @TITLE@ na adresi @DOKUWIKIURL@
+
+URL: @URL@
+
+je odobren.
+
+-- 
+Ova poruka je generirana od strane DokuWiki-a na adresi
+@DOKUWIKIURL@
