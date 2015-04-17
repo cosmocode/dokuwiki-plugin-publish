@@ -1,0 +1,19 @@
+Postoji novi prijedlog na vašem DokuWiku-u. Detalji su u nastavku:
+
+Datum            : @DATE@
+Preglednik       : @BROWSER@
+IP-Adresa        : @IPADDRESS@
+Računalo         : @HOSTNAME@
+@APRPRE@ revizija: @OLDPAGE@
+Nova revizija    : @NEWPAGE@
+Sažetak promjena : @SUMMARY@
+Korisnik         : @USER@
+
+@DIFF@
+
+
+Molim pregledajte promjene i odobrite novu verziju na  @NEWPAGE@ ili pošaljite povratnu informaciju korisniku @USER@.
+
+-- 
+Ova poruka je generirana od strane DokuWiki-a na adresi
+@DOKUWIKIURL@
