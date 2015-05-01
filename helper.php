@@ -350,8 +350,8 @@ class helper_plugin_publish extends DokuWiki_Plugin {
         if($rev1 == $rev2) {
             return '';
         }
-        $params = 'do=diff,rev2[0]=' . $rev1 . ',rev2[1]=' . $rev2 . ',difftype=sidebyside';
-        $difflink = wl($id, $params,true,'&');
+        $params = array('do' => 'diff', 'difftype' => 'sidebyside', 'rev2[0]' => $rev1, 'rev2[1]' => $rev2);
+        $difflink = wl($id, $params,true);
         return $difflink;
     }
 
