@@ -118,12 +118,12 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
             if($this->hlp->hasApprovals($pageinfo['meta'])) {
                 $aprpre = 'Aproved';
                 $oldrev = $this->hlp->getLatestApprovedRevision($ID);
-                $difflink = $this->hlp->getDifflink($ID, $oldrev, $rev);
+                $difflink = $this->hlp->getDifflink($ID, $oldrev, $rev, '&');
             } else {
                 $aprpre = 'Previous';
                 $changelog = new PageChangelog($ID);
                 $oldrev = $changelog->getRelativeRevision($rev, -1);
-                $difflink = $this->hlp->getDifflink($ID, $oldrev, $rev);
+                $difflink = $this->hlp->getDifflink($ID, $oldrev, $rev, '&');
             }
 
             $body = str_replace('@DIFF@', $difflink, $body);
