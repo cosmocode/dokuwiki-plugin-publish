@@ -344,14 +344,15 @@ class helper_plugin_publish extends DokuWiki_Plugin {
      * @param string $id
      * @param int $rev1
      * @param int $rev2
+     * @param string $separator parameter separator
      * @return string Diff-Link or empty string if $rev1 == $rev2
      */
-    public function getDifflink($id, $rev1, $rev2) {
+    public function getDifflink($id, $rev1, $rev2, $separator = '&amp;') {
         if($rev1 == $rev2) {
             return '';
         }
         $params = array('do' => 'diff', 'difftype' => 'sidebyside', 'rev2[0]' => $rev1, 'rev2[1]' => $rev2);
-        $difflink = wl($id, $params,true);
+        $difflink = wl($id, $params, true, $separator);
         return $difflink;
     }
 
