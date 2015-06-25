@@ -1,0 +1,19 @@
+Dette er et nytt forslag i din DokuWiki. Her er detaljene:
+
+Dato : @DATE@
+Nettleser : @BROWSER@
+IP-addresse : @IPADDRESS@
+Vertsnavn : @HOSTNAME@
+@APRPRE@ revisjon : @OLDPAGE@
+Ny revisjon : @NEWPAGE@
+Endre sammendrag : @SUMMARY@
+Bruker : @USER@
+
+@DIFF@
+
+
+Sjekk endringene og godkjenn revisjonen på @NEWPAGE@
+eller gi tilbakemelding til @USER@.
+
+-- 
+Denne e-posten ble laget av DokuWiki på @DOKUWIKIURL@
