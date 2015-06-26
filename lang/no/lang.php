@@ -23,3 +23,6 @@ $lang['cannot approve error']  = 'Kan ikke godkjenne pga. tekniske feil (rettigh
 $lang['approvals']             = 'Godkjenninger: %s/%s';
 $lang['approved by']           = 'Godkjent av: %s';
 $lang['approve action']        = 'Godkjenn dokument';
+$lang['mail_invalid']          = 'En av e-postadressene som er angit for endringsanmodninger fra publish-plugin-en er ugyldig: %s';
+$lang['apr_mail_subject']      = 'nytt forslag';
+$lang['apr_mail_app_subject']  = 'forslag godkjent';
