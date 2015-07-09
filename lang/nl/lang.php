@@ -5,6 +5,7 @@
  * 
  * @author Rene <wllywlnt@yahoo.com>
  * @author Mark Prins <mprins@users.sf.net>
+ * @author Peter van Diest <peter.van.diest@xs4all.nl>
  */
 $lang['apr_recent_draft']      = 'De <a href="%s">Most Recent Version</a> van dit document is een concept.';
 $lang['apr_outdated']          = 'Deze versie is <em>Outdated</em> door een <a href="%s">Newer Approved Version</a>.';
@@ -24,3 +25,6 @@ $lang['cannot approve error']  = 'De pagina kan niet worden goedgekeurd vanwege 
 $lang['approvals']             = 'Goedkeuringen: %s/%s';
 $lang['approved by']           = 'Goedgekeurd door: %s';
 $lang['approve action']        = 'Document goedkeuren';
+$lang['mail_invalid']          = 'Eén van de e-mailadressen voor wijzigingsnotificatie vanuit de Publish-plugin is ongeldig: %s';
+$lang['apr_mail_subject']      = 'Nieuwe suggestie';
+$lang['apr_mail_app_subject']  = 'Suggestie goedgekeurd';
