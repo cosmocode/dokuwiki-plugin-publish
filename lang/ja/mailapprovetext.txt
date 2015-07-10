@@ -1,0 +1,10 @@
+@FULLNAME@様
+@TITLE@ at @DOKUWIKIURL@ の @TITLE@ に対する草案
+
+URL: @URL@
+
+は承認されました。
+
+-- 
+このメールは DokuWiki が自動作成しました。
+@DOKUWIKIURL@
