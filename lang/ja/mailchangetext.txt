@@ -1,0 +1,19 @@
+DokuWiki に新規草案があります。詳細は以下のとおりです：
+
+日付               : @DATE@
+ブラウザ           : @BROWSER@
+IP アドレス        : @IPADDRESS@
+ホスト名           : @HOSTNAME@
+@APRPRE@ リビジョン: @OLDPAGE@
+新リビジョン       : @NEWPAGE@
+編集の概要         : @SUMMARY@
+ユーザー           : @USER@
+
+@DIFF@
+
+
+変更を確認し、@NEWPAGE@ のリビジョンを承認するか @USER@ に差戻して下さい。
+
+-- 
+このメールは DokuWiki が自動作成しました。
+@DOKUWIKIURL@
