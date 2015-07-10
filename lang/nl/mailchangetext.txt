@@ -1,0 +1,19 @@
+Er is een nieuwe suggestie in je DokuWiki. Dit zijn de details:
+
+Datum             : @DATE@
+Browser          : @BROWSER@
+IP-Adres       : @IPADDRESS@
+Hostname         : @HOSTNAME@
+@APRPRE@ Revisie: @OLDPAGE@
+Nieuw Revisie     : @NEWPAGE@
+Samenvatting aanpassing     : @SUMMARY@
+Gebruiker             :  @USER@
+
+@DIFF@
+
+
+Bekijk a.u.b. de wijzigingen en keur de revisie goed in  @NEWPAGE@ of geef feedback aan @USER@.
+
+-- 
+Deze e-mail is gegenereerd door DokuWiki in
+@DOKUWIKIURL@

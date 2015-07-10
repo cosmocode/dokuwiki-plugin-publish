@@ -1,0 +1,10 @@
+Hallo @FULLNAME@!
+Je suggestie voor @TITLE@ in @DOKUWIKIURL@
+
+URL: @URL@
+
+is goedgekeurd.
+
+-- 
+Deze e-mail is gegenereerd door DokuWiki in
+@DOKUWIKIURL@
