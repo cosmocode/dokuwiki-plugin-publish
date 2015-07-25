@@ -131,7 +131,7 @@ class syntax_plugin_publish extends DokuWiki_Syntax_Plugin {
         global $conf;
         $dir = $conf['datadir'] . '/' . str_replace(':', '/', $namespace);
         $pages = array();
-        search($pages, $dir, array($this,'_search_helper'), array($namespace, $this->getConf('apr_namespaces')));
+        search($pages, $dir, array($this,'_search_helper'), array($namespace, $this->getConf('apr_namespaces'), $this->getConf('no_apr_namespaces')));
         return $pages;
     }
 
@@ -144,6 +144,7 @@ class syntax_plugin_publish extends DokuWiki_Syntax_Plugin {
     function _search_helper(&$data, $base, $file, $type, $lvl, $opts) {
         $ns = $opts[0];
         $valid_ns = $opts[1];
+        $invalid_ns = $opts[2];
 
         if ($type == 'd') {
             return $this->hlp->in_sub_namespace($valid_ns, $ns . ':' . str_replace('/', ':', $file));
@@ -154,7 +155,7 @@ class syntax_plugin_publish extends DokuWiki_Syntax_Plugin {
         }
 
         $id = pathID($ns . $file);
-        if (!$this->hlp->in_namespace($valid_ns, $id)) {
+        if (!$this->hlp->in_namespace($valid_ns, $id) || $this->hlp->in_namespace($invalid_ns, $id)) {
             return false;
         }
 
