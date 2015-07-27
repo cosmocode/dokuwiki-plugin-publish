@@ -15,32 +15,32 @@ class helper_plugin_publish extends DokuWiki_Plugin {
     private $sortedApprovedRevisions = null;
 
     // FIXME find out what this is supposed to do and how it can be done better
-    function in_namespace($valid, $check) {
+    function in_namespace($namespace_list, $id) {
         // PHP apparantly does not have closures -
         // so we will parse $valid ourselves. Wasteful.
-        $valid = preg_split('/\s+/', $valid);
+        $namespace_list = preg_split('/\s+/', $namespace_list);
         //if(count($valid) == 0) { return true; }//whole wiki matches
-        if((count($valid)==1) and ($valid[0]=="")) { return true; }//whole wiki matches
-        $check = trim($check, ':');
-        $check = explode(':', $check);
+        if((count($namespace_list)==1) and ($namespace_list[0]=="")) { return true; }//whole wiki matches
+        $id = trim($id, ':');
+        $id = explode(':', $id);
 
         // Check against all possible namespaces
-        foreach($valid as $v) {
-            $v = explode(':', $v);
-            $n = 0;
-            $c = count($v);
-            $matching = 1;
+        foreach($namespace_list as $namespace) {
+            $namespace = explode(':', $namespace);
+            $current_ns_depth = 0;
+            $total_ns_depth = count($namespace);
+            $matching = true;
 
             // Check each element, untill all elements of $v satisfied
-            while($n < $c) {
-                if($v[$n] != $check[$n]) {
+            while($current_ns_depth < $total_ns_depth) {
+                if($namespace[$current_ns_depth] != $id[$current_ns_depth]) {
                     // not a match
-                    $matching = 0;
+                    $matching = false;
                     break;
                 }
-                $n += 1;
+                $current_ns_depth += 1;
             }
-            if($matching == 1) { return true; } // a match
+            if($matching) { return true; } // a match
         }
         return false;
     }
