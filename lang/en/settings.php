@@ -6,6 +6,7 @@ $lang['number_of_approved'] = 'Number of users needed to approve a page.';
 $lang['hidereaderbanner'] = 'Hide banner to read only users';
 $lang['hide drafts'] = 'Hide drafts to read only users';
 $lang['hide_approved_banner']  = 'Hide banner on approved pages';
+$lang['hide_showrev']  = 'Hide showrev warning';
 $lang['author groups'] = 'Groups that can see drafts (separate by blank)';
 $lang['internal note'] = 'Note on unapproved pages';
 $lang['delete attic on first approve'] = 'Delete attic on first approve';
