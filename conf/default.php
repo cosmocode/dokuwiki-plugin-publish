@@ -6,6 +6,7 @@ $conf['number_of_approved'] = 1;
 $conf['hidereaderbanner'] = 0;
 $conf['hide drafts'] = 0;
 $conf['hide_approved_banner'] = 0;
+$conf['hide_showrev'] = 0;
 $conf['author groups'] = '';
 $conf['internal note'] = '';
 $conf['delete attic on first approve'] = 0;
