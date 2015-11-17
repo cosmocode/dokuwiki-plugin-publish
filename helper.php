@@ -14,7 +14,14 @@ class helper_plugin_publish extends DokuWiki_Plugin {
 
     private $sortedApprovedRevisions = null;
 
-    // FIXME find out what this is supposed to do and how it can be done better
+    /**
+     * checks if an id is within one of the namespaces in $namespace_list
+     *
+     * @param string $namespace_list
+     * @param string $id
+     *
+     * @return bool
+     */
     function in_namespace($namespace_list, $id) {
         // PHP apparantly does not have closures -
         // so we will parse $valid ourselves. Wasteful.
