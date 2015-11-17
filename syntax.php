@@ -148,7 +148,7 @@ class syntax_plugin_publish extends DokuWiki_Syntax_Plugin {
         $invalid_ns = $opts[2];
 
         if ($type == 'd') {
-            return $this->hlp->in_sub_namespace($valid_ns, $ns . ':' . str_replace('/', ':', $file));
+            return $this->hlp->is_dir_valid($valid_ns, $ns . ':' . str_replace('/', ':', $file));
         }
 
         if (!preg_match('#\.txt$#', $file)) {
