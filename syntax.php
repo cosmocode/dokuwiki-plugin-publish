@@ -156,11 +156,11 @@ class syntax_plugin_publish extends DokuWiki_Syntax_Plugin {
         }
 
         $id = pathID($ns . $file);
-        if (!$this->hlp->in_namespace($valid_ns, $id)) {
+        if (!empty($valid_ns) && !$this->hlp->in_namespace($valid_ns, $id)) {
             return false;
         }
 
-        if ($this->hlp->in_namespace($invalid_ns, $id)) {
+        if (!empty($invalid_ns) && $this->hlp->in_namespace($invalid_ns, $id)) {
             return false;
         }
 
