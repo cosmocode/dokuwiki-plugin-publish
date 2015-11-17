@@ -13,7 +13,7 @@ class publish_mail_unit_test extends DokuWikiTest {
     protected $pluginsEnabled = array('publish');
 
     /**
-     * @covers action_plugin_publish_mail::difflink
+     * @covers helper_plugin_publish::getDifflink
      */
     function test_difflink () {
         global $ID;
