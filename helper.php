@@ -14,7 +14,14 @@ class helper_plugin_publish extends DokuWiki_Plugin {
 
     private $sortedApprovedRevisions = null;
 
-    // FIXME find out what this is supposed to do and how it can be done better
+    /**
+     * checks if an id is within one of the namespaces in $namespace_list
+     *
+     * @param string $namespace_list
+     * @param string $id
+     *
+     * @return bool
+     */
     function in_namespace($namespace_list, $id) {
         // PHP apparantly does not have closures -
         // so we will parse $valid ourselves. Wasteful.
@@ -45,34 +52,41 @@ class helper_plugin_publish extends DokuWiki_Plugin {
         return false;
     }
 
-    // FIXME find out what this is supposed to do and how it can be done better
-    function in_sub_namespace($valid, $check) {
-        // is check a dir which contains any valid?
-        // PHP apparantly does not have closures -
-        // so we will parse $valid ourselves. Wasteful.
-        $valid = preg_split('/\s+/', $valid);
+    /**
+     * check if given $dir contains a valid namespace or is contained in a valid namespace
+     *
+     * @param $valid_namespaces_list
+     * @param $dir
+     *
+     * @return bool
+     */
+    function is_dir_valid($valid_namespaces_list, $dir) {
+        $valid_namespaces_list = preg_split('/\s+/', $valid_namespaces_list);
         //if(count($valid) == 0) { return true; }//whole wiki matches
-        if((count($valid)==1) and ($valid[0]=="")) { return true; }//whole wiki matches
-        $check = trim($check, ':');
-        $check = explode(':', $check);
+        if((count($valid_namespaces_list)==1) && ($valid_namespaces_list[0]=="")) { return true; }//whole wiki matches
+        $dir = trim($dir, ':');
+        $dir = explode(':', $dir);
 
         // Check against all possible namespaces
-        foreach($valid as $v) {
-            $v = explode(':', $v);
-            $n = 0;
-            $c = count($check); //this is what is different from above!
-            $matching = 1;
+        foreach($valid_namespaces_list as $valid_namespace) {
+            $valid_namespace = explode(':', $valid_namespace);
+            $current_depth = 0;
+            $dir_depth = count($dir); //this is what is different from above!
+            $matching = true;
 
             // Check each element, untill all elements of $v satisfied
-            while($n < $c) {
-                if($v[$n] != $check[$n]) {
-                    // not a match
-                    $matching = 0;
+            while($current_depth < $dir_depth) {
+                if (empty($valid_namespace[$current_depth])) {
                     break;
                 }
-                $n += 1;
+                if($valid_namespace[$current_depth] != $dir[$current_depth]) {
+                    // not a match
+                    $matching = false;
+                    break;
+                }
+                $current_depth += 1;
             }
-            if($matching == 1) { return true; } // a match
+            if($matching) { return true; } // a match
         }
         return false;
     }

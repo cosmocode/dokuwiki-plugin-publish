@@ -148,7 +148,7 @@ class syntax_plugin_publish extends DokuWiki_Syntax_Plugin {
         $invalid_ns = $opts[2];
 
         if ($type == 'd') {
-            return $this->hlp->in_sub_namespace($valid_ns, $ns . ':' . str_replace('/', ':', $file));
+            return $this->hlp->is_dir_valid($valid_ns, $ns . ':' . str_replace('/', ':', $file));
         }
 
         if (!preg_match('#\.txt$#', $file)) {
@@ -156,11 +156,11 @@ class syntax_plugin_publish extends DokuWiki_Syntax_Plugin {
         }
 
         $id = pathID($ns . $file);
-        if (!$this->hlp->in_namespace($valid_ns, $id)) {
+        if (!empty($valid_ns) && !$this->hlp->in_namespace($valid_ns, $id)) {
             return false;
         }
 
-        if ($this->hlp->in_namespace($invalid_ns, $id)) {
+        if (!empty($invalid_ns) && $this->hlp->in_namespace($invalid_ns, $id)) {
             return false;
         }
 
