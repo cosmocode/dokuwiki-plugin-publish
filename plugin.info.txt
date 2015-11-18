@@ -1,7 +1,7 @@
 base    publish
 author  Jarrod Lowe, Andreas Gohr, Dominik Eckelmann
 email   dokuwiki@cosmocode.de
-date    2015-07-27
+date    2015-11-17
 name    Publishing Plugin
 desc    Integrate a publishing process into DokuWiki
 url     http://www.dokuwiki.org/plugin:publish
