@@ -5,6 +5,7 @@
  * 
  * @author Christian "Na_kai" Sueur <sueur.christian@gmail.com>
  * @author Nicolas Friedli <nicolas@theologique.ch>
+ * @author Grégory Gutierez <gregory.gutierez@gmail.com>
  */
 $lang['apr_recent_draft']      = 'La <a href="%s"> version la plus récente </ a> de ce document est un projet.';
 $lang['apr_outdated']          = 'Cette version est <em> expirée </ em> par une <a href="%s"> plus récente version approuvée </ a>.';
@@ -24,3 +25,6 @@ $lang['cannot approve error']  = 'Impossible d\'approuver pour des raisons techn
 $lang['approvals']             = 'Approuvés: %s/%s';
 $lang['approved by']           = 'Approuvés par: %s';
 $lang['approve action']        = 'Approuver le document';
+$lang['mail_invalid']          = 'Une des adresses e-mail saisies pour notifier les changements est invalide (plugin Publish) : %s';
+$lang['apr_mail_subject']      = 'Nouvelle soumission';
+$lang['apr_mail_app_subject']  = 'Soumission approuvée';

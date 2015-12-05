@@ -1,0 +1,10 @@
+Bonjour @FULLNAME@ !
+
+Votre page @TITLE@ pour le site @DOKUWIKIURL@ :
+
+URL: @URL@
+
+a bien été approuvée !
+
+--
+Ce mail a été généré automatiquement par DokuWiki depuis le site @DOKUWIKIURL@
