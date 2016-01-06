@@ -17,3 +17,30 @@ function approval_checkbox(text) {
 
   return true;
 }
+
+
+jQuery( document ).ready(function () {
+    jQuery('button.publish__approveNS').click(function(evt){
+        var $_this = jQuery(this);
+        var namespace = $_this.attr('ns');
+        jQuery.post(
+            DOKU_BASE + 'lib/exe/ajax.php',
+            {
+                call: 'plugin_publish_approveNS',
+                namespace: namespace
+            },
+            function(data) {
+                $_this.parent().parent().siblings('tr.apr_table').each(function(index) {
+                        var id = jQuery(this).find('a').first().text();
+                        var pageNamespace = id.substr(0,id.lastIndexOf(':'));
+                        if (pageNamespace === namespace) {
+                            jQuery(this).hide('slow');
+                        }
+                    }
+                );
+                $_this.parent().parent().hide('slow');
+            },
+            'json'
+        );
+    });
+});

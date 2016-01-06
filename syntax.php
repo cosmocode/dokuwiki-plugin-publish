@@ -88,7 +88,9 @@ class syntax_plugin_publish extends DokuWiki_Syntax_Plugin {
                 $renderer->doc .= wl($this_ns . ':' . $this->getConf('start'));
                 $renderer->doc .= '">';
                 $renderer->doc .= $name_ns;
-                $renderer->doc .= '</a></td></tr>';
+                $renderer->doc .= '</a> ';
+                $renderer->doc .= '<button class="publish__approveNS" type="button" ns="' . $name_ns .'">' . $this->getLang('approveNS') . '</button>';
+                $renderer->doc .= '</td></tr>';
                 $working_ns = $this_ns;
             }
 

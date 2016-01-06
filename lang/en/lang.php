@@ -36,3 +36,5 @@ $lang['mail_invalid'] = 'One of email adresses entered for change notifications 
 $lang['apr_do_approve'] = 'Approve';
 $lang['apr_mail_subject'] = 'new suggestion';
 $lang['apr_mail_app_subject'] = 'suggestion approved';
+
+$lang['approveNS'] = 'Approve namespace';

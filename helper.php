@@ -421,4 +421,14 @@ class helper_plugin_publish extends DokuWiki_Plugin {
         return false;
     }
 
+    public function removeSubnamespacePages ($pages, $namespace) {
+        $cleanpages = array();
+        foreach ($pages as $page) {
+            if (getNS($page[0]) == $namespace) {
+                $cleanpages[] = $page;
+            }
+        }
+        return $cleanpages;
+    }
+
 }

@@ -34,3 +34,5 @@ $lang['approve action']        = 'Dokument bestätigen';
 $lang['apr_do_approve'] = 'Bestätigen';
 $lang['apr_mail_subject'] = 'Neuer Vorschlag';
 $lang['apr_mail_app_subject'] = 'Vorschlag bestätigt';
+
+$lang['approveNS'] = 'Namensraum bestätigen';
