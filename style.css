@@ -66,3 +66,7 @@ table.apr_table tr.apr_ns td {
 div.approval span span.approval_date {
   display: inline;
 }
+
+button.publish__approveNS {
+    float: left;
+}

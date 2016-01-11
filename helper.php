@@ -369,4 +369,66 @@ class helper_plugin_publish extends DokuWiki_Plugin {
         return $difflink;
     }
 
+    function getPagesFromNamespace($namespace) {
+        global $conf;
+        $dir = $conf['datadir'] . '/' . str_replace(':', '/', $namespace);
+        $pages = array();
+        search($pages, $dir, array($this,'_search_helper'), array($namespace, $this->getConf('apr_namespaces'),
+                                                                  $this->getConf('no_apr_namespaces')));
+        return $pages;
+    }
+
+    /**
+     * search callback function
+     *
+     * filter out pages which can't be approved by the current user
+     * then check if they need approving
+     */
+    function _search_helper(&$data, $base, $file, $type, $lvl, $opts) {
+        $ns = $opts[0];
+        $valid_ns = $opts[1];
+        $invalid_ns = $opts[2];
+
+        if ($type == 'd') {
+            return $this->is_dir_valid($valid_ns, $ns . ':' . str_replace('/', ':', $file));
+        }
+
+        if (!preg_match('#\.txt$#', $file)) {
+            return false;
+        }
+
+        $id = pathID($ns . $file);
+        if (!empty($valid_ns) && !$this->in_namespace($valid_ns, $id)) {
+            return false;
+        }
+
+        if (!empty($invalid_ns) && $this->in_namespace($invalid_ns, $id)) {
+            return false;
+        }
+
+        if (auth_quickaclcheck($id) < AUTH_DELETE) {
+            return false;
+        }
+
+        $meta = $this->getMeta($id);
+        if ($this->isCurrentRevisionApproved($id)) {
+
+            // Already approved
+            return false;
+        }
+
+        $data[] = array($id, $meta['approval'], $meta['last_change']['date']);
+        return false;
+    }
+
+    public function removeSubnamespacePages ($pages, $namespace) {
+        $cleanpages = array();
+        foreach ($pages as $page) {
+            if (getNS($page[0]) == $namespace) {
+                $cleanpages[] = $page;
+            }
+        }
+        return $cleanpages;
+    }
+
 }

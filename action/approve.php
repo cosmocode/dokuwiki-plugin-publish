@@ -15,6 +15,34 @@ class action_plugin_publish_approve extends DokuWiki_Action_Plugin {
 
     function register(Doku_Event_Handler $controller) {
         $controller->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE', $this, 'handle_io_write', array());
+        $controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this, 'approveNS', array());
+    }
+
+    function approveNS(Doku_Event &$event, $param) {
+        if ($event->data !== 'plugin_publish_approveNS') {
+            return;
+        }
+        //no other ajax call handlers needed
+        $event->stopPropagation();
+        $event->preventDefault();
+
+        //e.g. access additional request variables
+        global $INPUT; //available since release 2012-10-13 "Adora Belle"
+        $namespace = $INPUT->str('namespace');
+        $pages = $this->helper->getPagesFromNamespace($namespace);
+        $pages = $this->helper->removeSubnamespacePages($pages, $namespace);
+
+        global $ID, $INFO;
+        $original_id = $ID;
+        foreach ($pages as $page) {
+            $ID = $page[0];
+            $INFO = pageinfo();
+            if (!$this->helper->canApprove()) {
+                continue;
+            }
+            $this->addApproval();
+        }
+        $ID = $original_id;
     }
 
     function handle_io_write(Doku_Event &$event, $param) {
@@ -23,6 +51,7 @@ class action_plugin_publish_approve extends DokuWiki_Action_Plugin {
         # is too early)
         global $ACT;
         global $INPUT;
+        global $ID;
 
         if ($ACT != 'show') {
             return;
@@ -38,7 +67,7 @@ class action_plugin_publish_approve extends DokuWiki_Action_Plugin {
         }
 
         $this->addApproval();
-        return;
+        send_redirect(wl($ID, array('rev' => $this->helper->getRevision()), true, '&'));
     }
 
     function addApproval() {
@@ -84,7 +113,6 @@ class action_plugin_publish_approve extends DokuWiki_Action_Plugin {
             msg($this->getLang('cannot approve error'), -1);
         }
 
-        send_redirect(wl($ID, array('rev' => $this->helper->getRevision()), true, '&'));
     }
 
 }
