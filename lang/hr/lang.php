@@ -26,3 +26,4 @@ $lang['approve action']        = 'Odobri dokument';
 $lang['mail_invalid']          = 'Jedna od unesenih adresa e-pošte za dojave promjena u publish dodatku je neispravna: %s';
 $lang['apr_mail_subject']      = 'novi prijedlog';
 $lang['apr_mail_app_subject']  = 'prijedlog odobren';
+$lang['approveNS']             = 'Odobri imenski prostor';
