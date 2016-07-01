@@ -1,0 +1,9 @@
+@FULLNAME@님 안녕하세요!
+@DOKUWIKIURL@에서 @TITLE@에 대한 제안
+
+URL: @URL@
+
+이 승인되었습니다.
+
+-- 
+이 메일은 @DOKUWIKIURL@에서 도쿠위키가 생성했습니다

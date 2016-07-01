@@ -1,0 +1,18 @@
+여기에 도쿠위키에서 새 제안이 있습니다. 여기에 자세한 사항이 있습니다:
+
+날짜             : @DATE@
+브라우저          : @BROWSER@
+IP 주소       : @IPADDRESS@
+호스트 이름         : @HOSTNAME@
+@APRPRE@ 판: @OLDPAGE@
+새 판     : @NEWPAGE@
+편집 요약     : @SUMMARY@
+사용자             : @USER@
+
+@DIFF@
+
+
+@NEWPAGE@에서 판의 바뀜을 검토하고 승인해주시거나 @USER@님에게 피드백을 주시기 바랍니다.
+
+-- 
+이 메일은 @DOKUWIKIURL@에서 도쿠위키가 생성했습니다
