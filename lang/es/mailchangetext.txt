@@ -1,0 +1,19 @@
+Hay una nueva sugerencia en su DokuWiki. A continuación los detalles:
+
+Fecha            : @DATE@
+Navegador        : @BROWSER@
+IP-Address       : @IPADDRESS@
+Hostname         : @HOSTNAME@
+@APRPRE@ Revisión: @OLDPAGE@
+Nueva Revisión   : @NEWPAGE@
+Resumen edición  : @SUMMARY@
+Usuario          : @USER@
+
+@DIFF@
+
+
+Por favor revise los cambios, puede aprobarlos en @NEWPAGE@ o dar sus comentarios al usuario @USER@.
+
+-- 
+Este correo fue generado por DokuWiki en
+@DOKUWIKIURL@

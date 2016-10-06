@@ -1,0 +1,10 @@
+Hola @FULLNAME@!
+Su sugerencia para @TITLE@ en @DOKUWIKIURL@
+
+URL: @URL@
+
+está aprobada.
+
+-- 
+Este correo fue generado por DokuWiki en 
+@DOKUWIKIURL@
