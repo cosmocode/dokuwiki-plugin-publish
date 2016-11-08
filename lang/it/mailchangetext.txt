@@ -1,0 +1,19 @@
+E' stata suggerita una modifica al tuo DokuWiki. Questisono i dettagli:
+
+Data              : @DATE@
+Browser           : @BROWSER@
+Indirizzo-IP      : @IPADDRESS@
+Hostname          : @HOSTNAME@
+@APRPRE@ Revisione: @OLDPAGE@
+Nuova Revisione   : @NEWPAGE@
+Riassunto         : @SUMMARY@
+Utente            : @USER@
+
+@DIFF@
+
+
+Per favore revisiona e approva le modifiche a @NEWPAGE@ o rispondi a @USER@.
+
+-- 
+Messaggio generato automaticamente da DokuWiki presso
+@DOKUWIKIURL@

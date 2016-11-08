@@ -1,0 +1,10 @@
+Ciao @FULLNAME@!
+La tua modifica su @TITLE@ presso @DOKUWIKIURL@
+
+URL: @URL@
+
+&egrave stata approvata.
+
+-- 
+Messaggio generato automaticamente da DokuWiki presso
+@DOKUWIKIURL@
