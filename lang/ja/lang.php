@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Hideaki SAWADA <chuno@live.jp>
  */
 $lang['apr_recent_draft']      = 'この文章の<a href="%s">最新バージョン</a>は草案です。';
@@ -26,3 +26,4 @@ $lang['approve action']        = '承認する';
 $lang['mail_invalid']          = '公開プラグインから変更通知用に登録したメールアドレスが無効です：%s';
 $lang['apr_mail_subject']      = '新規草案';
 $lang['apr_mail_app_subject']  = '草案が承認されました';
+$lang['approveNS']             = '名前空間を承認する';
