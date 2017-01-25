@@ -286,6 +286,7 @@ class helper_plugin_publish extends DokuWiki_Plugin {
     }
 
     function isHidden($id = null) {
+        // if it is false, everyone can see drafts
         if (!$this->getConf('hide drafts')) {
             return false;
         }
@@ -298,28 +299,38 @@ class helper_plugin_publish extends DokuWiki_Plugin {
         if (!$this->isActive($id)) {
             return false;
         }
-
-        if ($this->getLatestApprovedRevision($id)) {
-            return false;
-        }
         return true;
     }
 
-    function isHiddenForUser($id = null) {
+    function isHiddenForUser($id = null, $rev = null) {
         if (!$this->isHidden($id)) {
             return false;
         }
 
-        if ($id == null) {
+        if ($id === null) {
             global $ID;
             $id = $ID;
+            if ($rev === null){
+                global $REV;
+                $rev = $REV;
+            }
+        }
+
+        $revlist = $this->getSortedApprovedRevisions($id);
+        if($rev){
+            if(isset($revlist[$rev])){
+                return false;
+            }
+        }else{
+            if(count($revlist)){
+                return false;
+            }
         }
 
         $allowedGroups = array_filter(explode(' ', trim($this->getConf('author groups'))));
         if (empty($allowedGroups)) {
-            return auth_quickaclcheck($id) < AUTH_EDIT;
+            return auth_quickaclcheck($id) < AUTH_DELETE;
         }
-
         if (!$_SERVER['REMOTE_USER']) {
             return true;
         }
@@ -336,8 +347,9 @@ class helper_plugin_publish extends DokuWiki_Plugin {
 
     function isActive($id = null) {
         if ($id == null) {
-            global $ID;
+            global $ID, $REV, $INFO;
             $id = $ID;
+            if(!$INFO['exists']) return false;
         }
         if (!$this->in_namespace($this->getConf('apr_namespaces'), $id)) {
             return false;
@@ -349,6 +361,8 @@ class helper_plugin_publish extends DokuWiki_Plugin {
                 return false;
             }
         }
+
+
         return true;
     }
 
