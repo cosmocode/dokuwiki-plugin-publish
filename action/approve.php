@@ -75,12 +75,21 @@ class action_plugin_publish_approve extends DokuWiki_Action_Plugin {
         global $USERINFO;
         global $ID;
         global $INFO;
+        global $REV;
 
-        $approvalRevision = $approvalRevision ? $approvalRevision : $this->helper->getRevision();
-        if (!file_exists(fullpath(wikiFN($ID, $approvalRevision)))) {
-            msg($this->getLang('cannot approve a non-existing revision'), -1);
-            return;
+        if($approvalRevision){
+            if ($approvalRevision !== $REV && !page_exists($ID, $approvalRevision)) {
+                msg($this->getLang('cannot approve a non-existing revision'), -1);
+                return;
+            }
+        }else{
+            $approvalRevision = $this->helper->getRevision();
+            if (!$INFO['exists']) {
+                msg($this->getLang('cannot approve a non-existing revision'), -1);
+                return;
+            }
         }
+
         $approvals = $this->helper->getApprovals();
 
         if (!isset($approvals[$approvalRevision])) {
@@ -141,7 +150,7 @@ class action_plugin_publish_approve extends DokuWiki_Action_Plugin {
             return true;
         }
 
-        $this->addApproval();
+        $this->addApproval($event->data[3]);
         return true;
     }
 
