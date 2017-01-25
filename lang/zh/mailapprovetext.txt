@@ -1,0 +1,9 @@
+@FULLNAME@，您好！
+
+您在 @DOKUWIKIURL@ 上为 @TITLE@ 做出的修改已被批准。
+
+地址: @URL@
+
+--
+本邮件由 DokuWiki 发出。
+@DOKUWIKIURL@
