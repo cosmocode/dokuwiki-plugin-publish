@@ -365,7 +365,7 @@ class helper_plugin_publish extends DokuWiki_Plugin {
             return '';
         }
         $params = 'do=diff,rev2[0]=' . $rev1 . ',rev2[1]=' . $rev2 . ',difftype=sidebyside';
-        $difflink = wl($id, $params,true,'&');
+        $difflink = wl($id, $params, true);
         return $difflink;
     }
 
