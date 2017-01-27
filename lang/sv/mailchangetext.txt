@@ -15,5 +15,5 @@ Användare           : @USER@
 Läs igenom ändringarna och godkänn redigeringen på @NEWPAGE@ eller ge återkoppling till @USER@.
 
 -- 
-Detta brev har genererats av DokuWiki på
+Detta brev genererades av DokuWiki på
 @DOKUWIKIURL@
