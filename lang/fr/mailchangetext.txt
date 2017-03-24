@@ -1,0 +1,19 @@
+Il y a une nouvelle soumission dans votre DokuWiki. voici les détails :
+
+Date              : @DATE@
+Navigateur        : @BROWSER@
+Adresse IP        : @IPADDRESS@
+Nom d'hôte        : @HOSTNAME@
+Révision @APRPRE@ : @OLDPAGE@
+Nouvelle révision : @NEWPAGE@
+Résumé d'édition  : @SUMMARY@
+Utilisateur       : @USER@
+
+@DIFF@
+
+
+Vous pouvez réviser les changements et approuver cette révision sur @NEWPAGE@ ou faire un retour à @USER@.
+
+-- 
+Courriel généré par DokuWiki à 
+@DOKUWIKIURL@
