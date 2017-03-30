@@ -34,7 +34,7 @@ class action_plugin_publish_revisions extends DokuWiki_Action_Plugin {
                 $member = $key;
             }
 
-            if ($member && $ref['_elem'] == 'tag' &&
+            if ($member && isset($ref['_elem']) && $ref['_elem'] == 'tag' &&
                 $ref['_tag'] == 'input' && $ref['name'] == 'rev2[]'){
 
                 $revision = $ref['value'];
