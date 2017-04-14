@@ -41,6 +41,10 @@ class action_plugin_publish_recent extends DokuWiki_Action_Plugin {
                 continue;
             }
 
+            if (!$this->hlp->isActive($id)) {
+                continue;
+            }
+
             if ($this->hlp->isCurrentRevisionApproved($id)) {
                 $event->data->_content[$parent]['class'] .= ' approved_revision';
             } else {
