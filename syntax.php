@@ -19,7 +19,7 @@ class syntax_plugin_publish extends DokuWiki_Syntax_Plugin {
      */
     private $hlp;
 
-    function syntax_plugin_publish(){
+    function __construct(){
         $this->hlp = plugin_load('helper','publish');
     }
 
