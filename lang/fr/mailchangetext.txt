@@ -4,7 +4,7 @@ Date              : @DATE@
 Navigateur        : @BROWSER@
 Adresse IP        : @IPADDRESS@
 Nom d'hôte        : @HOSTNAME@
-@APRPRE@ Revision : @OLDPAGE@
+Révision @APRPRE@ : @OLDPAGE@
 Nouvelle révision : @NEWPAGE@
 résumé d'édition  : @SUMMARY@
 Utilisateur       : @USER@
@@ -16,4 +16,5 @@ nouvelle révision sur @NEWPAGE@ ou envoyer vos
 commentaires à @USER@.
 
 -- 
-Courriel envoyé par dokuwiki à @DOKUWIKIURL@
+Courriel envoyé par dokuwiki à
+@DOKUWIKIURL@

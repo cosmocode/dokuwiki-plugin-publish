@@ -7,4 +7,5 @@ URL: @URL@
 a bien été approuvée !
 
 -- 
-Courriel envoyé par dokuwiki à @DOKUWIKIURL@
+Courriel envoyé par dokuwiki à
+@DOKUWIKIURL@
