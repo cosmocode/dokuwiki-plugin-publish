@@ -6,5 +6,5 @@ URL: @URL@
 
 a bien été approuvée !
 
---
-Ce mail a été généré automatiquement par DokuWiki depuis le site @DOKUWIKIURL@
+-- 
+Courriel envoyé par dokuwiki à @DOKUWIKIURL@
