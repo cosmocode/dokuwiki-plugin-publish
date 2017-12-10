@@ -32,12 +32,11 @@ class action_plugin_publish_hide extends DokuWiki_Action_Plugin {
             return;
         }
 
-        global $ACT;
-        if (!in_array($ACT, array('show', 'edit', 'source', 'diff'))) {
+        if (!in_array($event->data, array('show', 'edit', 'source', 'diff'))) {
             return;
         }
 
-        $ACT = 'denied';
+        $event->data = 'denied';
 
         $event->preventDefault();
         $event->stopPropagation();
