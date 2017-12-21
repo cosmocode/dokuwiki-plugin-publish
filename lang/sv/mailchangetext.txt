@@ -1,0 +1,19 @@
+Det finns ett nytt ändringsförslag i din DokuWiki. Här följer detaljerna:
+
+Datum               : @DATE@
+Webbläsare          : @BROWSER@
+IP-adress           : @IPADDRESS@
+Värdnamn            : @HOSTNAME@
+@APRPRE@ ändring    : @OLDPAGE@
+Ny ändring          : @NEWPAGE@
+Redigeringskommentar: @SUMMARY@
+Användare           : @USER@
+
+@DIFF@
+
+
+Läs igenom ändringarna och godkänn redigeringen på @NEWPAGE@ eller ge återkoppling till @USER@.
+
+-- 
+Detta brev genererades av DokuWiki på
+@DOKUWIKIURL@

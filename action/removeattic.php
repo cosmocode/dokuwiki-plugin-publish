@@ -34,7 +34,9 @@ class action_plugin_publish_removeattic extends DokuWiki_Action_Plugin {
             return; // previous version exist
         }
         global $ID;
-        $revisions = getRevisions($ID, 0, 0, 0);
+
+        $changelog = new PageChangelog($ID, 0);
+        $revisions = $changelog->getRevisions(0, 0);
 
         foreach ($revisions as $revision) {
             $fn = wikiFN($ID, $revision);

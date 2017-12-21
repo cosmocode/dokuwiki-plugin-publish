@@ -1,0 +1,20 @@
+Il y a une nouvelle suggestion pour votre wiki. En voici les détails :
+
+Date              : @DATE@
+Navigateur        : @BROWSER@
+Adresse IP        : @IPADDRESS@
+Nom d'hôte        : @HOSTNAME@
+Révision @APRPRE@ : @OLDPAGE@
+Nouvelle révision : @NEWPAGE@
+résumé d'édition  : @SUMMARY@
+Utilisateur       : @USER@
+
+@DIFF@ 
+
+Veuillez examiner les changements et approuver la
+nouvelle révision sur @NEWPAGE@ ou envoyer vos
+commentaires à @USER@.
+
+-- 
+Courriel envoyé par dokuwiki à
+@DOKUWIKIURL@

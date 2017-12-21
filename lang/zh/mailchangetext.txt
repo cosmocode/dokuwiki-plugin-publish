@@ -1,0 +1,18 @@
+您的 DokuWiki 有新修改建议，详情如下：
+
+时间    : @DATE@
+浏览器  : @BROWSER@
+IP 地址 : @IPADDRESS@
+主机名  : @HOSTNAME@
+@APRPRE@版本  : @OLDPAGE@
+新版本  : @NEWPAGE@
+编辑说明: @SUMMARY@
+用户    : @USER@
+
+@DIFF@
+
+请审核修改，并在 @NEWPAGE@ 批准修改或向 @USER@ 提出反馈意见。
+
+--
+本邮件由 DokuWiki 发出。
+@DOKUWIKIURL@

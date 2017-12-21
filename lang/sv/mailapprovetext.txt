@@ -1,0 +1,10 @@
+Hej @FULLNAME@!
+Ditt förslag för @TITLE@ på @DOKUWIKIURL@
+
+URL: @URL@
+
+har godkänts.
+
+-- 
+Detta brev genererades av DokuWiki på
+@DOKUWIKIURL@
