@@ -44,7 +44,8 @@ class action_plugin_publish_start extends DokuWiki_Action_Plugin {
             return;
         }
 
-        if (!$this->hlp->isCurrentRevisionApproved()) {
+        if (!$this->hlp->isCurrentRevisionApproved() && !$INPUT->has('rev')){
+            // if rev is present, no redirect
             $latestApproved = $this->hlp->getLatestApprovedRevision();
             if ($latestApproved) {
                 $REV = $latestApproved;
