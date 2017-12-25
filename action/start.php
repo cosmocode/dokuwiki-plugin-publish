@@ -22,6 +22,7 @@ class action_plugin_publish_start extends DokuWiki_Action_Plugin {
         global $REV;
         global $INFO;
         global $ID;
+        global $INPUT;
 
         if ($ACT !== 'show') {
             return;
