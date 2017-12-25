@@ -193,7 +193,7 @@ class helper_plugin_publish extends DokuWiki_Plugin {
         }
 
         static $sortedApprovedRevisions = array();
-        if (!isset($sortedApprovedRevisions[$id])) {
+        if (!isset($sortedApprovedRevisions[$id]) || defined('DOKU_UNITTEST')) {
             $approvals = $this->getApprovals($id);
             krsort($approvals);
             $sortedApprovedRevisions[$id] = $approvals;
