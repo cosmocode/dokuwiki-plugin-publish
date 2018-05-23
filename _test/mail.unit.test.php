@@ -52,6 +52,8 @@ class publish_mail_unit_test extends DokuWikiTest {
         $oldrevision = pageinfo();
         $oldrevision = $oldrevision['lastmod'];
         sleep(1);
+        global $INFO;
+        $INFO = pageinfo();
         saveWikiText('start', 'start second', 'foobar');
         $newrevision = pageinfo();
         $newrevision = $newrevision['lastmod'];
@@ -100,6 +102,9 @@ http://wiki.example.com' . DOKU_BASE . '
         $auth->createUser('john','x','John Smith','abc@def.gh');
         $_SERVER['REMOTE_USER'] = 'john';
         $USERINFO['name'] = 'John Smith';
+
+        global $INFO;
+        $INFO = pageinfo();
         saveWikiText('start', 'start first', 'foobar');
 
         $_SERVER['REMOTE_USER'] = 'mike';
