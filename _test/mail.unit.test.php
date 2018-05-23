@@ -48,13 +48,13 @@ class publish_mail_unit_test extends DokuWikiTest {
         global $USERINFO;
         $_SERVER['REMOTE_USER'] = 'john';
         $USERINFO['name'] = 'John Smith';
-        saveWikiText('start', 'start first', 'foobar');
+        saveWikiText('start', 'start first', 'summary of save 1');
         $oldrevision = pageinfo();
         $oldrevision = $oldrevision['lastmod'];
-        sleep(1);
+        $this->waitForTick(true);
         global $INFO;
         $INFO = pageinfo();
-        saveWikiText('start', 'start second', 'foobar');
+        saveWikiText('start', 'start second', 'summary of save 2');
         $newrevision = pageinfo();
         $newrevision = $newrevision['lastmod'];
 
@@ -67,7 +67,7 @@ IP-Address       : @IPADDRESS@
 Hostname         : @HOSTNAME@
 Previous Revision: http://wiki.example.com' . DOKU_BASE . 'doku.php?id=start&rev=' . $oldrevision . '
 New Revision     : http://wiki.example.com' . DOKU_BASE . 'doku.php?id=start&rev=' . $newrevision . '
-Edit Summary     : foobar
+Edit Summary     : summary of save 2
 User             : @USER@
 
 http://wiki.example.com' . DOKU_BASE . 'doku.php?id=start&do=diff&rev2[0]=' . $oldrevision . '&rev2[1]=' . $newrevision . '&difftype=sidebyside
