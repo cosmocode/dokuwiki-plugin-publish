@@ -40,7 +40,6 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         global $ACT;
         global $INFO;
         global $conf;
-        $data = pageinfo();
 
         if ($ACT != 'save') {
             return true;
@@ -71,7 +70,7 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         }
 
         // get mail sender
-        $ReplyTo = $data['userinfo']['mail'];
+        $ReplyTo = $INFO['userinfo']['mail'];
 
         if ($ReplyTo == $receiver) {
             return true;
@@ -82,7 +81,7 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
         }
 
         // get mail subject
-        $timestamp = dformat($data['lastmod'], $conf['dformat']);
+        $timestamp = dformat(filemtime(wikiFN($ID)), $conf['dformat']);
         $subject = $this->getLang('apr_mail_subject') . ': ' . $ID . ' - ' . $timestamp;
 
         $body = $this->create_mail_body('change');
@@ -106,16 +105,16 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
     public function create_mail_body($action) {
         global $ID;
         global $conf;
-        $pageinfo = pageinfo();
+        global $INFO;
 
         // get mail text
-        $rev = $pageinfo['lastmod'];
+        $rev = filemtime(wikiFN($ID));
 
         if ($action === 'change') {
             $body = io_readFile($this->localFN('mailchangetext'));
 
             //If there is no approved revision show the diff to the revision before. Otherwise show the diff to the last approved revision.
-            if($this->hlp->hasApprovals($pageinfo['meta'])) {
+            if($this->hlp->hasApprovals($INFO['meta'])) {
                 $aprpre = 'Aproved';
                 $oldrev = $this->hlp->getLatestApprovedRevision($ID);
                 $difflink = $this->hlp->getDifflink($ID, $oldrev, $rev);
@@ -128,7 +127,7 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
 
             $body = str_replace('@DIFF@', $difflink, $body);
             $body = str_replace('@APRPRE@', $aprpre, $body);
-            $summary = $pageinfo['meta']['last_change']['sum'];
+            $summary = $INFO['meta']['last_change']['sum'];
             $body = str_replace('@SUMMARY@', $summary, $body);
             if ($oldrev === false ) {
                 $oldlink = '---';
