@@ -1,0 +1,10 @@
+Привет, @FULLNAME@!
+Ваша правка для @TITLE@ в @DOKUWIKIURL@
+
+URL: @URL@
+
+одобрена.
+
+-- 
+Это письмо было сгенерировано DokuWiki из
+@DOKUWIKIURL@
