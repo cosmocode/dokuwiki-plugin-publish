@@ -3,6 +3,7 @@
 $conf['apr_namespaces'] = '';
 $conf['no_apr_namespaces'] = '';
 $conf['number_of_approved'] = 1;
+$conf['approving_weights'] = '';
 $conf['hidereaderbanner'] = 0;
 $conf['hide drafts'] = 0;
 $conf['hide_approved_banner'] = 0;
