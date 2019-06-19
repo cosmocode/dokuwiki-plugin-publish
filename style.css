@@ -1,7 +1,5 @@
 div.approval {
-  margin: 2em;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 2em auto;
   width: 70% !important;
   min-height: 40px;
   clear: both;
