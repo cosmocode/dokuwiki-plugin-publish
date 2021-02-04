@@ -12,6 +12,7 @@ $lang['number_of_approved']    = 'Anzahl der Benutzer, die das Dokument prüfen 
 $lang['hidereaderbanner']      = 'Verstecke Banner vor Benutzern, die nur das Leserecht haben';
 $lang['hide drafts']           = 'Verstecke unbestätigte Versionen vor Benutzern, die nur das Leserecht haben.';
 $lang['hide_approved_banner']  = 'Verstecke Banner auf bestätigten Seiten.';
+$lang['hide_showrev']          = 'Verstecke showrev Warnung';
 $lang['author groups']         = 'Gruppen, die Drafts sehen können (mehrere mit Leerzeichen trennen)';
 $lang['internal note']         = 'Notiz auf nicht veröffentlichten Seiten';
 $lang['delete attic on first approve'] = 'Alte Versionen bei erster Bestätigung löschen';
