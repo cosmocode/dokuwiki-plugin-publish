@@ -26,7 +26,6 @@ class action_plugin_publish_revisions extends DokuWiki_Action_Plugin {
         }
 
         $meta = p_get_metadata($ID);
-        $latest_rev = $meta['last_change']['date'];
 
         $member = null;
         foreach ($event->data->_content as $key => $ref) {
@@ -39,7 +38,10 @@ class action_plugin_publish_revisions extends DokuWiki_Action_Plugin {
 
                 $revision = $ref['value'];
                 if ($revision == 'current') {
-                    $revision = $INFO['meta']['date']['modified'];
+                    // handle minor revisions and external edits
+                    $revision = isset($meta['last_change']['date']) ?
+                        $meta['last_change']['date'] :
+                        $INFO['meta']['date']['modified'];
                 }
                 if ($this->hlp->isRevisionApproved($revision)) {
                     $event->data->_content[$member]['class'] = 'li approved_revision';
