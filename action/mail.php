@@ -62,10 +62,8 @@ class action_plugin_publish_mail extends DokuWiki_Action_Plugin {
 
         // get mail receiver
         $receiver = $this->getConf('apr_mail_receiver');
-        $validator                      = new EmailAddressValidator();
-        $validator->allowLocalAddresses = true;
-        if(!$validator->check_email_address($receiver)) {
-            dbglog(sprintf($this->getLang('mail_invalid'),htmlspecialchars($receiver)));
+        if(!mail_isvalid($receiver)) {
+            dbglog(sprintf($this->getLang('mail_invalid'), htmlspecialchars($receiver)));
             return false;
         }
 
