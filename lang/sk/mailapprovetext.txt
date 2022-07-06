@@ -1,0 +1,10 @@
+Dobrý deň @FULLNAME@!
+Váš návrh pre @TITLE@ na @DOKUWIKIURL@
+
+URL: @URL@
+
+je schválený.
+
+-- 
+Tento e-mail bol vygenerovaný systémom DokuWiki na adrese
+@DOKUWIKIURL@
