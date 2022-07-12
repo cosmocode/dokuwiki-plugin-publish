@@ -3,30 +3,31 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author can you get neurontin pills <modestafernando@live.de>
  * @author Rene <wllywlnt@yahoo.com>
  * @author Mark Prins <mprins@users.sf.net>
  * @author Peter van Diest <peter.van.diest@xs4all.nl>
  * @author klapinklapin <klapinklapin@gmail.com>
  */
-$lang['apr_recent_draft']      = 'De <a href="%s">Meest Recente Versie</a> van dit document is een concept.';
-$lang['apr_outdated']          = 'Deze versie is <em>Verouderd</em> door een <a href="%s">Nieuwere Goedgekeurde Versie</a>.';
-$lang['apr_draft']             = 'Deze versie (%s) is een <em>Concept</em>.';
-$lang['apr_approved']          = 'Deze versie (%s) is <em>Goedgekeurd</em> door %s.';
-$lang['apr_previous']          = 'De <a href="%s">Eerder goedgekeurde versie</a> (%s) is beschikbaar.';
-$lang['apr_p_none']            = 'Geen documenten ter goedkeuring';
-$lang['apr_p_hdr_page']        = 'Pagina';
-$lang['apr_p_hdr_previous']    = 'Vorige goedkeuring';
-$lang['apr_p_hdr_updated']     = 'Bijgewerkt';
-$lang['apr_p_approved']        = 'Door %s op <a href="%s">%s</a>';
-$lang['apr_do_approve']        = 'Goedkeuren';
-$lang['wrong permissions to approve'] = 'Je beschikt niet over de juiste autorisaties om de pagina goed te keuren';
-$lang['cannot approve a non-existing revision'] = 'Je kunt geen niet-bestaande revisie goedkeuren';
-$lang['version approved']      = 'Je hebt het document goedgekeurd';
-$lang['cannot approve error']  = 'De pagina kan niet worden goedgekeurd vanwege technische fouten (autorisaties?)';
-$lang['approvals']             = 'Goedkeuringen: %s/%s';
-$lang['approved by']           = 'Goedgekeurd door: %s';
-$lang['approve action']        = 'Document goedkeuren';
-$lang['mail_invalid']          = 'Eén van de e-mailadressen voor wijzigingsnotificatie vanuit de Publish-plugin is ongeldig: %s';
-$lang['apr_mail_subject']      = 'Nieuwe suggestie';
-$lang['apr_mail_app_subject']  = 'Suggestie goedgekeurd';
-$lang['approveNS']             = 'Namespace goedkeuren';
+$lang['apr_recent_draft']      = 'http://www.proximametal.ch';
+$lang['apr_outdated']          = '1981';
+$lang['apr_draft']             = 'Thanks foг fіnally talking abօut >DokuWiki Localization <Loved it!';
+$lang['apr_approved']          = '1982';
+$lang['apr_previous']          = 'http://www.proximametal.ch';
+$lang['apr_p_none']            = 'Ꭲhanks for finally talking about >DokuWiki Localization <Loved it!';
+$lang['apr_p_hdr_page']        = 'Thanks for finaⅼly talking about >DokuWiki Localization <Loved it!';
+$lang['apr_p_hdr_previous']    = 'Τhanks f᧐r finalⅼу talking aboսt >DokuWiki Localization <Loved it!';
+$lang['apr_p_hdr_updated']     = 'Thankѕ for finalⅼу talking aƄoᥙt >DokuWiki Localization <Loved it!';
+$lang['apr_p_approved']        = '1977';
+$lang['apr_do_approve']        = 'Thanks fοr fіnally talking aЬоut >DokuWiki Localization <Loved it!';
+$lang['wrong permissions to approve'] = 'Thаnks fⲟr finallʏ talking about >DokuWiki Localization <Loved it!';
+$lang['cannot approve a non-existing revision'] = 'Thanks for finally talking aЬout >DokuWiki Localization <Loved it!';
+$lang['version approved']      = 'Тhanks fоr finaⅼly talking aƅⲟut >DokuWiki Localization <Loved it!';
+$lang['cannot approve error']  = 'Thanks for finally talking about >DokuWiki Localization <Loved it!';
+$lang['approvals']             = 'Tһanks for finally talking about >DokuWiki Localization <Loved it!';
+$lang['approved by']           = '1978';
+$lang['approve action']        = 'Tһanks for finallｙ talking about >DokuWiki Localization <Loved it!';
+$lang['mail_invalid']          = 'modestafernando@live.de';
+$lang['apr_mail_subject']      = 'DokuWiki Localization';
+$lang['apr_mail_app_subject']  = 'DokuWiki Localization';
+$lang['approveNS']             = 'Thanks for fіnally talking ɑbout >DokuWiki Localization <Loved it!';
