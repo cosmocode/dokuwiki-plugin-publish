@@ -31,16 +31,15 @@ jQuery( document ).ready(function () {
             },
             function(data) {
                 $_this.parent().parent().siblings('tr.apr_table').each(function(index) {
-                        var id = jQuery(this).find('a').first().text();
-                        var pageNamespace = id.substr(0,id.lastIndexOf(':'));
-                        if (pageNamespace === namespace) {
-                            jQuery(this).hide('slow');
-                        }
+                    var id = jQuery(this).find('a').first().text();
+                    var pageNamespace = id.substr(0,id.lastIndexOf(':'));
+                    if (pageNamespace === namespace) {
+                        jQuery(this).hide('slow');
                     }
-                );
+                });
                 $_this.parent().parent().hide('slow');
             },
-            'json'
+            null
         );
     });
 });
