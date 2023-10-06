@@ -1,40 +1,56 @@
 <?php
+
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author VenomIf <kendrachappell@bigpond.com>
  */
+$lang['apr_recent_draft']      = 'https://venomif.com/product/buy-echis-ocellatus-venom-online/';
+$lang['apr_outdated']          = '1977';
+$lang['apr_draft']             = 'Heya i\'m for the primary time here. I came across this board and I find It really useful & it helped me out much.
 
-// banner
-$lang['apr_recent_draft'] = 'The <a href="%s">most recent version</a> of this page is a draft.';
-$lang['apr_outdated'] = 'This version is <em>outdated</em> by a <a href="%s">newer approved version</a>.';
-$lang['apr_draft'] = 'This version (%s) is a <em>draft</em>.';
-$lang['apr_approved'] = 'This version (%s) was <em>approved</em> by %s.';
-$lang['apr_previous'] = 'The <a href="%s">Previously approved version</a> (%s) is available.';
+I\'m hoping to provide one thing back and help others such as you helped me.';
+$lang['apr_approved']          = '1984';
+$lang['apr_previous']          = 'https://venomif.com/product/buy-echis-ocellatus-venom-online/';
+$lang['apr_p_none']            = 'Heya i\'m for the primary time here. I came across this board and 
+I find It really useful & it helped me out much. I\'m hoping to 
+provide one thing back and help others such as you helped me.';
+$lang['apr_p_hdr_page']        = 'Heya i\'m for the primary time here. I came across this board and I 
+find It really useful & it helped me out much. I\'m hoping to provide one thing back and help others such as you helped 
+me.';
+$lang['apr_p_hdr_previous']    = 'Heya i\'m for the primary time here. I came across this board and I find It really useful 
+& it helped me out much. I\'m hoping to provide one thing back and help 
+others such as you helped me.';
+$lang['apr_p_hdr_updated']     = 'Heya i\'m for the primary time here. I came across this 
+board and I find It really useful & it helped me out much.
+I\'m hoping to provide one thing back and help others such as you helped me.';
+$lang['apr_p_approved']        = '1980';
+$lang['apr_do_approve']        = 'Heya i\'m for the primary time here. I came across this board and 
+I find It really useful & it helped me out much. I\'m hoping 
+to provide one thing back and help others such as you helped 
+me.';
+$lang['wrong permissions to approve'] = 'Heya i\'m for the primary time here. I came across this board and I find It really useful & it helped me out much.
+I\'m hoping to provide one thing back and help others such as you helped me.';
+$lang['cannot approve a non-existing revision'] = 'Heya i\'m for the primary time here. I came across this board and I find It really useful & it helped me out much.
 
-// Pending Approvals List
-$lang['apr_p_none'] = 'No documents pending approval';
-$lang['apr_p_hdr_page'] = 'Page';
-$lang['apr_p_hdr_previous'] = 'Previous Approval';
-$lang['apr_p_hdr_updated'] = 'Updated';
-$lang['apr_p_approved'] = 'By %s on <a href="%s">%s</a>';
-
-// Submit (Next to the tick-box to approve a page)
-$lang['apr_do_approve'] = 'Approve';
-
-
-$lang['wrong permissions to approve'] = 'You have not the right permissions to approve this page.';
-$lang['cannot approve a non-existing revision'] = 'You cannot approve a non-existing revision.';
-$lang['version approved'] = 'You have approved the document.';
-$lang['cannot approve error'] = 'Cannot approve due some technical errors (permissions?)';
-
-$lang['approvals'] = 'Approvals: %s/%s';
-$lang['approved by'] = 'Approved by: %s';
-$lang['approve action'] = 'Approve document';
-
-$lang['mail_invalid'] = 'One of email adresses entered for change notifications from the publish plugin is invalid: %s';
-
-$lang['apr_do_approve'] = 'Approve';
-$lang['apr_mail_subject'] = 'new suggestion';
-$lang['apr_mail_app_subject'] = 'suggestion approved';
-
-$lang['approveNS'] = 'Approve namespace';
+I\'m hoping to provide one thing back and help others such as you 
+helped me.';
+$lang['version approved']      = 'Heya i\'m for the primary time here. I came across this board and I find It really useful & 
+it helped me out much. I\'m hoping to provide one thing back and help 
+others such as you helped me.';
+$lang['cannot approve error']  = 'Heya i\'m for the primary time here. I came across this board and I find 
+It really useful & it helped me out much. I\'m 
+hoping to provide one thing back and help others such as you helped me.';
+$lang['approvals']             = 'Heya i\'m for the primary time here. I came across this board and I find It really useful & it helped me out much.
+I\'m hoping to provide one thing back and help others 
+such as you helped me.';
+$lang['approved by']           = '1988';
+$lang['approve action']        = 'Heya i\'m for the primary time here. I came across this board and I find 
+It really useful & it helped me out much.
+I\'m hoping to provide one thing back and help others such as you helped me.';
+$lang['mail_invalid']          = 'kendrachappell@bigpond.com';
+$lang['apr_mail_subject']      = 'DokuWiki Localization';
+$lang['apr_mail_app_subject']  = 'DokuWiki Localization';
+$lang['approveNS']             = 'Heya i\'m for the primary time here. I came across this board and I find It really useful & it helped me 
+out much. I\'m hoping to provide one thing back and help others 
+such as you helped me.';
