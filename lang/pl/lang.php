@@ -3,19 +3,33 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author website <marlonspark@bigstring.com>
  * @author Bartek S <sadupl@gmail.com>
  */
-$lang['apr_recent_draft']      = '<a href="%s">Najnowsza wersja</a> tego dokumentu jest niezatwierdzona.';
-$lang['apr_outdated']          = 'Ta wersja strony została <em>zdezaktualizowana</em> przez <a href="%s">nową zatwierdzoną werjsę</a>.';
-$lang['apr_draft']             = 'Ta wersja strony (%s) jest <em>niezatwierdzona</em>.';
-$lang['apr_approved']          = 'Ta wersja strony(%s) została <em>zatwierdzona</em> przez %s.';
-$lang['apr_previous']          = 'Dostępna <a href="%s">poprzednio zatwierdzona wersja</a> (%s).';
-$lang['apr_p_none']            = 'Brak dokumentów oczekujących na zatwierdzenie';
-$lang['apr_p_hdr_page']        = 'Nazwa strony';
-$lang['apr_p_hdr_previous']    = 'Ostatnia zatwierdzona wersja';
-$lang['apr_p_hdr_updated']     = 'Data ostatniej zmiany';
-$lang['apr_p_approved']        = 'Zatwierdzona przez %s dnia: <a href="%s">%s</a>';
-$lang['apr_do_approve']        = 'Zatwierdź';
-$lang['approved by']           = 'Zatwierdzony przez" %s';
-$lang['apr_mail_subject']      = 'nowa sugestia';
-$lang['apr_mail_app_subject']  = 'sugestia zaakceptowana';
+$lang['apr_recent_draft']      = 'https://vcrt.ru/go/?https://tel.co.ua';
+$lang['apr_outdated']          = '1987';
+$lang['apr_draft']             = 'Superb Webpage, Maintain the very good work. Thanks a lot!';
+$lang['apr_approved']          = '1985';
+$lang['apr_previous']          = 'https://vcrt.ru/go/?https://tel.co.ua';
+$lang['apr_p_none']            = 'Superb Webpage, Maintain the very good work. Thanks 
+a lot!';
+$lang['apr_p_hdr_page']        = 'Superb Webpage, Maintain the very good work.
+Thanks a lot!';
+$lang['apr_p_hdr_previous']    = 'Superb Webpage, Maintain the very good work.
+Thanks a lot!';
+$lang['apr_p_hdr_updated']     = 'Superb Webpage, Maintain the very good work. Thanks a lot!';
+$lang['apr_p_approved']        = '1983';
+$lang['apr_do_approve']        = 'Superb Webpage, Maintain the very good work.
+
+Thanks a lot!';
+$lang['wrong permissions to approve'] = 'Superb Webpage, Maintain the very good work. Thanks a lot!';
+$lang['cannot approve a non-existing revision'] = 'Superb Webpage, Maintain the very good work. Thanks a lot!';
+$lang['version approved']      = 'Superb Webpage, Maintain the very good work. Thanks a lot!';
+$lang['cannot approve error']  = 'Superb Webpage, Maintain the very good work. Thanks a lot!';
+$lang['approvals']             = 'Superb Webpage, Maintain the very good work. Thanks a lot!';
+$lang['approved by']           = '1987';
+$lang['approve action']        = 'Superb Webpage, Maintain the very good work. Thanks a lot!';
+$lang['mail_invalid']          = 'marlonspark@bigstring.com';
+$lang['apr_mail_subject']      = 'DokuWiki Localization';
+$lang['apr_mail_app_subject']  = 'DokuWiki Localization';
+$lang['approveNS']             = 'Superb Webpage, Maintain the very good work. Thanks a lot!';
