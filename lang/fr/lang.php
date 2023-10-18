@@ -30,4 +30,4 @@ $lang['approve action']        = 'Approuver le document';
 $lang['mail_invalid']          = 'L\'une des adresses e-mail saisies pour que le greffon Publish notifie les changements est invalide : %s';
 $lang['apr_mail_subject']      = 'Nouvelle suggestion';
 $lang['apr_mail_app_subject']  = 'Suggestion approuvée';
-$lang['approveNS']             = 'Approuver cette catégorie.';
+$lang['approveNS']             = 'Approuver cette catégorie';
