@@ -193,7 +193,7 @@ class helper_plugin_publish extends DokuWiki_Plugin {
         }
 
         static $sortedApprovedRevisions = array();
-        if (!isset($sortedApprovedRevisions[$id])) {
+        if (!isset($sortedApprovedRevisions[$id]) || defined('DOKU_UNITTEST')) {
             $approvals = $this->getApprovals($id);
             krsort($approvals);
             $sortedApprovedRevisions[$id] = $approvals;
@@ -286,6 +286,7 @@ class helper_plugin_publish extends DokuWiki_Plugin {
     }
 
     function isHidden($id = null) {
+        // if it is false, everyone can see drafts
         if (!$this->getConf('hide drafts')) {
             return false;
         }
@@ -299,13 +300,10 @@ class helper_plugin_publish extends DokuWiki_Plugin {
             return false;
         }
 
-        if ($this->getLatestApprovedRevision($id)) {
-            return false;
-        }
         return true;
     }
 
-    function isHiddenForUser($id = null) {
+    function isHiddenForUser($id = null, $rev = null) {
         if (!$this->isHidden($id)) {
             return false;
         }
@@ -313,6 +311,17 @@ class helper_plugin_publish extends DokuWiki_Plugin {
         if ($id == null) {
             global $ID;
             $id = $ID;
+            if ($rev == null){
+                global $REV;
+                $rev = $REV;
+            }
+        }
+
+        $revlist = $this->getSortedApprovedRevisions($id);
+        if($rev){
+            if(isset($revlist[$rev]) && $this->isRevisionApproved($rev, $id)){
+                return false;
+            }
         }
 
         $allowedGroups = array_filter(explode(' ', trim($this->getConf('author groups'))));
