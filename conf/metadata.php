@@ -6,6 +6,7 @@ $meta['number_of_approved'] = array('numeric', '_min' => 1);
 $meta['hide drafts'] = array('onoff');
 $meta['hidereaderbanner'] = array('onoff');
 $meta['hide_approved_banner'] = array('onoff');
+$meta['hide_showrev'] = array('onoff');
 $meta['author groups'] = array('string');
 $meta['internal note'] = array('string');
 $meta['delete attic on first approve'] = array('onoff');
