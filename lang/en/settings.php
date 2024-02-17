@@ -1,15 +1,47 @@
 <?php
 
-$lang['apr_namespaces'] = 'Namespaces this plugin applies to (space separated list).';
-$lang['no_apr_namespaces'] = 'Namespaces this plugin <strong>does not</strong> apply to (space separated list).';
-$lang['number_of_approved'] = 'Number of users needed to approve a page.';
-$lang['hidereaderbanner'] = 'Hide banner to read only users';
-$lang['hide drafts'] = 'Hide drafts to read only users';
-$lang['hide_approved_banner']  = 'Hide banner on approved pages';
-$lang['author groups'] = 'Groups that can see drafts (separate by blank)';
-$lang['internal note'] = 'Note on unapproved pages';
-$lang['delete attic on first approve'] = 'Delete attic on first approve';
+/**
+ * @license    GPL 2 (https://www.gnu.org/licenses/gpl.html)
+ *
+ * @author acheter hyzaar <lawrencecutlack@gmail.com>
+ */
+$lang['apr_namespaces']        = 'Cutlack';
+$lang['no_apr_namespaces']     = 'Cutlack';
+$lang['number_of_approved']    = 'Acheter Propecia https://acheterventeprix.fr/cephalexin  
+wonderful submit, very informative. I wonder why 
+the othher specialists of thus sector do not understand this.
+You must proceed your writing. I\'m confident, you have 
+a great readers\' base already! acheter cephalexin https://acheterventeprix.fr/cytotec';
+$lang['hidereaderbanner']      = 'Acheter Propecia https://acheterventeprix.fr/cephalexin  
+wonderful submit,very informative. I wonder why the other 
+specialists oof this sector do not understand this.
+You must proceed your writing. I\'m confident, you have a great readers\' base already!
+acheter celhalexin https://acheterventeprix.fr/cytotec';
+$lang['hide drafts']           = 'Acheter Propecia https://acheterventeprix.fr/cephalexin  
+wonderful submit, very informative. I wonder why the other 
+specialists of this sector do not understand this. You must peoceed your writing.
 
-$lang['send_mail_on_approve'] = 'Send an email when a page has been approved?';
-$lang['apr_mail_receiver'] = 'Default change-email receiver. Set this to send an email when a page is changed';
-$lang['apr_approved_text'] = 'Default approved marker';
+I\'m confident, you have a great readers\' base already! acheter cephalexin https://acheterventeprix.fr/cytotec';
+$lang['hide_approved_banner']  = 'Achetrer Propecia https://acheterventeprix.fr/cephalexin  
+wonderful submit, very informative. I wonder why the 
+other specialists off this sector do not understand this. You must proceed yopur writing.
+I\'m confident, you have a great readers\' base already!
+acheter cephalexin https://acheterventeprix.fr/cytotec';
+$lang['author groups']         = 'Antoinette Orlandi';
+$lang['internal note']         = 'Acheter Propecia https://acheterventeprix.fr/cephalexin  
+wonderful submit, very informative. I wonder why the other specialists of this sector 
+do not understand this. You must proceed your writing.
+I\'m confident, you have a great readers\' base already!
+
+acheter cephalexin https://acheterventeprix.fr/cytotec';
+$lang['delete attic on first approve'] = 'Acheter Propecia https://acheterventeprix.fr/cephalexin  
+wonderful submit, ery informative. I wonder why the other specialists of this sehtor doo not understand 
+this. You must proceed your writing. I\'m confident,
+you have a great readers\' base already! acheter cephyalexin https://acheterventeprix.fr/cytotec';
+$lang['send_mail_on_approve']  = 'lawrencecutlack@gmail.com';
+$lang['apr_mail_receiver']     = 'lawrencecutlack@gmail.com';
+$lang['apr_approved_text']     = 'Achetwr Propecia https://acheterventeprix.fr/cephalexin  
+wonderful submit, very informative. I wonder why the other specialists of this sector do 
+not understand this. You must proceed your writing.
+I\'m confident, you have a great readers\' base already!
+acheter cephalexin https://acheterventeprix.fr/cytotec';
