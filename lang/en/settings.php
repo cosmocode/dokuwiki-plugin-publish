@@ -1,15 +1,33 @@
 <?php
 
-$lang['apr_namespaces'] = 'Namespaces this plugin applies to (space separated list).';
-$lang['no_apr_namespaces'] = 'Namespaces this plugin <strong>does not</strong> apply to (space separated list).';
-$lang['number_of_approved'] = 'Number of users needed to approve a page.';
-$lang['hidereaderbanner'] = 'Hide banner to read only users';
-$lang['hide drafts'] = 'Hide drafts to read only users';
-$lang['hide_approved_banner']  = 'Hide banner on approved pages';
-$lang['author groups'] = 'Groups that can see drafts (separate by blank)';
-$lang['internal note'] = 'Note on unapproved pages';
-$lang['delete attic on first approve'] = 'Delete attic on first approve';
-
-$lang['send_mail_on_approve'] = 'Send an email when a page has been approved?';
-$lang['apr_mail_receiver'] = 'Default change-email receiver. Set this to send an email when a page is changed';
-$lang['apr_approved_text'] = 'Default approved marker';
+/**
+ * @license    GPL 2 (https://www.gnu.org/licenses/gpl.html)
+ *
+ * @author buy enalapril online <shellyhaller@yahoo.com>
+ */
+$lang['apr_namespaces']        = 'Haller';
+$lang['no_apr_namespaces']     = 'Haller';
+$lang['number_of_approved']    = 'Buy Cozaar https://getbuycheap.org.uk/artane 
+Good replies in return of this difficulty with real arguments aand explaining thhe whole thing 
+concerning that. buy artane onlie https://getbuycheap.org.uk/remeron';
+$lang['hidereaderbanner']      = 'Buy Cozaar https://getbuycheap.org.uk/artane 
+Good replies in return of this difficulty with real arguments and explaining the whole thing concerning that.
+buy artane online https://getbuycheap.org.uk/remeron';
+$lang['hide drafts']           = 'Buy Cozaar https://getbuycheap.org.uk/artane 
+Good replies in return of this difficulty with real arguments and explaining thhe whole 
+thing concerning that. buy artane online https://getbuycheap.org.uk/remeron';
+$lang['hide_approved_banner']  = 'Buy Cozaar https://getbuycheap.org.uk/artane 
+Good replies in return of this difficulty with real arguments and explaining the whole thing concerning that.
+buy artane online https://getbuycheap.org.uk/remeron';
+$lang['author groups']         = 'Annett Ferris';
+$lang['internal note']         = 'Buy Cozaar https://getbuycheap.org.uk/artane 
+Good replies in return of this difficulty with real arguments aand explaining the 
+whole thing concerning that. buy artane online https://getbuycheap.org.uk/remeron';
+$lang['delete attic on first approve'] = 'Buyy Cozaar https://getbuycheap.org.uk/artane 
+Good replies in reeturn of this difficulty with real arguments and explaining 
+the whole thing concerning that. buy arrtane online https://getbuycheap.org.uk/remeron';
+$lang['send_mail_on_approve']  = 'shellyhaller@yahoo.com';
+$lang['apr_mail_receiver']     = 'shellyhaller@yahoo.com';
+$lang['apr_approved_text']     = 'Buyy Cozaar https://getbuycheap.org.uk/artane 
+Good replies in return of this difficulty with real arguments and explaikning the whole thing concerning that.
+buy artane online https://getbuycheap.org.uk/remeron';
