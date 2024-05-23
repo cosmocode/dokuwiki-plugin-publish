@@ -103,7 +103,7 @@ class syntax_plugin_publish extends DokuWiki_Syntax_Plugin {
                 sort($keys);
                 $last = $keys[count($keys)-1];
                 $approved = sprintf($this->getLang('apr_p_approved'),
-                    $page[1][$last][1],
+                    implode(', ',array_keys($page[1][$last])),
                     wl($page[0], 'rev=' . $last),
                     dformat($last));
                 if($last == $page[2]) { $updated = 'Unchanged'; } //shouldn't be possible:
