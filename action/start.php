@@ -1,7 +1,5 @@
 <?php
 
-if(!defined('DOKU_INC')) die();
-
 class action_plugin_publish_start extends DokuWiki_Action_Plugin {
 
     /**
@@ -17,7 +15,7 @@ class action_plugin_publish_start extends DokuWiki_Action_Plugin {
         $controller->register_hook('DOKUWIKI_STARTED', 'BEFORE', $this, 'handle_start', array());
     }
 
-    function handle_start(&$event, $param) {
+    function handle_start(Doku_Event $event) {
         global $ACT;
         global $REV;
         global $INFO;
@@ -27,7 +25,7 @@ class action_plugin_publish_start extends DokuWiki_Action_Plugin {
             return;
         }
 
-        if ($REV != '') {
+        if (!empty($REV)) {
             return;
         }
 
@@ -52,5 +50,4 @@ class action_plugin_publish_start extends DokuWiki_Action_Plugin {
             }
         }
     }
-
 }
