@@ -7,7 +7,8 @@
  */
 class helper_plugin_publish_test extends DokuWikiTest {
 
-    public function setUp() {
+    public function setUp(): void
+    {
         parent::setUp();
     }
 

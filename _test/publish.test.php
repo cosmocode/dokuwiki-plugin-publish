@@ -13,7 +13,8 @@ class approvel_test extends DokuWikiTest {
 
     protected $pluginsEnabled = array('publish');
 
-    public function setUp(){
+    public function setUp(): void
+    {
         parent::setUp();
 
         global $USERINFO;
