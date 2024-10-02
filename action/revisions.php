@@ -14,7 +14,7 @@ class action_plugin_publish_revisions extends DokuWiki_Action_Plugin {
     }
 
     function register(Doku_Event_Handler $controller) {
-        $controller->register_hook('HTML_REVISIONSFORM_OUTPUT', 'BEFORE', $this, 'handle_revisions', array());
+        $controller->register_hook('FORM_REVISIONS_OUTPUT', 'AFTER', $this, 'handle_revisions', array());
     }
 
     function handle_revisions(Doku_Event &$event, $param) {
