@@ -1,10 +1,1 @@
-Hei @FULLNAME@!
-Ditt forslag til @TITLE@ for @DOKUWIKIURL@
-
-URL: @URL@
-
-er godkjent.
-
--- 
-Denne e-posten er laget av DokuWiki for
- @DOKUWIKIURL@
+zacharyplowman@uol.com.br

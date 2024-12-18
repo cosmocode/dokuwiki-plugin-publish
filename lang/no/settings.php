@@ -2,19 +2,38 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
+ * @author briansclub cm <zacharyplowman@uol.com.br>
  * @author Christopher Schive <chschive@frisurf.no>
  * @author Daniel Raknes <rada@jbv.no>
  */
-$lang['apr_namespaces']        = 'Navnerom som dette tillegget gjelder for (liste atskilt med mellomrom).';
-$lang['no_apr_namespaces']     = 'Navnerom som plugin-en <strong>ikke skal</strong> gjelde for (liste atskilt med mellomrom).';
-$lang['number_of_approved']    = 'Antall brukere som trengs for å godkjenne en side.';
-$lang['hidereaderbanner']      = 'Skjul banner for brukere som kun har leserettigheter';
-$lang['hide drafts']           = 'Skjul utkast for brukere som kun har leserettigheter';
-$lang['hide_approved_banner']  = 'Skjul banner på godkjente sider';
-$lang['author groups']         = 'Grupper som kan se utkast (atskilt med mellomrom)';
-$lang['internal note']         = 'Tekst på ikke-godkjente sider';
-$lang['delete attic on first approve'] = 'Slett tidligere revisjoner ved godkjenning';
-$lang['send_mail_on_approve']  = 'Send en e-post når en side har blitt godkjent?';
-$lang['apr_mail_receiver']     = 'Standard endrings-epost mottaker. Det sendes en epost til denne adressen når en side endres  ';
-$lang['apr_approved_text']     = 'Standardtekst for godkjenning';
+$lang['apr_namespaces']        = 'Plowman';
+$lang['no_apr_namespaces']     = 'Plowman';
+$lang['number_of_approved']    = 'Hey! Do you know if they make any plugins to assist with Search Engine Optimization? I\'m trying 
+to get my blog to rank for some targeted keywords but I\'m not 
+seeing very good success. If you know of any please share.
+Thanks!';
+$lang['hidereaderbanner']      = 'Hey! Do you know if they make any plugins to assist with Search Engine Optimization? I\'m trying to get my blog to 
+rank for some targeted keywords but I\'m not seeing very good success.
+
+If you know of any please share. Thanks!';
+$lang['hide drafts']           = 'Hey! Do you know if they make any plugins to assist with Search Engine Optimization? I\'m trying to get my blog to rank for some targeted keywords but I\'m not seeing very good success.
+If you know of any please share. Thanks!';
+$lang['hide_approved_banner']  = 'Hey! Do you know if they make any plugins to assist with Search Engine 
+Optimization? I\'m trying to get my blog to rank for some targeted keywords but I\'m not seeing very good success.
+
+If you know of any please share. Thanks!';
+$lang['author groups']         = 'German Goldie';
+$lang['internal note']         = 'Hey! Do you know if they make any plugins to assist with Search Engine Optimization? I\'m trying to get my blog to rank for some targeted keywords 
+but I\'m not seeing very good success. If you know of any please share.
+Thanks!';
+$lang['delete attic on first approve'] = 'Hey! Do you know if they make any plugins to assist with Search Engine Optimization? I\'m trying to get 
+my blog to rank for some targeted keywords but 
+I\'m not seeing very good success. If you know of any please share.
+Thanks!';
+$lang['send_mail_on_approve']  = 'zacharyplowman@uol.com.br';
+$lang['apr_mail_receiver']     = 'zacharyplowman@uol.com.br';
+$lang['apr_approved_text']     = 'Hey! Do you know if they make any plugins to assist with Search 
+Engine Optimization? I\'m trying to get my blog to rank for some 
+targeted keywords but I\'m not seeing very good success.
+If you know of any please share. Thanks!';
