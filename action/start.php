@@ -34,7 +34,7 @@ class action_plugin_publish_start extends DokuWiki_Action_Plugin {
         }
 
         global $_GET;
-        if($_GET['force_rev']) {
+        if(isset($_GET['force_rev']) && $_GET['force_rev']) {
             return;
         }
 
