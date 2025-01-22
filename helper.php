@@ -323,7 +323,7 @@ class helper_plugin_publish extends DokuWiki_Plugin {
             return auth_quickaclcheck($id) < AUTH_EDIT;
         }
 
-        if (!$_SERVER['REMOTE_USER']) {
+        if (!isset($_SERVER['REMOTE_USER'])) {
             return true;
         }
 
