@@ -111,7 +111,10 @@ class helper_plugin_publish extends DokuWiki_Plugin {
         if (isset($meta['last_change']['date'])) {
             return $meta['last_change']['date'];
         }
-        return $meta['date']['modified'];
+        if($meta) {
+            return $meta['date']['modified'];
+        }
+        return null;
     }
 
     function getApprovals($id = null) {
