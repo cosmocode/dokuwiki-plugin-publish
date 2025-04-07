@@ -109,12 +109,7 @@ class helper_plugin_publish extends DokuWiki_Plugin {
         }
         $meta = $this->getMeta($id);
         if($meta){
-            if (isset($meta['last_change']['date'])) {
-                return $meta['last_change']['date'];
-            }
-            if (isset($meta['date']['modified'])) {
-                return $meta['date']['modified'];
-            }
+            return $meta['last_change']['date'] ?? $meta['date']['modified'];
         }
         return 0;
     }
