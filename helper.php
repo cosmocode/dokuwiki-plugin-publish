@@ -311,6 +311,7 @@ class helper_plugin_publish extends DokuWiki_Plugin {
     }
 
     function isHiddenForUser($id = null) {
+        global $INPUT;
         if (!$this->isHidden($id)) {
             return false;
         }
@@ -325,7 +326,7 @@ class helper_plugin_publish extends DokuWiki_Plugin {
             return auth_quickaclcheck($id) < AUTH_EDIT;
         }
 
-        if (!isset($_SERVER['REMOTE_USER'])) {
+        if (!$INPUT->has('REMOTE_USER')) {
             return true;
         }
 
