@@ -321,7 +321,7 @@ class helper_plugin_publish extends DokuWiki_Plugin {
             return auth_quickaclcheck($id) < AUTH_EDIT;
         }
 
-        if (!$INPUT->has('REMOTE_USER')) {
+        if (!$INPUT->server->has('REMOTE_USER')) {
             return true;
         }
 
