@@ -108,10 +108,10 @@ class helper_plugin_publish extends DokuWiki_Plugin {
             return $REV;
         }
         $meta = $this->getMeta($id);
-        if (isset($meta['last_change']['date'])) {
-            return $meta['last_change']['date'];
+        if($meta){
+            return $meta['last_change']['date'] ?? $meta['date']['modified'];
         }
-        return $meta['date']['modified'];
+        return 0;
     }
 
     function getApprovals($id = null) {
@@ -306,6 +306,7 @@ class helper_plugin_publish extends DokuWiki_Plugin {
     }
 
     function isHiddenForUser($id = null) {
+        global $INPUT;
         if (!$this->isHidden($id)) {
             return false;
         }
@@ -320,7 +321,7 @@ class helper_plugin_publish extends DokuWiki_Plugin {
             return auth_quickaclcheck($id) < AUTH_EDIT;
         }
 
-        if (!$_SERVER['REMOTE_USER']) {
+        if (!$INPUT->server->has('REMOTE_USER')) {
             return true;
         }
 

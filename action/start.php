@@ -19,6 +19,7 @@ class action_plugin_publish_start extends DokuWiki_Action_Plugin {
         global $ACT;
         global $REV;
         global $INFO;
+        global $INPUT;
         global $ID;
 
         if ($ACT !== 'show') {
@@ -33,8 +34,7 @@ class action_plugin_publish_start extends DokuWiki_Action_Plugin {
             return;
         }
 
-        global $_GET;
-        if($_GET['force_rev']) {
+        if($INPUT->has('force_rev')) {
             return;
         }
 
