@@ -3,6 +3,7 @@
 $meta['apr_namespaces'] = array('string');
 $meta['no_apr_namespaces'] = array('string');
 $meta['number_of_approved'] = array('numeric', '_min' => 1);
+$meta['approving_weights'] = array('string', '_pattern' => '#^(\w+=\d+&?)*$#');
 $meta['hide drafts'] = array('onoff');
 $meta['hidereaderbanner'] = array('onoff');
 $meta['hide_approved_banner'] = array('onoff');
