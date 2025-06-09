@@ -2,6 +2,8 @@
 
 if(!defined('DOKU_INC')) die();
 
+use dokuwiki\Extension\Event;
+
 class action_plugin_publish_approve extends DokuWiki_Action_Plugin {
 
     /**
@@ -108,7 +110,7 @@ class action_plugin_publish_approve extends DokuWiki_Action_Plugin {
                 $mail = plugin_load('action','publish_mail');
                 $mail->send_approve_mail();
             }
-            trigger_event('PLUGIN_PUBLISH_APPROVE', $data);
+            Event::createAndTrigger('PLUGIN_PUBLISH_APPROVE', $data);
         } else {
             msg($this->getLang('cannot approve error'), -1);
         }
