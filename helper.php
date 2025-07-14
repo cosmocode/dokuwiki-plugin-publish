@@ -40,7 +40,11 @@ class helper_plugin_publish extends DokuWiki_Plugin {
 
             // Check each element, untill all elements of $v satisfied
             while($current_ns_depth < $total_ns_depth) {
-                if($namespace[$current_ns_depth] != $id[$current_ns_depth]) {
+                if(
+                    !isset($id[$current_ns_depth]) ||
+                    !isset($namespace[$current_ns_depth]) ||
+                    $namespace[$current_ns_depth] != $id[$current_ns_depth]
+                ) {
                     // not a match
                     $matching = false;
                     break;
@@ -109,7 +113,8 @@ class helper_plugin_publish extends DokuWiki_Plugin {
         }
         $meta = $this->getMeta($id);
         if($meta){
-            return $meta['last_change']['date'] ?? $meta['date']['modified'];
+            if(isset($meta['last_change']['date'])) return $meta['last_change']['date'];
+            if(isset($meta['date']['modified'])) return $meta['date']['modified'];
         }
         return 0;
     }
