@@ -41,7 +41,7 @@ class action_plugin_publish_hide extends DokuWiki_Action_Plugin {
         $event->preventDefault();
         $event->stopPropagation();
 
-        print p_locale_xhtml('denied');
+        html_denied();
     }
 
     function hidePage(Doku_Event &$event, $params) {
