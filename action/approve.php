@@ -18,6 +18,7 @@ class action_plugin_publish_approve extends DokuWiki_Action_Plugin {
     function register(Doku_Event_Handler $controller) {
         $controller->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE', $this, 'handle_io_write', array());
         $controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this, 'approveNS', array());
+        $controller->register_hook('IO_WIKIPAGE_WRITE', 'AFTER', $this, 'self_approve', array(), -1000);
     }
 
     function approveNS(Doku_Event &$event, $param) {
@@ -72,17 +73,25 @@ class action_plugin_publish_approve extends DokuWiki_Action_Plugin {
         send_redirect(wl($ID, array('rev' => $this->helper->getRevision()), true, '&'));
     }
 
-    function addApproval() {
+    function addApproval($approvalRevision = null) {
         global $USERINFO;
         global $ID;
         global $INFO;
+        global $REV;
 
-        if (!$INFO['exists']) {
-            msg($this->getLang('cannot approve a non-existing revision'), -1);
-            return;
+        if($approvalRevision){
+            if ($approvalRevision !== $REV && !page_exists($ID, $approvalRevision)) {
+                msg($this->getLang('cannot approve a non-existing revision'), -1);
+                return;
+            }
+        }else{
+            $approvalRevision = $this->helper->getRevision();
+            if (!$INFO['exists']) {
+                msg($this->getLang('cannot approve a non-existing revision'), -1);
+                return;
+            }
         }
 
-        $approvalRevision = $this->helper->getRevision();
         $approvals = $this->helper->getApprovals();
 
         if (!isset($approvals[$approvalRevision])) {
@@ -115,6 +124,36 @@ class action_plugin_publish_approve extends DokuWiki_Action_Plugin {
             msg($this->getLang('cannot approve error'), -1);
         }
 
+    }
+
+    function self_approve(Doku_Event &$event, $param){
+        global $ID;
+        global $ACT;
+        global $INFO;
+        global $conf;
+        $data = pageinfo();
+
+        if ($ACT != 'save' || !$event->result) {
+            return true;
+        }
+
+        // IO_WIKIPAGE_WRITE is always called twice when saving a page. This makes sure to only send the mail once.
+        if (!$event->data[3]) {
+            return true;
+        }
+
+        // Does the publish plugin apply to this page?
+        if (!$this->helper->isActive($ID)) {
+            return true;
+        }
+
+        // are we supposed to auto approve?
+        if (!$this->getConf('auto_self_approve') || !$this->helper->canApprove()) {
+            return true;
+        }
+
+        $this->addApproval($event->data[3]);
+        return true;
     }
 
 }

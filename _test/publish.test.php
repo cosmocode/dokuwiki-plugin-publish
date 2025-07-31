@@ -45,7 +45,7 @@ class approvel_test extends DokuWikiTest {
     public function test_unaprroved_banner_exists() {
         saveWikiText('foo', 'bar', 'foobar');
         $request = new TestRequest();
-        $response = $request->get(array('id' => 'foo'), '/doku.php?id=foo');
+        $response = $request->get(array(), '/doku.php?id=foo');
         $this->assertTrue(
             strpos($response->getContent(), '<div class="approval approved_no">') !== false,
             'The "not approved banner" is missing on a page which has not yet been aprroved with standard config.'
@@ -57,6 +57,8 @@ class approvel_test extends DokuWikiTest {
      * @coversNothing
      */
     public function test_aprroval_succesful() {
+        global $conf;
+        $conf['plugin']['publish']['auto_self_approve'] = 0;
         saveWikiText('foo', 'bar', 'foobar');
         $request = new TestRequest();
         $response = $request->get(array(), '/doku.php?id=foo&publish_approve=1');
@@ -82,6 +84,21 @@ class approvel_test extends DokuWikiTest {
             strpos($response->getContent(), '<div class="approval') === false,
             'The approved banner is still showing even so it is supposed not to show.'
         );
+    }
 
+    /**
+     * @coversNothing
+     */
+    public function test_self_aprrove() {
+        global $conf;
+        $conf['plugin']['publish']['auto_self_approve'] = 1;
+        saveWikiText('foo', 'bar', 'foobar');
+        $request = new TestRequest();
+        $response = $request->get(array(), '/doku.php?id=foo');
+
+        $this->assertTrue(
+            strpos($response->getContent(), '<div class="approval approved_yes') === false,
+            'Approving a page automatically failed.'
+        );
     }
 }
