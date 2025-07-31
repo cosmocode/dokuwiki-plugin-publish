@@ -63,6 +63,10 @@ class action_plugin_publish_approve extends DokuWiki_Action_Plugin {
             return;
         }
 
+        if(!checkSecurityToken()){
+             return;
+        }
+
         if (!$this->helper->canApprove()) {
             msg($this->getLang('wrong permissions to approve'), -1);
             return;

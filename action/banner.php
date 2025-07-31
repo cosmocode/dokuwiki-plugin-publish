@@ -205,8 +205,14 @@ class action_plugin_publish_banner extends DokuWiki_Action_Plugin {
             }
         }
 
+        $params = array(
+            'rev' => $REV,
+            'publish_approve' => 1,
+            'sectok' => getSecurityToken(),
+        );
+
         echo '<span class="approval_action">';
-        echo '<a href="' . wl($ID, array('rev' => $REV, 'publish_approve'=>1)) . '">';
+        echo '<a href="' . wl($ID, $params) . '">';
         echo $this->getLang('approve action');
         echo '</a>';
         echo '</span> ';
