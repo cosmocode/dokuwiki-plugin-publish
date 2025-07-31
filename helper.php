@@ -103,7 +103,21 @@ class helper_plugin_publish extends DokuWiki_Plugin {
             return false;
         }
 
-        return ($INFO['perm'] >= AUTH_DELETE);
+        if ($INFO['perm'] >= AUTH_DELETE) {
+            return true;
+        }
+
+        if (empty($INFO['userinfo']['grps'])) {
+            return false;
+        }
+
+        $approving_weights = $this->getApprovingWeights();
+        if ($approving_weights) {
+            $approving_groups = array_keys($approving_weights);
+            return !!array_intersect($approving_groups, $INFO['userinfo']['grps']);
+        }
+
+        return false;
     }
 
     function getRevision($id = null) {
@@ -212,7 +226,52 @@ class helper_plugin_publish extends DokuWiki_Plugin {
         if (!isset($approvals[$revision])) {
             return false;
         }
-        return (count($approvals[$revision]) >= $this->getConf('number_of_approved'));
+
+        $number_of_approved = $this->getConf('number_of_approved');
+        if (count($approvals[$revision]) >= $number_of_approved) {
+            return true;
+        }
+
+        $approving_weights = $this->getApprovingWeights();
+        if (!$approving_weights) {
+            return false;
+        }
+
+        global $auth;
+        foreach ($approvals[$revision] as $username => $approver) {
+            $userdata = $auth->getUserData($username);
+            if (empty($userdata['grps'])) {
+                continue;
+            }
+
+            foreach ($approving_weights as $approving_group => $approving_weight) {
+                if (in_array($approving_group, $userdata['grps'], true)) {
+                    $number_of_approved -= $approving_weight;
+                    if ($number_of_approved <= 0) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @staticvar array $weights
+     * @return array
+     */
+    private function getApprovingWeights() {
+        static $weights = null;
+        if ($weights === null) {
+            $qs = $this->getConf('approving_weights');
+            if ($qs) {
+                parse_str($qs, $weights);
+                $weights = array_filter(array_map('intval', $weights));
+            } else {
+                $weights = [];
+            }
+        }
+        return $weights;
     }
 
     function isCurrentRevisionApproved($id = null) {
