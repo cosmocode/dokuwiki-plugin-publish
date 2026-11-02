@@ -191,7 +191,7 @@ class action_plugin_publish_banner extends DokuWiki_Action_Plugin {
         global $ID;
         global $REV;
         global $USERINFO;
-        if (!$this->hlp->canApprove()) {
+        if (!$this->hlp->canApprove() || $this->hlp->isCurrentRevisionApproved()) {
             return;
         }
 
