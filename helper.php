@@ -418,8 +418,11 @@ class helper_plugin_publish extends DokuWiki_Plugin {
 
         $meta = $this->getMeta($id);
         if ($this->isCurrentRevisionApproved($id)) {
-
             // Already approved
+            return false;
+        }
+
+        if (!isset($meta['approval'])) {
             return false;
         }
 
