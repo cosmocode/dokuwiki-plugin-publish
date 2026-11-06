@@ -1,5 +1,5 @@
 <?php
-
+use dokuwiki\ChangeLog\PageChangeLog;
 if(!defined('DOKU_INC')) die();
 
 class action_plugin_publish_removeattic extends DokuWiki_Action_Plugin {
@@ -35,7 +35,7 @@ class action_plugin_publish_removeattic extends DokuWiki_Action_Plugin {
         }
         global $ID;
 
-        $changelog = new PageChangelog($ID, 0);
+        $changelog = new PageChangeLog($ID, 0);
         $revisions = $changelog->getRevisions(0, 0);
 
         foreach ($revisions as $revision) {
