@@ -32,9 +32,12 @@ class action_plugin_publish_banner extends DokuWiki_Action_Plugin {
             return;
         }
 
-        $meta = $INFO['meta'];
+        $meta = $INFO['meta'] ?? array();
 
-        if (!$meta['approval']) {
+        // Ensure the 'approval' key exists in the metadata array.
+        // On PHP 8, accessing a missing array key (e.g. $meta['approval'])
+        // triggers a "Undefined array key" warning, so we must check first.
+        if (!isset($meta['approval']) || !is_array($meta['approval'])) {
             $meta['approval'] = array();
         }
 
